@@ -68,6 +68,11 @@ public class LeseCSV {
             		Papier papier = new Papier(Auftragsart, Attribut1, Attribut2, Integer.parseInt(Belohnung));
             		System.out.println(papier.getFarbe());
             	}
+            	if(Produkt.equals("Holz"))
+            	{
+            		Holz holz = new Holz(Auftragsart, Attribut1, Attribut2, Integer.parseInt(Belohnung));
+            		System.out.println(holz.getArt());
+            	}
             	//System.out.println(zeile);
             }
         } catch (IOException e) {
