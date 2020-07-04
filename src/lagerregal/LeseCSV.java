@@ -73,6 +73,10 @@ public class LeseCSV {
             		Holz holz = new Holz(Auftragsart, Attribut1, Attribut2, Integer.parseInt(Belohnung));
             		System.out.println(holz.getArt());
             	}
+            	if(Produkt.equals("Stein"))
+            	{
+            		Stein stein = new Stein(Auftragsart, Attribut1, Attribut2, Integer.parseInt(Belohnung));
+            	}
             	//System.out.println(zeile);
             }
         } catch (IOException e) {
