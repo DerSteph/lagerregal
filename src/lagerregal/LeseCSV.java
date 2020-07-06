@@ -9,8 +9,9 @@ public class LeseCSV {
 	public static void ladeDatei(String name) {
 		File file = new File(name);
         if (!file.canRead() || !file.isFile())
+        	System.out.println("Programm ist abgestürzt");
         	System.exit(0);
-            BufferedReader in = null;
+        	BufferedReader in = null;
         try {
             in = new BufferedReader(new FileReader(name));
             String zeile = null;
