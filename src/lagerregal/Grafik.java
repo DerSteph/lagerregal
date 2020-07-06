@@ -1,11 +1,15 @@
 package lagerregal;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+
 
 public class Grafik {
 	public Grafik() {
 		JFrame fenster = new JFrame();
 		fenster.setSize(400,400);
+		fenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel lagerraum = new JPanel();
 		lagerraum.setLayout(new java.awt.GridLayout(3,3));
@@ -22,6 +26,12 @@ public class Grafik {
 		
 		JPanel buttons = new JPanel();
 		JButton button1 = new JButton("Neuer Auftrag");
+		button1.addActionListener(new java.awt.event.ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Test.test.leseZeile();
+			}
+		});
 		buttons.add(button1);
 		
 		JPanel auswahl = new JPanel();
