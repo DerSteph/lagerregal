@@ -1,6 +1,6 @@
 package lagerregal;
 
-public class Papier {
+public class Papier extends Produkt{
 	private String Lagerungsart;
 	private String Farbe;
 	private String Größe;

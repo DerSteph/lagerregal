@@ -9,9 +9,9 @@ public class Bilanz {
 		return gesamtkonto;
 	}
 	public void addGesamtkonto(int geld) {
-		this.gesamtkonto = this.gesamtkonto + gesamtkonto;
+		this.gesamtkonto = this.gesamtkonto + geld;
 	}
 	public void removeGesamtkonto(int geld) {
-		this.gesamtkonto = this.gesamtkonto - gesamtkonto;
+		this.gesamtkonto = this.gesamtkonto - geld;
 	}
 }

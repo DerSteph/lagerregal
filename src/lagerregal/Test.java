@@ -18,8 +18,13 @@ public class Test {
 		test.leseZeile();
 		test.leseZeile();
 		test.leseZeile();
-		lager.AuftragAbarbeiten(lager.naechsterAuftrag(), 0);
+		lager.AuftragAbarbeiten(lager.GetAuftrag(0), 0);
+		lager.AuftragAbarbeiten(lager.GetAuftrag(1), 1);
+		lager.AuftragAbarbeiten(lager.GetAuftrag(2), 11);
 		lager.getLagerinhalt();
+		System.out.println(bilanz.getGesamtkonto());
+		test.leseZeile();
+		lager.AuftragAbarbeiten(lager.GetAuftrag(0), 0);
 		//Grafik test = new Grafik();
 	}
 }

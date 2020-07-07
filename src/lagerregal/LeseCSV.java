@@ -31,9 +31,9 @@ public class LeseCSV {
 	    	String Attribut2 = null;
 	    	String Belohnung = null;
 	    	int auswahl = 0;
-	    	for (int i = 0, n = zeile.length(); i < n; i++) {
+	    	for (int i = 0; i < zeile.length(); i++) {
 	    	    char c = zeile.charAt(i);
-	    	    if(c == ';' || i == zeile.length()-1)
+	    	    if(c == ';'|| i == zeile.length()-1)
 	    	    {
 	    	    	switch(auswahl)
 	    	    	{
@@ -53,6 +53,8 @@ public class LeseCSV {
 	    	    		Attribut2 = text;
 	    	    		break;
 	    	    	case 5:
+	    	    		// noch überlegen, ob das eleganter geht
+	        	    	text = text + c;
 	    	    		Belohnung = text;
 	    	    		break;
 	    	    	}
@@ -80,7 +82,7 @@ public class LeseCSV {
 	    		}
 	    		else
 	    		{
-	    			System.out.println("Erfolgreich Schlange hinzugefügt.");
+	    			System.out.println("Erfolgreich Papier der Schlange hinzugefügt.");
 	    		}
 	    	}
 	    	if(Produkt.equals("Holz"))
@@ -92,7 +94,7 @@ public class LeseCSV {
 	    		}
 	    		else
 	    		{
-	    			System.out.println("Erfolgreich Schlange hinzugefügt.");
+	    			System.out.println("Erfolgreich Holz der Schlange hinzugefügt.");
 	    		}
 	    	}
 	    	if(Produkt.equals("Stein"))
@@ -104,7 +106,7 @@ public class LeseCSV {
 	    		}
 	    		else
 	    		{
-	    			System.out.println("Erfolgreich Schlange hinzugefügt.");
+	    			System.out.println("Erfolgreich Stein der Schlange hinzugefügt.");
 	    		}
 	    	}
 	    	System.out.println(zeile);
