@@ -4,11 +4,14 @@ import java.util.*;
 
 public class Lager {
 	private double Umsatz;
-	private Object[] inhalt;
+	private ArrayList<Produkt> inhalt;
 	private Queue schlange = new LinkedList();
 	private int schlangelaenge = 0;
 	public Lager() {
-		this.inhalt = new Object[27];
+		this.inhalt = new ArrayList<Produkt>();
+		for(int i = 0; i < 27; i++) {
+			inhalt.add(i, null);
+		}
 		this.Umsatz = 0;
 	}
 	public boolean AuftragHinzufuegen(Object objekt) {
@@ -49,15 +52,15 @@ public class Lager {
 			{
 				System.out.println();
 			}
-			if(inhalt[i] instanceof Papier)
+			if(inhalt.get(i) instanceof Papier)
 			{
 				System.out.print(" P ");	
 			}
-			else if(inhalt[i] instanceof Stein)
+			else if(inhalt.get(i) instanceof Stein)
 			{
 				System.out.print(" S ");
 			}
-			else if(inhalt[i] instanceof Holz)
+			else if(inhalt.get(i) instanceof Holz)
 			{
 				System.out.print(" H ");
 			}
@@ -77,8 +80,8 @@ public class Lager {
 		{
 			if(auftrag instanceof Papier)
 			{
-				if(inhalt[lagerplatz] == null) {
-					inhalt[lagerplatz] = auftrag;
+				if(inhalt.get(lagerplatz) == null) {
+					inhalt.add(lagerplatz, (Produkt) auftrag);
 					Test.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten());
 					System.out.println("Erfolgreich eingelagert.");
 					return true;
@@ -94,14 +97,14 @@ public class Lager {
 				boolean prüfeObPlatzVerfügbar = true;
 				if(lagerplatz < 9) {
 					for(int i = 0; i < 9; i++) {
-						if(inhalt[i] != null)
+						if(inhalt.get(i) != null)
 						{
 							prüfeObPlatzVerfügbar = false;
 						}
 					}
 					if(prüfeObPlatzVerfügbar == true) {
 						for(int i = 0; i < 9; i++) {
-							inhalt[lagerplatz] = auftrag;
+							inhalt.add(i, (Produkt) auftrag);
 						}
 						Test.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten());
 						System.out.println("Erfolgreich eingelagert.");
@@ -115,14 +118,14 @@ public class Lager {
 				}
 				else if(lagerplatz < 18) {
 					for(int i = 9; i < 18; i++) {
-						if(inhalt[i] != null)
+						if(inhalt.get(i) != null)
 						{
 							prüfeObPlatzVerfügbar = false;
 						}
 					}
 					if(prüfeObPlatzVerfügbar == true) {
 						for(int i = 9; i < 18; i++) {
-							inhalt[lagerplatz] = auftrag;
+							inhalt.add(i, (Produkt) auftrag);
 						}
 						Test.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten());
 						System.out.println("Erfolgreich eingelagert.");
@@ -136,14 +139,14 @@ public class Lager {
 				}
 				else {
 					for(int i = 19; i < 27; i++) {
-						if(inhalt[i] != null)
+						if(inhalt.get(i) != null)
 						{
 							prüfeObPlatzVerfügbar = false;
 						}
 					}
 					if(prüfeObPlatzVerfügbar == true) {
 						for(int i = 19; i < 27; i++) {
-							inhalt[lagerplatz] = auftrag;
+							inhalt.add(i, (Produkt) auftrag);
 						}
 						Test.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten());
 						System.out.println("Erfolgreich eingelagert.");
@@ -158,8 +161,8 @@ public class Lager {
 			}
 			else if(auftrag instanceof Stein) {
 				if(lagerplatz < 9) {
-					if(inhalt[lagerplatz] == null) {
-						inhalt[lagerplatz] = auftrag;
+					if(inhalt.get(lagerplatz) == null) {
+						inhalt.add(lagerplatz, (Produkt) auftrag);
 						Test.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten());
 						System.out.println("Erfolgreich eingelagert.");
 						return true;

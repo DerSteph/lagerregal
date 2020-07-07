@@ -15,10 +15,10 @@ public class Test {
 		}
 		lager = new Lager();
 		bilanz = new Bilanz();
-		/*test.leseZeile();
 		test.leseZeile();
 		test.leseZeile();
-		test.leseZeile();*/
+		test.leseZeile();
+		lager.AuftragAbarbeiten(lager.naechsterAuftrag(), 0);
 		lager.getLagerinhalt();
 		//Grafik test = new Grafik();
 	}
