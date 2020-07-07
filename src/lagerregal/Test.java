@@ -4,6 +4,7 @@ public class Test {
 	public static int zaehler;
 	public static LeseCSV test;
 	public static Lager lager;
+	public static Bilanz bilanz;
 	public static void main(String[] args) {
 		try
 		{
@@ -13,6 +14,12 @@ public class Test {
 			System.out.println("Datei kann nicht geladen werden.");
 		}
 		lager = new Lager();
-		Grafik test = new Grafik();
+		bilanz = new Bilanz();
+		/*test.leseZeile();
+		test.leseZeile();
+		test.leseZeile();
+		test.leseZeile();*/
+		lager.getLagerinhalt();
+		//Grafik test = new Grafik();
 	}
 }

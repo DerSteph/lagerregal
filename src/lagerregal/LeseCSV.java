@@ -76,16 +76,36 @@ public class LeseCSV {
 	    		Papier papier = new Papier(Auftragsart, Attribut1, Attribut2, Integer.parseInt(Belohnung));
 	    		if(Test.lager.AuftragHinzufuegen(papier) == false)
 	    		{
-	    			
+	    			System.out.println("Schlange ist voll");
+	    		}
+	    		else
+	    		{
+	    			System.out.println("Erfolgreich Schlange hinzugefügt.");
 	    		}
 	    	}
 	    	if(Produkt.equals("Holz"))
 	    	{
 	    		Holz holz = new Holz(Auftragsart, Attribut1, Attribut2, Integer.parseInt(Belohnung));
+	    		if(Test.lager.AuftragHinzufuegen(holz) == false)
+	    		{
+	    			System.out.println("Schlange ist voll");
+	    		}
+	    		else
+	    		{
+	    			System.out.println("Erfolgreich Schlange hinzugefügt.");
+	    		}
 	    	}
 	    	if(Produkt.equals("Stein"))
 	    	{
 	    		Stein stein = new Stein(Auftragsart, Attribut1, Attribut2, Integer.parseInt(Belohnung));
+	    		if(Test.lager.AuftragHinzufuegen(stein) == false)
+	    		{
+	    			System.out.println("Schlange ist voll");
+	    		}
+	    		else
+	    		{
+	    			System.out.println("Erfolgreich Schlange hinzugefügt.");
+	    		}
 	    	}
 	    	System.out.println(zeile);
 		}
