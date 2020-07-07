@@ -86,6 +86,22 @@ public class Lager {
 		{
 			if(auftrag instanceof Papier)
 			{
+				if(lagerplatz % 9 >= 0 && lagerplatz % 9 <= 2)
+				{
+					for(int i = 1; i < 3; i++) {
+						if(inhalt.get(lagerplatz + i*3) != null) {
+							System.out.println("Der Lagerplatz wird durch andere Dinge davor blockiert.");
+							return false;
+						}
+					}
+				}
+				if(lagerplatz % 9 >= 3 && lagerplatz % 9 <= 5)
+				{
+						if(inhalt.get(lagerplatz + 3) != null) {
+							System.out.println("Der Lagerplatz wird durch andere Dinge davor blockiert.");
+							return false;
+						}
+				}
 				if(inhalt.get(lagerplatz) == null) {
 					inhalt.set(lagerplatz, (Produkt) auftrag);
 					Test.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten());
@@ -167,6 +183,22 @@ public class Lager {
 			}
 			else if(auftrag instanceof Stein) {
 				if(lagerplatz < 9) {
+					if(lagerplatz % 9 >= 0 && lagerplatz % 9 <= 2)
+					{
+						for(int i = 1; i < 3; i++) {
+							if(inhalt.get(lagerplatz + i*3) != null) {
+								System.out.println("Der Lagerplatz wird durch andere Dinge davor blockiert.");
+								return false;
+							}
+						}
+					}
+					if(lagerplatz % 9 >= 3 && lagerplatz % 9 <= 5)
+					{
+							if(inhalt.get(lagerplatz + 3) != null) {
+								System.out.println("Der Lagerplatz wird durch andere Dinge davor blockiert.");
+								return false;
+							}
+					}
 					if(inhalt.get(lagerplatz) == null) {
 						inhalt.set(lagerplatz, (Produkt) auftrag);
 						Test.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten());
@@ -198,12 +230,40 @@ public class Lager {
 		System.out.println("Irgendwas ist kaputt.");
 		return false;
 	}
-	
+	public boolean Verschrotten(int lagerplatz) {
+		if(inhalt.get(lagerplatz) != null) {
+			if(inhalt.get(lagerplatz) instanceof Papier || inhalt.get(lagerplatz) instanceof Stein) {
+				inhalt.set(lagerplatz, null);
+			}
+			if(inhalt.get(lagerplatz) instanceof Holz)
+			{
+				if(lagerplatz < 9) {
+					for(int i = 0; i < 9; i++) {
+						inhalt.set(i, null);
+					}
+				}
+				if(lagerplatz < 18) {
+					for(int i = 9; i < 18; i++) {
+						inhalt.set(i, null);
+					}
+				}
+				if(lagerplatz < 27) {
+					for(int i = 19; i < 27; i++) {
+						inhalt.set(i, null);
+					}
+				}
+			}
+			Test.bilanz.removeGesamtkonto(500);
+			System.out.println("Erfolgreich verschrottet");
+			return true;
+		}
+		System.out.println("An der Stelle existiert nichts.");
+		return false;
+	}
 	/*
 	 * TODO: Umlagern, prüfen bei EInlagerung, Verschrotten und Auslagern
+	 * Viele If Anfrage durch Switch ersetzen
 	 * 
 	 * 
-	 * 
-	 */
 	 */
 }

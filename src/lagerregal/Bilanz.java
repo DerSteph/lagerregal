@@ -14,4 +14,11 @@ public class Bilanz {
 	public void removeGesamtkonto(int geld) {
 		this.gesamtkonto = this.gesamtkonto - geld;
 	}
+	/*
+	 * TODO: Anzeige von Umsätzen, und Eintrag der Ereignisse in eine Liste
+	 * 
+	 * 
+	 * 
+	 * 
+	 */
 }
