@@ -3,6 +3,11 @@ package lagerregal;
 public class Produkt {
 	private String Lagerungsart;
 	private int Kosten;
+	
+	public String getInhalt() {
+		return null;
+	}
+	
 	public String getLagerungsart() {
 		return Lagerungsart;
 	}

@@ -102,7 +102,7 @@ public class Lager {
 			}
 			else
 			{
-				System.out.print(" x ");
+				System.out.print(" _ ");
 			}
 		}
 	}
@@ -297,19 +297,23 @@ public class Lager {
 									inhalt.set(i, null);
 								}
 							}
-							if(lagerplatz < 18)
+							else if(lagerplatz < 18)
 							{
 								for(int i = 9; i < 18; i++)
 								{
 									inhalt.set(i, null);
 								}
 							}
-							if(lagerplatz < 27)
+							else if(lagerplatz < 27)
 							{
 								for(int i = 18; i < 27; i++)
 								{
 									inhalt.set(i, null);
 								}
+							}
+							else
+							{
+								
 							}
 							AuftragLöschen(auswahl);
 							Start.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten());
@@ -348,6 +352,7 @@ public class Lager {
 		System.out.println("Irgendwas ist kaputt.");
 		return false;
 	}
+
 	public boolean Verschrotten(int lagerplatz) {
 		if(inhalt.get(lagerplatz) != null) {
 			if(inhalt.get(lagerplatz) instanceof Papier || inhalt.get(lagerplatz) instanceof Stein) {
@@ -360,15 +365,19 @@ public class Lager {
 						inhalt.set(i, null);
 					}
 				}
-				if(lagerplatz < 18) {
+				else if(lagerplatz < 18) {
 					for(int i = 9; i < 18; i++) {
 						inhalt.set(i, null);
 					}
 				}
-				if(lagerplatz < 27) {
+				else if(lagerplatz < 27) {
 					for(int i = 19; i < 27; i++) {
 						inhalt.set(i, null);
 					}
+				}
+				else
+				{
+					
 				}
 			}
 			Start.bilanz.removeGesamtkonto(500);
@@ -634,6 +643,14 @@ public class Lager {
 	public void zeigePlätzeWoProduktGelagert(Produkt name) {
 		for(int i = 0; i < 27; i++)
 		{
+			if(i % 9 == 0) 
+			{
+				System.out.println();
+			}
+			if(i % 3 == 0)
+			{
+				System.out.println();
+			}
 			if(name instanceof Papier)
 			{
 				if(inhalt.get(i) instanceof Papier)
@@ -656,7 +673,14 @@ public class Lager {
 				}
 				else
 				{
-					inhalt.get(i).toShortStringSmall();
+					if(inhalt.get(i) == null)
+					{
+						System.out.print(" _ ");
+					}
+					else
+					{
+						System.out.print(" " + inhalt.get(i).toShortStringSmall() + " ");	
+					}
 				}
 			}
 			if(name instanceof Holz)
@@ -681,7 +705,7 @@ public class Lager {
 									}
 								}
 							}
-							if(i < 18)
+							else if(i < 18)
 							{
 								for(int j = 9; i < 18; i++)
 								{
@@ -695,7 +719,7 @@ public class Lager {
 									}
 								}
 							}
-							if(i < 27)
+							else if(i < 27)
 							{
 								for(int j = 18; i < 27; i++)
 								{
@@ -709,6 +733,11 @@ public class Lager {
 									}
 								}
 							}
+							else
+							{
+								
+							}
+							i = i + 9;
 						}
 						else
 						{
@@ -720,13 +749,210 @@ public class Lager {
 						System.out.print(" h ");
 					}
 				}
+				else
+				{
+					if(inhalt.get(i) == null)
+					{
+						System.out.print(" _ ");
+					}
+					else
+					{
+						System.out.print(" " + inhalt.get(i).toShortStringSmall() + " ");	
+					}
+				}
+			}
+			if(name instanceof Stein)
+			{
+				if(inhalt.get(i) instanceof Stein)
+				{
+					if(((Stein) inhalt.get(i)).getArt().equals(((Stein) name).getArt()))
+					{
+						if(((Stein) inhalt.get(i)).getGewicht().equals(((Stein) name).getGewicht()))
+						{
+							System.out.print(" S ");
+						}
+						else
+						{
+							System.out.print(" s ");
+						}
+					}
+					else
+					{
+						System.out.print(" s ");
+					}
+				}
+				else
+				{
+					if(inhalt.get(i) == null)
+					{
+						System.out.print(" _ ");
+					}
+					else
+					{
+						System.out.print(" " + inhalt.get(i).toShortStringSmall() + " ");	
+					}
+				}
 			}
 		}
 	}
 
 	public boolean Umlagern(int lagerquelle, int lagerziel) {
-		Start.bilanz.removeGesamtkonto(100);
-		return true;
+		if(inhalt.get(lagerquelle) == null)
+		{
+			System.out.println("Der Lagerplatz ist leer");
+			return false;
+		}
+		if(inhalt.get(lagerquelle) instanceof Papier)
+		{
+			if(inhalt.get(lagerziel) != null)
+			{
+				System.out.println("Das Lagerziel ist bereits besetzt");
+				return false;
+			}
+			else
+			{
+				inhalt.set(lagerziel, inhalt.get(lagerquelle));
+				inhalt.set(lagerquelle, null);
+				Start.bilanz.removeGesamtkonto(100);
+				System.out.println("Das Lagerziel wurde erfolgreich zur Lagerquelle umgelagert.");
+				return true;
+			}
+		}
+		if(inhalt.get(lagerquelle) instanceof Holz)
+		{
+			boolean prüfeObPlatzVerfügbar = true;
+			if(lagerziel < 9)
+			{
+				for(int i = 0; i < 9; i++)
+				{
+					if(inhalt.get(i) != null)
+					{
+						prüfeObPlatzVerfügbar = false;	
+					}
+				}
+			}
+			else if(lagerziel < 18)
+			{
+				for(int i = 9; i < 18; i++)
+				{
+					if(inhalt.get(i) != null)
+					{
+						prüfeObPlatzVerfügbar = false;	
+					}
+				}
+			}
+			else if(lagerziel < 27)
+			{
+				for(int i = 18; i < 27; i++)
+				{
+					if(inhalt.get(i) != null)
+					{
+						prüfeObPlatzVerfügbar = false;	
+					}
+				}
+			}
+			else
+			{
+				
+			}
+			if(prüfeObPlatzVerfügbar == false)
+			{
+				System.out.println("Das Lagerziel ist bereits besetzt");
+			}
+			else
+			{
+				if(lagerziel < 9)
+				{
+					for(int i = 0; i < 9; i++)
+					{
+						inhalt.set(i, inhalt.get(lagerquelle));
+					}
+				}
+				else if(lagerziel < 18)
+				{
+					for(int i = 9; i < 18; i++)
+					{
+						inhalt.set(i, inhalt.get(lagerquelle));
+					}
+				}
+				else if(lagerziel < 27)
+				{
+					for(int i = 18; i < 27; i++)
+					{
+						inhalt.set(i, inhalt.get(lagerquelle));
+					}
+				}
+				else
+				{
+					
+				}
+				if(lagerquelle < 9)
+				{
+					for(int i = 0; i < 9; i++)
+					{
+						inhalt.set(i, null);
+					}
+				}
+				else if(lagerquelle < 18)
+				{
+					for(int i = 9; i < 18; i++)
+					{
+						inhalt.set(i, null);
+					}
+				}
+				else if(lagerquelle < 27)
+				{
+					for(int i = 18; i < 27; i++)
+					{
+						inhalt.set(i, null);
+					}
+				}
+				else
+				{
+					
+				}
+				System.out.println("Das Lagerziel wurde erfolgreich zur Lagerquelle umgelagert.");
+				return true;
+			}
+		}
+		if(inhalt.get(lagerquelle) instanceof Stein)
+		{
+			if(inhalt.get(lagerziel) != null)
+			{
+				System.out.println("Das Lagerziel ist bereits besetzt");
+				return false;
+			}
+			else
+			{
+				if(lagerziel > 8)
+				{
+					System.out.println("Steine können nur unten gelagert werden!");
+				}
+				else
+				{
+					inhalt.set(lagerziel, inhalt.get(lagerquelle));
+					inhalt.set(lagerquelle, null);
+					Start.bilanz.removeGesamtkonto(100);
+					System.out.println("Das Lagerziel wurde erfolgreich zur Lagerquelle umgelagert.");
+					return true;	
+				}
+			}
+		}
+		System.out.println("Irgendwas ist falsch");
+		return false;
+	}
+	
+	public boolean getLagerplatzInhalt(int lagerplatz) {
+		if(inhalt.get(lagerplatz) == null)
+		{
+			System.out.println("Lagerplatz ist leer");
+			return false;
+		}
+		else
+		{
+			System.out.println(inhalt.get(lagerplatz).getInhalt());
+			return true;
+		}
 	}
 	/*
 	 * TODO: Umlagern, prüfen bei EInlagerung, Verschrotten und Auslagern

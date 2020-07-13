@@ -22,4 +22,8 @@ public class Stein extends Produkt {
 	public void setGewicht(String gewicht) {
 		Gewicht = gewicht;
 	}
+	@Override
+	public String getInhalt() {
+		return this.getClass().getSimpleName() + ", " + this.getArt() + ", " + this.getGewicht();
+	}
 }
