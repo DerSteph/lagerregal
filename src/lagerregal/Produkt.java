@@ -15,4 +15,20 @@ public class Produkt {
 	public void setKosten(int kosten) {
 		Kosten = kosten;
 	}
+	public String toString() {
+		return this.getClass().getSimpleName();
+	}
+	public String toSmallString () {
+		switch(this.toString())
+		{
+		case "Papier":
+			return "P";
+		case "Stein":
+			return "S";
+		case "Holz":
+			return "H";
+		default:
+			return "x";
+		}
+	}
 }

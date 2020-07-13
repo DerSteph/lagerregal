@@ -29,7 +29,7 @@ public class Grafik {
 		button1.addActionListener(new java.awt.event.ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Test.test.leseZeile();
+				//Test.test.leseZeile();
 			}
 		});
 		buttons.add(button1);
