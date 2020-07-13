@@ -18,7 +18,7 @@ public class Produkt {
 	public String toString() {
 		return this.getClass().getSimpleName();
 	}
-	public String toSmallString () {
+	public String toShortString () {
 		switch(this.toString())
 		{
 		case "Papier":
@@ -27,6 +27,19 @@ public class Produkt {
 			return "S";
 		case "Holz":
 			return "H";
+		default:
+			return "x";
+		}
+	}
+	public String toShortStringSmall () {
+		switch(this.toString())
+		{
+		case "Papier":
+			return "p";
+		case "Stein":
+			return "s";
+		case "Holz":
+			return "h";
 		default:
 			return "x";
 		}

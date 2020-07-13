@@ -33,7 +33,7 @@ public class Start {
 		lager.printAuftraege();
 		lager.AuftragAbarbeiten(1, 6);
 		lager.getLagerinhalt();
-		lager.zeigeFreiePlaetze(6);
+		//lager.zeigeFreiePlaetze(6);
 		/*lager.AuftragAbarbeiten(lager.GetAuftrag(0), 0);
 		lager.Verschrotten(11);
 		lager.getLagerinhalt();

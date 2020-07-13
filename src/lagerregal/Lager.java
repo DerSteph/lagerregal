@@ -58,7 +58,7 @@ public class Lager {
 			return true;
 		}
 	}
-	
+
 	public Produkt GetAuftrag(int nummer) {
 		return schlange.get(nummer);
 	}
@@ -132,10 +132,10 @@ public class Lager {
 				}
 				if(lagerplatz % 9 >= 3 && lagerplatz % 9 <= 5)
 				{
-						if(inhalt.get(lagerplatz + 3) != null) {
-							System.out.println("Der Lagerplatz wird durch andere Dinge davor blockiert.");
-							return false;
-						}
+					if(inhalt.get(lagerplatz + 3) != null) {
+						System.out.println("Der Lagerplatz wird durch andere Dinge davor blockiert.");
+						return false;
+					}
 				}
 				if(inhalt.get(lagerplatz) == null) {
 					inhalt.set(lagerplatz, (Produkt) auftrag);
@@ -233,10 +233,10 @@ public class Lager {
 					}
 					if(lagerplatz % 9 >= 3 && lagerplatz % 9 <= 5)
 					{
-							if(inhalt.get(lagerplatz + 3) != null) {
-								System.out.println("Der Lagerplatz wird durch andere Dinge davor blockiert.");
-								return false;
-							}
+						if(inhalt.get(lagerplatz + 3) != null) {
+							System.out.println("Der Lagerplatz wird durch andere Dinge davor blockiert.");
+							return false;
+						}
 					}
 					if(inhalt.get(lagerplatz) == null) {
 						inhalt.set(lagerplatz, (Produkt) auftrag);
@@ -263,9 +263,87 @@ public class Lager {
 			}
 			// Zeige alle freien Plätzen
 		}
+		else if(((Produkt) auftrag).getLagerungsart().equals("Auslagerung"))
+		{
+			if(auftrag instanceof Papier)
+			{
+				if(inhalt.get(lagerplatz) instanceof Papier)
+				{
+					if(((Papier) inhalt.get(lagerplatz)).getFarbe().equals(((Papier) auftrag).getFarbe()))
+					{
+						if(((Papier) inhalt.get(lagerplatz)).getGröße().equals(((Papier) auftrag).getGröße()))
+						{
+							inhalt.set(lagerplatz, null);
+							AuftragLöschen(auswahl);
+							Start.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten());
+							System.out.println("Erfolgreich ausgelagert.");
+							return true;
+						}
+					}
+				}
+			}
+			else if(auftrag instanceof Holz)
+			{
+				if(inhalt.get(lagerplatz) instanceof Holz)
+				{
+					if(((Holz) inhalt.get(lagerplatz)).getArt().equals(((Holz) auftrag).getArt()))
+					{
+						if(((Holz) inhalt.get(lagerplatz)).getForm().equals(((Holz) auftrag).getForm()))
+						{
+							if(lagerplatz < 9)
+							{
+								for(int i = 0; i < 9; i++)
+								{
+									inhalt.set(i, null);
+								}
+							}
+							if(lagerplatz < 18)
+							{
+								for(int i = 9; i < 18; i++)
+								{
+									inhalt.set(i, null);
+								}
+							}
+							if(lagerplatz < 27)
+							{
+								for(int i = 18; i < 27; i++)
+								{
+									inhalt.set(i, null);
+								}
+							}
+							AuftragLöschen(auswahl);
+							Start.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten());
+							System.out.println("Erfolgreich ausgelagert.");
+							return true;
+						}
+					}
+				}
+			}
+			else if(auftrag instanceof Stein)
+			{
+				if(inhalt.get(lagerplatz) instanceof Stein)
+				{
+					if(((Stein) inhalt.get(lagerplatz)).getArt().equals(((Stein) auftrag).getArt()))
+					{
+						if(((Stein) inhalt.get(lagerplatz)).getGewicht().equals(((Stein) auftrag).getGewicht()))
+						{
+							inhalt.set(lagerplatz, null);
+							AuftragLöschen(auswahl);
+							Start.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten());
+							System.out.println("Erfolgreich ausgelagert.");
+							return true;
+						}
+					}
+				}
+			}
+			else
+			{
+				System.out.println("Hat keine Funktion");
+			}
+		}
 		else
 		{
-			Start.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten());
+			System.out.print("Hat keine Funktion");
 		}
 		System.out.println("Irgendwas ist kaputt.");
 		return false;
@@ -539,7 +617,7 @@ public class Lager {
 				}
 				else if(checkliste[i] == 2)
 				{
-					System.out.print(" " + inhalt.get(lagerplatz).toSmallString() + " ");
+					System.out.print(" " + inhalt.get(lagerplatz).toShortString() + " ");
 				}
 				else
 				{
@@ -552,6 +630,100 @@ public class Lager {
 			System.out.println("Es wurde kein Lagerelement ausgewählt");
 		}
 	}
+
+	public void zeigePlätzeWoProduktGelagert(Produkt name) {
+		for(int i = 0; i < 27; i++)
+		{
+			if(name instanceof Papier)
+			{
+				if(inhalt.get(i) instanceof Papier)
+				{
+					if(((Papier) inhalt.get(i)).getFarbe().equals(((Papier) name).getFarbe()))
+					{
+						if(((Papier) inhalt.get(i)).getGröße().equals(((Papier) name).getGröße()))
+						{
+							System.out.print(" P ");
+						}
+						else
+						{
+							System.out.print(" p ");
+						}
+					}
+					else
+					{
+						System.out.print(" p ");
+					}
+				}
+				else
+				{
+					inhalt.get(i).toShortStringSmall();
+				}
+			}
+			if(name instanceof Holz)
+			{
+				if(inhalt.get(i) instanceof Holz)
+				{
+					if(((Holz) inhalt.get(i)).getArt().equals(((Holz) name).getArt()))
+					{
+						if(((Holz) inhalt.get(i)).getForm().equals(((Holz) name).getForm()))
+						{
+							if(i < 9)
+							{
+								for(int j = 0; i < 9; i++)
+								{
+									if(i % 3 == 0)
+									{
+										System.out.println();
+									}
+									else
+									{
+										System.out.print(" H ");
+									}
+								}
+							}
+							if(i < 18)
+							{
+								for(int j = 9; i < 18; i++)
+								{
+									if(i % 3 == 0)
+									{
+										System.out.println();
+									}
+									else
+									{
+										System.out.print(" H ");
+									}
+								}
+							}
+							if(i < 27)
+							{
+								for(int j = 18; i < 27; i++)
+								{
+									if(i % 3 == 0)
+									{
+										System.out.println();
+									}
+									else
+									{
+										System.out.print(" H ");
+									}
+								}
+							}
+						}
+						else
+						{
+							System.out.print(" h ");
+						}
+					}
+					else
+					{
+						System.out.print(" h ");
+					}
+				}
+			}
+		}
+	}
+
 	public boolean Umlagern(int lagerquelle, int lagerziel) {
 		Start.bilanz.removeGesamtkonto(100);
 		return true;
