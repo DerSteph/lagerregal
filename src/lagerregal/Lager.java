@@ -20,9 +20,10 @@ public class Lager {
 		}
 		this.Umsatz = 0;
 	}
-	public boolean AuftragHinzufuegen() {
+	public boolean auftragHinzufügen() {
 		if(schlangelaenge == 3)
 		{
+			System.out.println("Die Auftragsliste ist voll");
 			return false;
 		}
 		else
@@ -33,7 +34,7 @@ public class Lager {
 			return true;
 		}
 	}
-	public boolean AuftragEntfernen(int nummer) {
+	public boolean auftragZurückstellen(int nummer) {
 		// Hier muss der Auftrag dann hinten rangestellt werden!!
 		if(schlangelaenge == 0) {
 			return false;
@@ -47,32 +48,33 @@ public class Lager {
 		}
 	}
 	// Löscht den Auftrag vollständig!
-	private boolean AuftragLöschen(int nummer) {
+	private boolean auftragAblehnen(int nummer) {
 		if(schlangelaenge == 0) {
 			return false;
 		}
 		else
 		{
+			Start.bilanz.removeGesamtkonto(getAuftrag(nummer).getKosten(), getAuftrag(nummer), "Abgelehnt");
 			schlange.set(nummer, null);
 			schlangelaenge--;
 			return true;
 		}
 	}
 
-	public Produkt GetAuftrag(int nummer) {
+	public Produkt getAuftrag(int nummer) {
 		return schlange.get(nummer);
 	}
 	public void printAuftraege() {
 		System.out.println("Auftraege zur Abarbeitung:");
 		for(int i = 0; i < 3; i++)
 		{
-			if(GetAuftrag(i) == null)
+			if(getAuftrag(i) == null)
 			{
 				System.out.println("Platz " + i + ": ---");
 			}
 			else
 			{
-				System.out.println("Platz " + i + ": " + GetAuftrag(i).toString());	
+				System.out.println("Platz " + i + ": " + getAuftrag(i).toString());	
 			}
 		}
 	}
@@ -105,13 +107,14 @@ public class Lager {
 				System.out.print(" _ ");
 			}
 		}
+		System.out.println();
 	}
 	public boolean AuftragAbarbeiten(int auswahl, int lagerplatz) {
 		if(auswahl > 3 || auswahl < 0)
 		{
 			System.out.println("Es können nur aktive Aufträge zwischen 0 und 2 gewählt werden!");
 		}
-		Produkt auftrag = (Produkt) GetAuftrag(auswahl);
+		Produkt auftrag = (Produkt) getAuftrag(auswahl);
 		if(lagerplatz > 26 || lagerplatz < 0)
 		{
 			System.out.println("Der Lagerplatz ist außerhalb des möglichen");
@@ -139,8 +142,8 @@ public class Lager {
 				}
 				if(inhalt.get(lagerplatz) == null) {
 					inhalt.set(lagerplatz, (Produkt) auftrag);
-					AuftragLöschen(auswahl);
-					Start.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten());
+					auftragAblehnen(auswahl);
+					Start.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten(), auftrag);
 					System.out.println("Erfolgreich eingelagert.");
 					return true;
 				}
@@ -164,8 +167,8 @@ public class Lager {
 						for(int i = 0; i < 9; i++) {
 							inhalt.set(i, (Produkt) auftrag);
 						}
-						AuftragLöschen(auswahl);
-						Start.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten());
+						auftragAblehnen(auswahl);
+						Start.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten(), auftrag);
 						System.out.println("Erfolgreich eingelagert.");
 						return true;
 					}
@@ -186,8 +189,8 @@ public class Lager {
 						for(int i = 9; i < 18; i++) {
 							inhalt.set(i, (Produkt) auftrag);
 						}
-						AuftragLöschen(auswahl);
-						Start.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten());
+						auftragAblehnen(auswahl);
+						Start.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten(), auftrag);
 						System.out.println("Erfolgreich eingelagert.");
 						return true;
 					}
@@ -208,8 +211,8 @@ public class Lager {
 						for(int i = 19; i < 27; i++) {
 							inhalt.set(i, (Produkt) auftrag);
 						}
-						AuftragLöschen(auswahl);
-						Start.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten());
+						auftragAblehnen(auswahl);
+						Start.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten(), auftrag);
 						System.out.println("Erfolgreich eingelagert.");
 						return true;
 					}
@@ -240,8 +243,8 @@ public class Lager {
 					}
 					if(inhalt.get(lagerplatz) == null) {
 						inhalt.set(lagerplatz, (Produkt) auftrag);
-						AuftragLöschen(auswahl);
-						Start.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten());
+						auftragAblehnen(auswahl);
+						Start.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten(), auftrag);
 						System.out.println("Erfolgreich eingelagert.");
 						return true;
 					}
@@ -274,8 +277,8 @@ public class Lager {
 						if(((Papier) inhalt.get(lagerplatz)).getGröße().equals(((Papier) auftrag).getGröße()))
 						{
 							inhalt.set(lagerplatz, null);
-							AuftragLöschen(auswahl);
-							Start.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten());
+							auftragAblehnen(auswahl);
+							Start.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten(), auftrag);
 							System.out.println("Erfolgreich ausgelagert.");
 							return true;
 						}
@@ -315,8 +318,8 @@ public class Lager {
 							{
 								
 							}
-							AuftragLöschen(auswahl);
-							Start.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten());
+							auftragAblehnen(auswahl);
+							Start.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten(), auftrag);
 							System.out.println("Erfolgreich ausgelagert.");
 							return true;
 						}
@@ -332,8 +335,8 @@ public class Lager {
 						if(((Stein) inhalt.get(lagerplatz)).getGewicht().equals(((Stein) auftrag).getGewicht()))
 						{
 							inhalt.set(lagerplatz, null);
-							AuftragLöschen(auswahl);
-							Start.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten());
+							auftragAblehnen(auswahl);
+							Start.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten(), auftrag);
 							System.out.println("Erfolgreich ausgelagert.");
 							return true;
 						}
@@ -355,6 +358,7 @@ public class Lager {
 
 	public boolean Verschrotten(int lagerplatz) {
 		if(inhalt.get(lagerplatz) != null) {
+			Produkt verschrottung = inhalt.get(lagerplatz);
 			if(inhalt.get(lagerplatz) instanceof Papier || inhalt.get(lagerplatz) instanceof Stein) {
 				inhalt.set(lagerplatz, null);
 			}
@@ -371,7 +375,7 @@ public class Lager {
 					}
 				}
 				else if(lagerplatz < 27) {
-					for(int i = 19; i < 27; i++) {
+					for(int i = 18; i < 27; i++) {
 						inhalt.set(i, null);
 					}
 				}
@@ -380,7 +384,7 @@ public class Lager {
 					
 				}
 			}
-			Start.bilanz.removeGesamtkonto(500);
+			Start.bilanz.removeGesamtkonto(500, verschrottung, "Verschrottung");
 			System.out.println("Erfolgreich verschrottet");
 			return true;
 		}
@@ -633,6 +637,7 @@ public class Lager {
 					System.out.print(" x ");
 				}
 			}
+			System.out.println();
 		}
 		else
 		{
@@ -813,7 +818,7 @@ public class Lager {
 			{
 				inhalt.set(lagerziel, inhalt.get(lagerquelle));
 				inhalt.set(lagerquelle, null);
-				Start.bilanz.removeGesamtkonto(100);
+				Start.bilanz.removeGesamtkonto(100, inhalt.get(lagerziel), "Umlagern");
 				System.out.println("Das Lagerziel wurde erfolgreich zur Lagerquelle umgelagert.");
 				return true;
 			}
@@ -932,7 +937,7 @@ public class Lager {
 				{
 					inhalt.set(lagerziel, inhalt.get(lagerquelle));
 					inhalt.set(lagerquelle, null);
-					Start.bilanz.removeGesamtkonto(100);
+					Start.bilanz.removeGesamtkonto(100, inhalt.get(lagerziel), "Umlagern");
 					System.out.println("Das Lagerziel wurde erfolgreich zur Lagerquelle umgelagert.");
 					return true;	
 				}
@@ -942,16 +947,16 @@ public class Lager {
 		return false;
 	}
 	
-	public boolean getLagerplatzInhalt(int lagerplatz) {
+	public String getLagerplatzInhalt(int lagerplatz) {
 		if(inhalt.get(lagerplatz) == null)
 		{
-			System.out.println("Lagerplatz ist leer");
-			return false;
+			//System.out.println("Lagerplatz ist leer");
+			return null;
 		}
 		else
 		{
-			System.out.println(inhalt.get(lagerplatz).getInhalt());
-			return true;
+			//System.out.println(inhalt.get(lagerplatz).getInhalt());
+			return inhalt.get(lagerplatz).getInhalt();
 		}
 	}
 	/*

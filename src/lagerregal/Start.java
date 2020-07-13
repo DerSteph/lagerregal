@@ -15,42 +15,6 @@ public class Start {
 		}
 		lager = new Lager();
 		bilanz = new Bilanz();
-		lager.AuftragHinzufuegen();
-		lager.AuftragHinzufuegen();
-		lager.AuftragHinzufuegen();
-		lager.printAuftraege();
-		lager.AuftragAbarbeiten(0, 7);
-		lager.AuftragAbarbeiten(1, 8);
-		lager.AuftragAbarbeiten(2, 11);
-		lager.AuftragHinzufuegen();
-		lager.AuftragHinzufuegen();
-		lager.AuftragHinzufuegen();
-		lager.AuftragEntfernen(0);
-		lager.AuftragEntfernen(1);
-		lager.AuftragEntfernen(2);
-		lager.AuftragHinzufuegen();
-		lager.AuftragHinzufuegen();
-		lager.AuftragHinzufuegen();
-		lager.AuftragEntfernen(0);
-		lager.AuftragEntfernen(1);
-		lager.AuftragEntfernen(2);
-		lager.AuftragHinzufuegen();
-		lager.AuftragHinzufuegen();
-		lager.printAuftraege();
-		lager.zeigePlätzeWoProduktGelagert(lager.GetAuftrag(1));
-		lager.AuftragAbarbeiten(1, 8);
-		lager.getLagerinhalt();
-		lager.Umlagern(7, 8);
-		lager.Umlagern(10, 25);
-		lager.getLagerinhalt();
-		//lager.getLagerinhalt();
-		System.out.println();
-		//lager.getLagerplatzInhalt(6);
-		//lager.zeigeFreiePlaetze(6);
-		/*lager.AuftragAbarbeiten(lager.GetAuftrag(0), 0);
-		lager.Verschrotten(11);
-		lager.getLagerinhalt();
-		System.out.println(bilanz.getGesamtkonto());*/
-		//Grafik test = new Grafik();
+		Grafik test = new Grafik();
 	}
 }
