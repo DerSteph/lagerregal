@@ -1,6 +1,6 @@
 package lagerregal;
 
-public class Test {
+public class Start {
 	public static int zaehler;
 	public static CSV test;
 	public static Lager lager;
@@ -22,7 +22,6 @@ public class Test {
 		lager.AuftragAbarbeiten(0, 7);
 		lager.AuftragAbarbeiten(1, 8);
 		lager.AuftragAbarbeiten(2, 11);
-		lager.printAuftraege();
 		lager.AuftragHinzufuegen();
 		lager.AuftragHinzufuegen();
 		lager.AuftragHinzufuegen();

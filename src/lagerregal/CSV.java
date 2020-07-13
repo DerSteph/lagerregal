@@ -38,7 +38,7 @@ public class CSV {
     	    	    	switch(auswahl)
     	    	    	{
     	    	    	case 0:
-    	    	    		Test.zaehler++;
+    	    	    		Start.zaehler++;
     	    	    		break;
     	    	    	case 1:
     	    	    		Auftragsart = text;
