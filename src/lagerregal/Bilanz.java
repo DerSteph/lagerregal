@@ -5,6 +5,8 @@ import java.util.LinkedList;
 
 public class Bilanz {
 	private int gesamtkonto = 0;
+	private int gesamtplus = 0;
+	private int gesamtminus = 0;
 	private LinkedList<Bilanzobjekt> geldverlauf;
 	public Bilanz() {
 		geldverlauf = new LinkedList<Bilanzobjekt>();
@@ -12,16 +14,25 @@ public class Bilanz {
 	public int getGesamtkonto() {
 		return gesamtkonto;
 	}
+	public int getGesamtplus() {
+		return gesamtplus;
+	}
+	public int getGesamtminus() {
+		return gesamtminus;
+	}
 	public void addGesamtkonto(int geld, Produkt name) {
 		this.gesamtkonto = this.gesamtkonto + geld;
+		this.gesamtplus = this.gesamtplus + geld;
 		geldverlauf.add(new Bilanzobjekt(name));
 	}
 	public void removeGesamtkonto(int geld, Produkt name) {
 		this.gesamtkonto = this.gesamtkonto - geld;
+		this.gesamtminus = this.gesamtminus - geld;
 		geldverlauf.add(new Bilanzobjekt(name));
 	}
 	public void removeGesamtkonto(int geld, Produkt name, String grund) {
 		this.gesamtkonto = this.gesamtkonto - geld;
+		this.gesamtminus = this.gesamtminus - geld;
 		geldverlauf.add(new Bilanzobjekt(name, grund));
 	}
 	public void getGesamtverlauf()

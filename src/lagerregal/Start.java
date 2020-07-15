@@ -7,6 +7,7 @@ public class Start {
 	public static CSV test;
 	public static Lager lager;
 	public static Bilanz bilanz;
+	public static MainWindow window;
 	public static void main(String[] args) {
 		try
 		{
@@ -17,6 +18,6 @@ public class Start {
 		}
 		lager = new Lager();
 		bilanz = new Bilanz();
-		MainWindow test = new MainWindow();
+		window = new MainWindow();
 	}
 }
