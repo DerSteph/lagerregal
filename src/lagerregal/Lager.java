@@ -20,7 +20,7 @@ public class Lager {
 		}
 		this.Umsatz = 0;
 	}
-	public boolean auftragHinzufügen() {
+	public boolean auftragHinzufuegen() {
 		if(schlangelaenge == 3)
 		{
 			System.out.println("Die Auftragsliste ist voll");
@@ -34,7 +34,7 @@ public class Lager {
 			return true;
 		}
 	}
-	public boolean auftragZurückstellen(int nummer) {
+	public boolean auftragZurueckstellen(int nummer) {
 		// Hier muss der Auftrag dann hinten rangestellt werden!!
 		if(schlangelaenge == 0) {
 			return false;
@@ -47,7 +47,7 @@ public class Lager {
 			return true;
 		}
 	}
-	// Löscht den Auftrag vollständig!
+	// Lï¿½scht den Auftrag vollstï¿½ndig!
 	private boolean auftragAblehnen(int nummer) {
 		if(schlangelaenge == 0) {
 			return false;
@@ -112,12 +112,12 @@ public class Lager {
 	public boolean AuftragAbarbeiten(int auswahl, int lagerplatz) {
 		if(auswahl > 3 || auswahl < 0)
 		{
-			System.out.println("Es können nur aktive Aufträge zwischen 0 und 2 gewählt werden!");
+			System.out.println("Es kï¿½nnen nur aktive Auftrï¿½ge zwischen 0 und 2 gewï¿½hlt werden!");
 		}
 		Produkt auftrag = (Produkt) getAuftrag(auswahl);
 		if(lagerplatz > 26 || lagerplatz < 0)
 		{
-			System.out.println("Der Lagerplatz ist außerhalb des möglichen");
+			System.out.println("Der Lagerplatz ist auï¿½erhalb des mï¿½glichen");
 			return false;
 		}
 		if(((Produkt) auftrag).getLagerungsart().equals("Einlagerung"))
@@ -155,15 +155,15 @@ public class Lager {
 			}
 			else if(auftrag instanceof Holz)
 			{
-				boolean prüfeObPlatzVerfügbar = true;
+				boolean pruefeObPlatzVerfuegbar = true;
 				if(lagerplatz < 9) {
 					for(int i = 0; i < 9; i++) {
 						if(inhalt.get(i) != null)
 						{
-							prüfeObPlatzVerfügbar = false;
+							pruefeObPlatzVerfuegbar = false;
 						}
 					}
-					if(prüfeObPlatzVerfügbar == true) {
+					if(pruefeObPlatzVerfuegbar == true) {
 						for(int i = 0; i < 9; i++) {
 							inhalt.set(i, (Produkt) auftrag);
 						}
@@ -182,10 +182,10 @@ public class Lager {
 					for(int i = 9; i < 18; i++) {
 						if(inhalt.get(i) != null)
 						{
-							prüfeObPlatzVerfügbar = false;
+							pruefeObPlatzVerfuegbar = false;
 						}
 					}
-					if(prüfeObPlatzVerfügbar == true) {
+					if(pruefeObPlatzVerfuegbar == true) {
 						for(int i = 9; i < 18; i++) {
 							inhalt.set(i, (Produkt) auftrag);
 						}
@@ -204,10 +204,10 @@ public class Lager {
 					for(int i = 19; i < 27; i++) {
 						if(inhalt.get(i) != null)
 						{
-							prüfeObPlatzVerfügbar = false;
+							pruefeObPlatzVerfuegbar = false;
 						}
 					}
-					if(prüfeObPlatzVerfügbar == true) {
+					if(pruefeObPlatzVerfuegbar == true) {
 						for(int i = 19; i < 27; i++) {
 							inhalt.set(i, (Produkt) auftrag);
 						}
@@ -256,7 +256,7 @@ public class Lager {
 				}
 				else
 				{
-					System.out.println("Steine können nur unten gelagert werden!");
+					System.out.println("Steine kï¿½nnen nur unten gelagert werden!");
 					return false;
 				}
 			}
@@ -264,7 +264,7 @@ public class Lager {
 				System.out.println("Entspricht keiner Lagersache.");
 				return false;
 			}
-			// Zeige alle freien Plätzen
+			// Zeige alle freien Plï¿½tzen
 		}
 		else if(((Produkt) auftrag).getLagerungsart().equals("Auslagerung"))
 		{
@@ -274,7 +274,7 @@ public class Lager {
 				{
 					if(((Papier) inhalt.get(lagerplatz)).getFarbe().equals(((Papier) auftrag).getFarbe()))
 					{
-						if(((Papier) inhalt.get(lagerplatz)).getGröße().equals(((Papier) auftrag).getGröße()))
+						if(((Papier) inhalt.get(lagerplatz)).getGroesse().equals(((Papier) auftrag).getGroesse()))
 						{
 							inhalt.set(lagerplatz, null);
 							auftragAblehnen(auswahl);
@@ -394,7 +394,7 @@ public class Lager {
 
 	public void zeigeFreiePlaetze(Produkt name)
 	{
-		// 0 = belegt, 1 = frei, 2 = ausgewählter gegenstand
+		// 0 = belegt, 1 = frei, 2 = ausgewï¿½hlter gegenstand
 		int checkliste[] = new int[27];
 		for(int i = 0; i < checkliste.length; i++)
 		{
@@ -404,7 +404,7 @@ public class Lager {
 		{
 			if(name instanceof Papier)
 			{
-				// Gucken, welche Plätze überhaupt frei sind!
+				// Gucken, welche Plï¿½tze ï¿½berhaupt frei sind!
 				for(int i = 26; i > 0; i--)
 				{
 					if(checkliste[i] == 0)
@@ -469,15 +469,15 @@ public class Lager {
 			{
 				for(int j = 0; j < 3; j++)
 				{
-					boolean prüfeObPlatzVerfügbar = true;
+					boolean pruefeObPlatzVerfuegbar = true;
 					for(int i = 0; i < 9; i++)
 					{
 						if(inhalt.get(i+j*9) != null)
 						{
-							prüfeObPlatzVerfügbar = false;
+							pruefeObPlatzVerfuegbar = false;
 						}
 					}
-					if(prüfeObPlatzVerfügbar == false)
+					if(pruefeObPlatzVerfuegbar == false)
 					{
 						for(int i = 0; i < 9; i++)
 						{
@@ -508,11 +508,11 @@ public class Lager {
 		}
 		else
 		{
-			System.out.println("Es wurde kein Lagerelement ausgewählt");
+			System.out.println("Es wurde kein Lagerelement ausgewï¿½hlt");
 		}
 	}
 	public void zeigeFreiePlaetze(int lagerplatz) {
-		// 0 = belegt, 1 = frei, 2 = ausgewählter gegenstand
+		// 0 = belegt, 1 = frei, 2 = ausgewï¿½hlter gegenstand
 		int checkliste[] = new int[27];
 		for(int i = 0; i < checkliste.length; i++)
 		{
@@ -522,7 +522,7 @@ public class Lager {
 		{
 			if(inhalt.get(lagerplatz) instanceof Papier)
 			{
-				// Gucken, welche Plätze überhaupt frei sind!
+				// Gucken, welche Plï¿½tze ï¿½berhaupt frei sind!
 				for(int i = 26; i > 0; i--)
 				{
 					if(checkliste[i] == 0)
@@ -597,15 +597,15 @@ public class Lager {
 			{
 				for(int j = 0; j < 3; j++)
 				{
-					boolean prüfeObPlatzVerfügbar = true;
+					boolean pruefeObPlatzVerfuegbar = true;
 					for(int i = 0; i < 9; i++)
 					{
 						if(inhalt.get(i+j*9) != null)
 						{
-							prüfeObPlatzVerfügbar = false;
+							pruefeObPlatzVerfuegbar = false;
 						}
 					}
-					if(prüfeObPlatzVerfügbar == false)
+					if(pruefeObPlatzVerfuegbar == false)
 					{
 						for(int i = 0; i < 9; i++)
 						{
@@ -641,11 +641,11 @@ public class Lager {
 		}
 		else
 		{
-			System.out.println("Es wurde kein Lagerelement ausgewählt");
+			System.out.println("Es wurde kein Lagerelement ausgewï¿½hlt");
 		}
 	}
 
-	public void zeigePlätzeWoProduktGelagert(Produkt name) {
+	public void zeigePlÃ¤tzeWoProduktGelagert(Produkt name) {
 		for(int i = 0; i < 27; i++)
 		{
 			if(i % 9 == 0) 
@@ -662,7 +662,7 @@ public class Lager {
 				{
 					if(((Papier) inhalt.get(i)).getFarbe().equals(((Papier) name).getFarbe()))
 					{
-						if(((Papier) inhalt.get(i)).getGröße().equals(((Papier) name).getGröße()))
+						if(((Papier) inhalt.get(i)).getGroesse().equals(((Papier) name).getGroesse()))
 						{
 							System.out.print(" P ");
 						}
@@ -825,14 +825,14 @@ public class Lager {
 		}
 		if(inhalt.get(lagerquelle) instanceof Holz)
 		{
-			boolean prüfeObPlatzVerfügbar = true;
+			boolean pruefeObPlatzVerfuegbar = true;
 			if(lagerziel < 9)
 			{
 				for(int i = 0; i < 9; i++)
 				{
 					if(inhalt.get(i) != null)
 					{
-						prüfeObPlatzVerfügbar = false;	
+						pruefeObPlatzVerfuegbar = false;
 					}
 				}
 			}
@@ -842,7 +842,7 @@ public class Lager {
 				{
 					if(inhalt.get(i) != null)
 					{
-						prüfeObPlatzVerfügbar = false;	
+						pruefeObPlatzVerfuegbar = false;
 					}
 				}
 			}
@@ -852,7 +852,7 @@ public class Lager {
 				{
 					if(inhalt.get(i) != null)
 					{
-						prüfeObPlatzVerfügbar = false;	
+						pruefeObPlatzVerfuegbar = false;
 					}
 				}
 			}
@@ -860,7 +860,7 @@ public class Lager {
 			{
 				
 			}
-			if(prüfeObPlatzVerfügbar == false)
+			if(pruefeObPlatzVerfuegbar == false)
 			{
 				System.out.println("Das Lagerziel ist bereits besetzt");
 			}
@@ -931,7 +931,7 @@ public class Lager {
 			{
 				if(lagerziel > 8)
 				{
-					System.out.println("Steine können nur unten gelagert werden!");
+					System.out.println("Steine kï¿½nnen nur unten gelagert werden!");
 				}
 				else
 				{
@@ -960,7 +960,7 @@ public class Lager {
 		}
 	}
 	/*
-	 * TODO: Umlagern, prüfen bei EInlagerung, Verschrotten und Auslagern
+	 * TODO: Umlagern, prï¿½fen bei EInlagerung, Verschrotten und Auslagern
 	 * Viele If Anfrage durch Switch ersetzen
 	 * 
 	 * 

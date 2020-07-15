@@ -1,5 +1,7 @@
 package lagerregal;
 
+import display.MainWindow;
+
 public class Start {
 	public static int zaehler;
 	public static CSV test;
@@ -15,6 +17,6 @@ public class Start {
 		}
 		lager = new Lager();
 		bilanz = new Bilanz();
-		Grafik test = new Grafik();
+		MainWindow test = new MainWindow();
 	}
 }

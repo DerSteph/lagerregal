@@ -2,15 +2,15 @@ package lagerregal;
 
 public class Papier extends Produkt{
 	private String Farbe;
-	private String Größe;
+	private String Groesse;
 	private int Kosten;
-	public Papier(String Lagerungsart, String Farbe, String Größe, int Kosten)
+	public Papier(String Lagerungsart, String Farbe, String Groesse, int Kosten)
 	{
 		super();
 		this.setLagerungsart(Lagerungsart);
 		this.setKosten(Kosten);
 		this.Farbe = Farbe;
-		this.Größe = Größe;
+		this.Groesse = Groesse;
 	}
 	public String getFarbe() {
 		return Farbe;
@@ -18,11 +18,11 @@ public class Papier extends Produkt{
 	public void setFarbe(String farbe) {
 		Farbe = farbe;
 	}
-	public String getGröße() {
-		return Größe;
+	public String getGroesse() {
+		return Groesse;
 	}
-	public void setGröße(String größe) {
-		Größe = größe;
+	public void setGroesse(String groesse) {
+		Groesse = groesse;
 	}
 	public int getKosten() {
 		return Kosten;
@@ -32,6 +32,6 @@ public class Papier extends Produkt{
 	}
 	@Override
 	public String getInhalt() {
-		return this.getClass().getSimpleName() + ", " + this.getFarbe() + ", " + this.getGröße();
+		return this.getClass().getSimpleName() + ", " + this.getFarbe() + ", " + this.getGroesse();
 	}
 }
