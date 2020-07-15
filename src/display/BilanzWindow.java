@@ -1,15 +1,19 @@
 package display;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
+import lagerregal.Bilanzobjekt;
 import lagerregal.Start;
 
 import java.awt.*;
+import java.time.format.DateTimeFormatter;
+import java.util.Vector;
 
 public class BilanzWindow {
 	public BilanzWindow() {
 		JFrame bilanzfenster = new JFrame();
-		bilanzfenster.setSize(400,400);
+		bilanzfenster.setSize(600,600);
 		bilanzfenster.setLocationRelativeTo(null);
 		bilanzfenster.setTitle("Bilanz");
 		
@@ -25,19 +29,71 @@ public class BilanzWindow {
 		oben.add(gesamtminus);
 		
 		JPanel unten = new JPanel();
-		JTable verlauf = new JTable();
+		unten.setLayout(new GridLayout(1,1));
+		
+		// Die Column-Titles
+		String[] title = new String[]{
+				"Grund", "Produkt", "Kosten", "Datum"
+		};
+		
+		final DefaultTableModel model = new DefaultTableModel(title, 0);
+		
+		JTable verlauf = new JTable(model);
 		Container content = new Container();
 		
 		content.add(new JScrollPane());
 		content.setLayout(new BorderLayout());
 		content.add(verlauf.getTableHeader(), BorderLayout.PAGE_START);
 		content.add(verlauf, BorderLayout.CENTER);
+		unten.add(content);
+		
+		if(Start.bilanz.getGeldverlauf().isEmpty())
+		{
+			for(int i = 0; i < 5; i++)
+			{
+				Vector<String> data = new Vector<String>(4);
+				data.add("");
+				data.add("");
+				data.add("");
+				data.add("");
+				model.addRow(data);
+			}
+		}
+		else
+		{
+			int count = 0;
+			for(Bilanzobjekt e: Start.bilanz.getGeldverlauf())
+			{
+				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+
+				Vector<String> data = new Vector<String>(4);
+				data.add(e.getGrund());
+				data.add(e.getProdukt().getClass().getSimpleName());
+				data.add(Integer.toString(e.getKosten()));
+				data.add(dtf.format(e.getZeit()));
+				model.addRow(data);
+				count++;
+			}
+			if(count < 5)
+			{
+				for(int i = count; i < 5; i++)
+				{
+					Vector<String> data = new Vector<String>(4);
+					data.add("");
+					data.add("");
+					data.add("");
+					data.add("");
+					model.addRow(data);	
+				}
+			}
+		}
 		
 		JPanel anzeige = new JPanel();
 		anzeige.setLayout(new GridLayout(2,1));
 		anzeige.add(oben);
 		anzeige.add(unten);
 		bilanzfenster.getContentPane().add(anzeige);
+		bilanzfenster.pack();
 		bilanzfenster.setVisible(true);
 	}
 }

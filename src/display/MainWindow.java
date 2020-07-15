@@ -17,7 +17,7 @@ public class MainWindow {
 	public JLabel kontostand = new JLabel();
 	public MainWindow() {
 		JFrame fenster = new JFrame();
-		fenster.setSize(600,600);
+		fenster.setSize(800, 600);
 		fenster.setLocationRelativeTo(null);
 		fenster.setTitle("Lagerregal - das Spiel");
 		fenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -40,6 +40,9 @@ public class MainWindow {
 		
 		JPanel buttons = new JPanel();
 		buttons.setLayout(new java.awt.GridLayout(4,1));
+		JPanel actionbuttons = new JPanel();
+		actionbuttons.setLayout(new java.awt.GridLayout(1,3));
+
 		JButton neuerauftrag = new JButton("Neuer Auftrag");
 		for(int k = 0; k < 3; k++)
 		{
@@ -73,7 +76,12 @@ public class MainWindow {
 			}
 		});
 		
-		buttons.add(neuerauftrag);
+		JButton umlagern = new JButton("Umlagern");
+		JButton verschrotten = new JButton("Verschrotten");
+		actionbuttons.add(neuerauftrag);
+		actionbuttons.add(umlagern);
+		actionbuttons.add(verschrotten);
+		buttons.add(actionbuttons);
 		for(int i = 0; i < 3; i++)
 		{
 			buttons.add(auftrag[i]);

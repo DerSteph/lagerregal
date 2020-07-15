@@ -35,6 +35,9 @@ public class Bilanz {
 		this.gesamtminus = this.gesamtminus - geld;
 		geldverlauf.add(new Bilanzobjekt(name, grund));
 	}
+	public LinkedList<Bilanzobjekt> getGeldverlauf() {
+		return geldverlauf;
+	}
 	public void getGesamtverlauf()
 	{
 		for(Bilanzobjekt e: geldverlauf)
