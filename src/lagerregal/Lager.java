@@ -6,7 +6,7 @@ public class Lager {
 	private double Umsatz;
 	private ArrayList<Produkt> inhalt;
 	private ArrayList<Produkt> schlange;
-	private int schlangelaenge = 0;
+	private int listlaenge = 0;
 	public Lager() {
 		this.inhalt = new ArrayList<Produkt>();
 		for(int i = 0; i < 27; i++) {
@@ -21,54 +21,67 @@ public class Lager {
 		this.Umsatz = 0;
 	}
 	public boolean auftragHinzufuegen() {
-		if(schlangelaenge == 3)
+		if(listlaenge == 3)
 		{
 			System.out.println("Die Auftragsliste ist voll");
 			return false;
 		}
 		else
 		{
-			schlange.set(schlangelaenge, Start.test.firstSchlange());
-			Start.test.removeSchlange();
-			schlangelaenge++;
+			if(getAuftrag(0) == null)
+			{
+				schlange.set(0, Start.datei.firstSchlange());
+			}
+			else if(getAuftrag(1) == null) {
+				schlange.set(1, Start.datei.firstSchlange());
+			}
+			else if(getAuftrag(2) == null) {
+				schlange.set(2, Start.datei.firstSchlange());
+			}
+			else
+			{
+				schlange.set(listlaenge, Start.datei.firstSchlange());
+			}
+			Start.datei.removeSchlange();
+			listlaenge++;
 			return true;
 		}
 	}
 	public boolean auftragZurueckstellen(int nummer) {
 		// Hier muss der Auftrag dann hinten rangestellt werden!!
-		if(schlangelaenge == 0) {
+		if(listlaenge == 0) {
 			return false;
 		}
 		else
 		{
-			Start.test.addSchlange(schlange.get(nummer));
+			Start.datei.addSchlange(schlange.get(nummer));
 			schlange.set(nummer, null);
-			schlangelaenge--;
+			listlaenge--;
 			return true;
 		}
 	}
 	// Lï¿½scht den Auftrag vollstï¿½ndig!
 	public boolean auftragAblehnen(int nummer) {
-		if(schlangelaenge == 0) {
+		if(listlaenge == 0) {
 			return false;
 		}
 		else
 		{
 			Start.bilanz.removeGesamtkonto(getAuftrag(nummer).getKosten(), getAuftrag(nummer), "Abgelehnt");
 			schlange.set(nummer, null);
-			schlangelaenge--;
+			listlaenge--;
 			return true;
 		}
 	}
 	// Löscht den Auftrag für das Abschliessen
 	private boolean auftragLoeschen(int nummer) {
-		if(schlangelaenge == 0) {
+		if(listlaenge == 0) {
 			return false;
 		}
 		else
 		{
 			schlange.set(nummer, null);
-			schlangelaenge--;
+			listlaenge--;
 			return true;
 		}
 	}
@@ -657,7 +670,7 @@ public class Lager {
 		}
 	}
 
-	public void zeigePlÃ¤tzeWoProduktGelagert(Produkt name) {
+	public void zeigePlaetzeWoProduktGelagert(Produkt name) {
 		for(int i = 0; i < 27; i++)
 		{
 			if(i % 9 == 0) 

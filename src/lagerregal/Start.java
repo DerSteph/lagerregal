@@ -4,14 +4,14 @@ import display.MainWindow;
 
 public class Start {
 	public static int zaehler;
-	public static CSV test;
+	public static CSV datei;
 	public static Lager lager;
 	public static Bilanz bilanz;
 	public static MainWindow window;
 	public static void main(String[] args) {
 		try
 		{
-			test = new CSV("C:\\auftrag.csv");
+			datei = new CSV("C:\\auftrag.csv");
 		}
 		catch(Exception e) {
 			System.out.println("Datei kann nicht geladen werden.");

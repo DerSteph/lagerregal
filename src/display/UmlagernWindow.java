@@ -14,6 +14,7 @@ import lagerregal.Start;
 
 public class UmlagernWindow {
 	private String modus = "Lagerquelle";
+	private int lagerquelle = 0;
 	private JLabel textbeschreibung = new JLabel();
 	public UmlagernWindow() {
 		JFrame fenster = new JFrame();
@@ -49,6 +50,18 @@ public class UmlagernWindow {
 					if(modus == "Lagerquelle")
 					{
 						modus = "Lagerziel";
+						if(lagerauswahl.getText().equals("Lager 1"))
+						{
+							lagerquelle = Start.window.getRightLagerplatz(temp);
+						}
+						else if(lagerauswahl.getText().equals("Lager 2"))
+						{
+							lagerquelle = Start.window.getRightLagerplatz(temp+9);
+						}
+						else
+						{
+							lagerquelle = Start.window.getRightLagerplatz(temp+18);
+						}
 						JButton button = (JButton)e.getSource();
 						button.setEnabled(false);
 						fenster.setTitle("Wähle das Ziel");
@@ -67,7 +80,29 @@ public class UmlagernWindow {
 					}
 					else
 					{
-						
+						int lagerziel = 0;
+						if(lagerauswahl.getText().equals("Lager 1"))
+						{
+							lagerziel = Start.window.getRightLagerplatz(temp);
+						}
+						else if(lagerauswahl.getText().equals("Lager 2"))
+						{
+							lagerziel = Start.window.getRightLagerplatz(temp+9);
+						}
+						else
+						{
+							lagerziel = Start.window.getRightLagerplatz(temp+18);
+						}
+						if(Start.lager.Umlagern(lagerquelle, lagerziel))
+						{
+							Start.window.UpdateMainLagerraum();
+							fenster.dispatchEvent(new WindowEvent(fenster, WindowEvent.WINDOW_CLOSING));
+							Start.window.kontostand.setText("Dein Kontostand: " + Start.bilanz.getGesamtkonto() + "€");
+						}
+						else
+						{
+							JOptionPane.showMessageDialog(null, "Das Lagerziel ist bereits besetzt.");
+						}
 					}
 				}
 			});

@@ -1,6 +1,7 @@
 package display;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import lagerregal.Bilanzobjekt;
@@ -69,7 +70,14 @@ public class BilanzWindow {
 				Vector<String> data = new Vector<String>(4);
 				data.add(e.getGrund());
 				data.add(e.getProdukt().getClass().getSimpleName());
-				data.add(Integer.toString(e.getKosten()));
+				if(e.getGrund() == "Umlagern" || e.getGrund() == "Verschrotten")
+				{
+					data.add("-"+Integer.toString(e.getKosten()));
+				}
+				else
+				{
+					data.add(Integer.toString(e.getKosten()));
+				}
 				data.add(dtf.format(e.getZeit()));
 				model.addRow(data);
 				count++;
@@ -87,6 +95,13 @@ public class BilanzWindow {
 				}
 			}
 		}
+		
+		//verlauf.setDefaultRenderer(Object.class, new ColorTableCellRenderer());
+		ColorTableCellRenderer ctr = new ColorTableCellRenderer();
+		verlauf.getColumnModel().getColumn(0).setCellRenderer(ctr);
+		verlauf.getColumnModel().getColumn(1).setCellRenderer(ctr);
+		verlauf.getColumnModel().getColumn(2).setCellRenderer(ctr);
+		verlauf.getColumnModel().getColumn(3).setCellRenderer(ctr);
 		
 		JPanel anzeige = new JPanel();
 		anzeige.setLayout(new GridLayout(2,1));
