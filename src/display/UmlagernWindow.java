@@ -31,7 +31,7 @@ public class UmlagernWindow {
 		{
 			final int temp = i;
 			label[i] = new JButton();
-			String text = Start.lager.getLagerplatzInhalt(i);
+			String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i));
 			if(text == null) {
 				text = "leer";
 				label[i].setBorderPainted(false);

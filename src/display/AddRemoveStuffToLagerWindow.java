@@ -12,8 +12,8 @@ import javax.swing.JPanel;
 
 import lagerregal.Start;
 
-public class AddStuffToLagerWindow {
-	public AddStuffToLagerWindow(int num) {
+public class AddRemoveStuffToLagerWindow {
+	public AddRemoveStuffToLagerWindow(int num) {
 		JFrame auftraghinzufuegen = new JFrame();
 		auftraghinzufuegen.setSize(400,400);
 		auftraghinzufuegen.setLocationRelativeTo(null);
@@ -28,10 +28,15 @@ public class AddStuffToLagerWindow {
 		{
 			final int temp = i;
 			label[i] = new JButton();
-			String text = Start.lager.getLagerplatzInhalt(i);
+			String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i));
 			if(text == null) {
 				text = "leer";
 			}
+			else
+			{
+				label[i].setEnabled(false);
+			}
+			label[i].setText(text);
 			label[i].setText(text);
 			label[i].addActionListener(new java.awt.event.ActionListener() {
 				@Override
@@ -41,7 +46,7 @@ public class AddStuffToLagerWindow {
 						if(Start.lager.AuftragAbarbeiten(num, Start.window.getRightLagerplatz(temp)))
 						{
 							Start.window.UpdateMainLagerraum();
-							Start.window.auftrag[num].setText("");
+							Start.window.UpdateAuftragListe();
 							auftraghinzufuegen.dispatchEvent(new WindowEvent(auftraghinzufuegen, WindowEvent.WINDOW_CLOSING));
 							Start.window.kontostand.setText("Dein Kontostand: " + Start.bilanz.getGesamtkonto() + "€");
 						}
@@ -55,7 +60,7 @@ public class AddStuffToLagerWindow {
 						if(Start.lager.AuftragAbarbeiten(num, Start.window.getRightLagerplatz(temp+9)))
 						{
 							Start.window.UpdateMainLagerraum();
-							Start.window.auftrag[num].setText("");
+							Start.window.UpdateAuftragListe();
 							auftraghinzufuegen.dispatchEvent(new WindowEvent(auftraghinzufuegen, WindowEvent.WINDOW_CLOSING));
 							Start.window.kontostand.setText("Dein Kontostand: " + Start.bilanz.getGesamtkonto() + "€");
 						}
@@ -69,7 +74,7 @@ public class AddStuffToLagerWindow {
 						if(Start.lager.AuftragAbarbeiten(num, Start.window.getRightLagerplatz(temp+18)))
 						{
 							Start.window.UpdateMainLagerraum();
-							Start.window.auftrag[num].setText("");
+							Start.window.UpdateAuftragListe();
 							auftraghinzufuegen.dispatchEvent(new WindowEvent(auftraghinzufuegen, WindowEvent.WINDOW_CLOSING));
 							Start.window.kontostand.setText("Dein Kontostand: " + Integer.toString(Start.bilanz.getGesamtkonto()) + "€");
 						}
@@ -102,7 +107,10 @@ public class AddStuffToLagerWindow {
 						String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i+18));
 						if(text == null) {
 							text = "leer";
-							Start.window.lagerraum_feld[i].setForeground(Color.gray);
+						}
+						else
+						{
+							label[i].setEnabled(false);
 						}
 						label[i].setText(text);
 					}
@@ -115,7 +123,10 @@ public class AddStuffToLagerWindow {
 						String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i));
 						if(text == null) {
 							text = "leer";
-							Start.window.lagerraum_feld[i].setForeground(Color.gray);
+						}
+						else
+						{
+							label[i].setEnabled(false);
 						}
 						label[i].setText(text);
 					}
@@ -128,7 +139,10 @@ public class AddStuffToLagerWindow {
 						String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i+9));
 						if(text == null) {
 							text = "leer";
-							Start.window.lagerraum_feld[i].setForeground(Color.gray);
+						}
+						else
+						{
+							label[i].setEnabled(false);
 						}
 						label[i].setText(text);
 					}
@@ -152,7 +166,10 @@ public class AddStuffToLagerWindow {
 						String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i+9));
 						if(text == null) {
 							text = "leer";
-							Start.window.lagerraum_feld[i].setForeground(Color.gray);
+						}
+						else
+						{
+							label[i].setEnabled(false);
 						}
 						label[i].setText(text);	
 					}
@@ -165,7 +182,10 @@ public class AddStuffToLagerWindow {
 						String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i+18));
 						if(text == null) {
 							text = "leer";
-							Start.window.lagerraum_feld[i].setForeground(Color.gray);
+						}
+						else
+						{
+							label[i].setEnabled(false);
 						}
 						label[i].setText(text);
 					}
@@ -178,7 +198,10 @@ public class AddStuffToLagerWindow {
 						String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i));
 						if(text == null) {
 							text = "leer";
-							Start.window.lagerraum_feld[i].setForeground(Color.gray);
+						}
+						else
+						{
+							label[i].setEnabled(false);
 						}
 						label[i].setText(text);
 					}
