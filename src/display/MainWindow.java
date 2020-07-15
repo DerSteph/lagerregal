@@ -67,7 +67,14 @@ public class MainWindow {
 						String text = ((JButton) e.getSource()).getText();
 						if(!text.equals(""))
 						{
-							new AddRemoveStuffToLagerWindow(temp);
+							if(Start.lager.getAuftrag(temp).getLagerungsart().equals("Einlagerung"))
+							{
+								new AddStuffToLagerWindow(temp);
+							}
+							else
+							{
+								new RemoveStuffFromLagerWindow(temp);
+							}
 						}
 					}
 				}

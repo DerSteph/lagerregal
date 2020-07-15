@@ -12,12 +12,12 @@ import javax.swing.JPanel;
 
 import lagerregal.Start;
 
-public class AddRemoveStuffToLagerWindow {
-	public AddRemoveStuffToLagerWindow(int num) {
+public class AddStuffToLagerWindow {
+	public AddStuffToLagerWindow(int num) {
 		JFrame auftraghinzufuegen = new JFrame();
 		auftraghinzufuegen.setSize(400,400);
 		auftraghinzufuegen.setLocationRelativeTo(null);
-		auftraghinzufuegen.setTitle("Wähle ein Lagerplatz aus!");
+		auftraghinzufuegen.setTitle("Einlagerung");
 		
 		JLabel lagerauswahl = new JLabel("Lager 1");
 		
@@ -69,7 +69,7 @@ public class AddRemoveStuffToLagerWindow {
 							JOptionPane.showMessageDialog(null, "Der Lagerplatz ist bereits durch andere Dinge davor blockiert.");
 						}
 					}
-					else if(lagerauswahl.getText().equals("Lager 2"))
+					else if(lagerauswahl.getText().equals("Lager 3"))
 					{
 						if(Start.lager.AuftragAbarbeiten(num, Start.window.getRightLagerplatz(temp+18)))
 						{
@@ -107,6 +107,7 @@ public class AddRemoveStuffToLagerWindow {
 						String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i+18));
 						if(text == null) {
 							text = "leer";
+							label[i].setEnabled(true);
 						}
 						else
 						{
@@ -123,6 +124,7 @@ public class AddRemoveStuffToLagerWindow {
 						String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i));
 						if(text == null) {
 							text = "leer";
+							label[i].setEnabled(true);
 						}
 						else
 						{
@@ -139,6 +141,7 @@ public class AddRemoveStuffToLagerWindow {
 						String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i+9));
 						if(text == null) {
 							text = "leer";
+							label[i].setEnabled(true);
 						}
 						else
 						{
@@ -166,6 +169,7 @@ public class AddRemoveStuffToLagerWindow {
 						String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i+9));
 						if(text == null) {
 							text = "leer";
+							label[i].setEnabled(true);
 						}
 						else
 						{
@@ -182,6 +186,7 @@ public class AddRemoveStuffToLagerWindow {
 						String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i+18));
 						if(text == null) {
 							text = "leer";
+							label[i].setEnabled(true);
 						}
 						else
 						{
@@ -198,6 +203,7 @@ public class AddRemoveStuffToLagerWindow {
 						String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i));
 						if(text == null) {
 							text = "leer";
+							label[i].setEnabled(true);
 						}
 						else
 						{

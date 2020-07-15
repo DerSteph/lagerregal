@@ -825,6 +825,168 @@ public class Lager {
 			}
 		}
 	}
+	
+	public boolean pruefeObProduktDortGelagert(int i, Produkt name) {
+		if(name instanceof Papier)
+		{
+			if(inhalt.get(i) instanceof Papier)
+			{
+				if(((Papier) inhalt.get(i)).getFarbe().equals(((Papier) name).getFarbe()))
+				{
+					if(((Papier) inhalt.get(i)).getGroesse().equals(((Papier) name).getGroesse()))
+					{
+						System.out.print(" P ");
+						return true;
+					}
+					else
+					{
+						System.out.print(" p ");
+						return false;
+					}
+				}
+				else
+				{
+					System.out.print(" p ");
+					return false;
+				}
+			}
+			else
+			{
+				if(inhalt.get(i) == null)
+				{
+					System.out.print(" _ ");
+					return false;
+				}
+				else
+				{
+					System.out.print(" " + inhalt.get(i).toShortStringSmall() + " ");	
+					return false;
+				}
+			}
+		}
+		if(name instanceof Holz)
+		{
+			if(inhalt.get(i) instanceof Holz)
+			{
+				if(((Holz) inhalt.get(i)).getArt().equals(((Holz) name).getArt()))
+				{
+					if(((Holz) inhalt.get(i)).getForm().equals(((Holz) name).getForm()))
+					{
+						if(i < 9)
+						{
+							for(int j = 0; i < 9; i++)
+							{
+								if(i % 3 == 0)
+								{
+									System.out.println();
+								}
+								else
+								{
+									System.out.print(" H ");
+								}
+							}
+							return true;
+						}
+						else if(i < 18)
+						{
+							for(int j = 9; i < 18; i++)
+							{
+								if(i % 3 == 0)
+								{
+									System.out.println();
+								}
+								else
+								{
+									System.out.print(" H ");
+								}
+							}
+							return true;
+						}
+						else if(i < 27)
+						{
+							for(int j = 18; i < 27; i++)
+							{
+								if(i % 3 == 0)
+								{
+									System.out.println();
+								}
+								else
+								{
+									System.out.print(" H ");
+								}
+							}
+							return true;
+						}
+						else
+						{
+							
+						}
+					}
+					else
+					{
+						System.out.print(" h ");
+						return false;
+					}
+				}
+				else
+				{
+					System.out.print(" h ");
+					return false;
+				}
+			}
+			else
+			{
+				if(inhalt.get(i) == null)
+				{
+					System.out.print(" _ ");
+					return false;
+				}
+				else
+				{
+					System.out.print(" " + inhalt.get(i).toShortStringSmall() + " ");	
+					return false;
+				}
+			}
+		}
+		if(name instanceof Stein)
+		{
+			if(inhalt.get(i) instanceof Stein)
+			{
+				if(((Stein) inhalt.get(i)).getArt().equals(((Stein) name).getArt()))
+				{
+					if(((Stein) inhalt.get(i)).getGewicht().equals(((Stein) name).getGewicht()))
+					{
+						System.out.print(" S ");
+						return true;
+					}
+					else
+					{
+						System.out.print(" s ");
+						return false;
+					}
+				}
+				else
+				{
+					System.out.print(" s ");
+					return false;
+				}
+			}
+			else
+			{
+				if(inhalt.get(i) == null)
+				{
+					System.out.print(" _ ");
+					return false;
+				}
+				else
+				{
+					System.out.print(" " + inhalt.get(i).toShortStringSmall() + " ");
+					return false;
+				}
+			}
+		}
+		return false;
+	}
 
 	public boolean Umlagern(int lagerquelle, int lagerziel) {
 		if(inhalt.get(lagerquelle) == null)
