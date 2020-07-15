@@ -24,12 +24,31 @@ public class AddStuffToLagerWindow {
 		JPanel lagerraum = new JPanel();
 		lagerraum.setLayout(new java.awt.GridLayout(3,3));
 		JButton[] label = new JButton[9];
+		
+		final int checkliste[] = Start.lager.getArrayVonFreienPlaetzen(Start.lager.getAuftrag(num));
+		int check = 0;
+		for(int i = 0; i < 27; i++)
+		{
+			if(checkliste[i] == 1)
+			{
+				check++;
+			}
+		}
+		
 		for(int i = 0; i < 9; i++)
 		{
 			final int temp = i;
 			label[i] = new JButton();
 			String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i));
 			if(text == null) {
+					if(checkliste[Start.window.getRightLagerplatz(i)] == 0)
+					{
+						label[i].setEnabled(false);
+					}
+					else
+					{
+						label[i].setEnabled(true);
+					}
 				text = "leer";
 			}
 			else
@@ -106,8 +125,15 @@ public class AddStuffToLagerWindow {
 					{
 						String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i+18));
 						if(text == null) {
+								if(checkliste[Start.window.getRightLagerplatz(i+18)] == 0)
+								{
+									label[i].setEnabled(false);
+								}
+								else
+								{
+									label[i].setEnabled(true);
+								}
 							text = "leer";
-							label[i].setEnabled(true);
 						}
 						else
 						{
@@ -123,8 +149,15 @@ public class AddStuffToLagerWindow {
 					{
 						String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i));
 						if(text == null) {
+								if(checkliste[Start.window.getRightLagerplatz(i)] == 0)
+								{
+									label[i].setEnabled(false);
+								}
+								else
+								{
+									label[i].setEnabled(true);
+								}
 							text = "leer";
-							label[i].setEnabled(true);
 						}
 						else
 						{
@@ -140,8 +173,15 @@ public class AddStuffToLagerWindow {
 					{
 						String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i+9));
 						if(text == null) {
+								if(checkliste[Start.window.getRightLagerplatz(i+9)] == 0)
+								{
+									label[i].setEnabled(false);
+								}
+								else
+								{
+									label[i].setEnabled(true);
+								}
 							text = "leer";
-							label[i].setEnabled(true);
 						}
 						else
 						{
@@ -168,8 +208,15 @@ public class AddStuffToLagerWindow {
 					{
 						String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i+9));
 						if(text == null) {
+								if(checkliste[Start.window.getRightLagerplatz(i+9)] == 0)
+								{
+									label[i].setEnabled(false);
+								}
+								else
+								{
+									label[i].setEnabled(true);
+								}
 							text = "leer";
-							label[i].setEnabled(true);
 						}
 						else
 						{
@@ -185,8 +232,15 @@ public class AddStuffToLagerWindow {
 					{
 						String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i+18));
 						if(text == null) {
+								if(checkliste[Start.window.getRightLagerplatz(i+18)] == 0)
+								{
+									label[i].setEnabled(false);
+								}
+								else
+								{
+									label[i].setEnabled(true);
+								}
 							text = "leer";
-							label[i].setEnabled(true);
 						}
 						else
 						{
@@ -202,8 +256,15 @@ public class AddStuffToLagerWindow {
 					{
 						String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i));
 						if(text == null) {
+								if(checkliste[Start.window.getRightLagerplatz(i)] == 0)
+								{
+									label[i].setEnabled(false);
+								}
+								else
+								{
+									label[i].setEnabled(true);
+								}
 							text = "leer";
-							label[i].setEnabled(true);
 						}
 						else
 						{
@@ -225,7 +286,15 @@ public class AddStuffToLagerWindow {
 		
 		JPanel text_panel = new JPanel();
 		JLabel text = new JLabel();
-		text.setText(Start.lager.getAuftrag(num).getInhalt());
+		if(check != 0)
+		{
+			text.setText("<html><body><center>" + Start.lager.getAuftrag(num).getInhalt() + "<br>Es sind noch " + check + " Plaetze frei.</center></body></html>");	
+		}
+		else
+		{
+			text.setForeground(Color.RED);
+			text.setText("<html><body><center>Es sind keine Plaetze mehr frei! <br>Du musst einige Produkte umlagern oder loeschen!</center></body></html>");
+		}
 		text_panel.add(text);
 		
 		JPanel anzeige = new JPanel();

@@ -416,8 +416,220 @@ public class Lager {
 		System.out.println("An der Stelle existiert nichts.");
 		return false;
 	}
-
-	public void zeigeFreiePlaetze(Produkt name)
+	
+	public int[] getArrayVonFreienPlaetzen(Produkt name)
+	{
+		// 0 = belegt, 1 = frei, 2 = ausgew�hlter gegenstand
+		int checkliste[] = new int[27];
+		for(int i = 0; i < checkliste.length; i++)
+		{
+			checkliste[i] = 1;
+		}
+		if(name != null)
+		{
+			if(name instanceof Papier)
+			{
+				// Gucken, welche Pl�tze �berhaupt frei sind!
+				for(int i = 26; i > 0; i--)
+				{
+					if(checkliste[i] == 0)
+					{
+						continue;
+					}
+					if(inhalt.get(i) != null)
+					{
+						if(i % 9 >= 6 && i % 9 <= 8)
+						{
+							checkliste[i] = 0;
+							checkliste[i - 1*3] = 0;
+							checkliste[i - 2*3] = 0;
+						}
+						if(i % 9 >= 3 && i % 9 <= 5)
+						{
+							checkliste[i] = 0;
+							checkliste[i - 1*3] = 0;
+						}
+						if(i % 9 >= 0 && i % 9 <= 2)
+						{
+							checkliste[i] = 0;
+						}
+					}
+				}
+				// Ausgeben
+			}
+			if(name instanceof Stein)
+			{
+				for(int i = 26; i > 0; i--)
+				{
+					if(i > 8)
+					{
+						checkliste[i] = 0;
+						continue;
+					}
+					if(checkliste[i] == 0)
+					{
+						continue;
+					}
+					if(inhalt.get(i) != null)
+					{
+						if(i % 9 >= 6 && i % 9 <= 8)
+						{
+							checkliste[i] = 0;
+							checkliste[i - 1*3] = 0;
+							checkliste[i - 2*3] = 0;
+						}
+						if(i % 9 >= 3 && i % 9 <= 5)
+						{
+							checkliste[i] = 0;
+							checkliste[i - 1*3] = 0;
+						}
+						if(i % 9 >= 0 && i % 9 <= 2)
+						{
+							checkliste[i] = 0;
+						}
+					}
+				}
+			}
+			if(name instanceof Holz)
+			{
+				for(int j = 0; j < 3; j++)
+				{
+					boolean pruefeObPlatzVerfuegbar = true;
+					for(int i = 0; i < 9; i++)
+					{
+						if(inhalt.get(i+j*9) != null)
+						{
+							pruefeObPlatzVerfuegbar = false;
+						}
+					}
+					if(pruefeObPlatzVerfuegbar == false)
+					{
+						for(int i = 0; i < 9; i++)
+						{
+							checkliste[i+j*9] = 0;
+						}
+					}
+				}
+			}
+		}
+		else
+		{
+			System.out.println("Es wurde kein Lagerelement ausgew�hlt");
+		}
+		return checkliste;	
+	}
+	
+	public int getAnzahlFreierVerfuegbarerPlaetze(Produkt name) {
+		// 0 = belegt, 1 = frei, 2 = ausgew�hlter gegenstand
+		int checkliste[] = new int[27];
+		for(int i = 0; i < checkliste.length; i++)
+		{
+			checkliste[i] = 1;
+		}
+		if(name != null)
+		{
+			if(name instanceof Papier)
+			{
+				// Gucken, welche Pl�tze �berhaupt frei sind!
+				for(int i = 26; i > 0; i--)
+				{
+					if(checkliste[i] == 0)
+					{
+						continue;
+					}
+					if(inhalt.get(i) != null)
+					{
+						if(i % 9 >= 6 && i % 9 <= 8)
+						{
+							checkliste[i] = 0;
+							checkliste[i - 1*3] = 0;
+							checkliste[i - 2*3] = 0;
+						}
+						if(i % 9 >= 3 && i % 9 <= 5)
+						{
+							checkliste[i] = 0;
+							checkliste[i - 1*3] = 0;
+						}
+						if(i % 9 >= 0 && i % 9 <= 2)
+						{
+							checkliste[i] = 0;
+						}
+					}
+				}
+				// Ausgeben
+			}
+			if(name instanceof Stein)
+			{
+				for(int i = 26; i > 0; i--)
+				{
+					if(i > 8)
+					{
+						checkliste[i] = 0;
+						continue;
+					}
+					if(checkliste[i] == 0)
+					{
+						continue;
+					}
+					if(inhalt.get(i) != null)
+					{
+						if(i % 9 >= 6 && i % 9 <= 8)
+						{
+							checkliste[i] = 0;
+							checkliste[i - 1*3] = 0;
+							checkliste[i - 2*3] = 0;
+						}
+						if(i % 9 >= 3 && i % 9 <= 5)
+						{
+							checkliste[i] = 0;
+							checkliste[i - 1*3] = 0;
+						}
+						if(i % 9 >= 0 && i % 9 <= 2)
+						{
+							checkliste[i] = 0;
+						}
+					}
+				}
+			}
+			if(name instanceof Holz)
+			{
+				for(int j = 0; j < 3; j++)
+				{
+					boolean pruefeObPlatzVerfuegbar = true;
+					for(int i = 0; i < 9; i++)
+					{
+						if(inhalt.get(i+j*9) != null)
+						{
+							pruefeObPlatzVerfuegbar = false;
+						}
+					}
+					if(pruefeObPlatzVerfuegbar == false)
+					{
+						for(int i = 0; i < 9; i++)
+						{
+							checkliste[i+j*9] = 0;
+						}
+					}
+				}
+			}
+			int check = 0;
+			for(int i = 0; i < 27; i++)
+			{
+				if(checkliste[i] == 1)
+				{
+					check++;
+				}
+			}
+			return check;
+		}
+		else
+		{
+			System.out.println("Es wurde kein Lagerelement ausgew�hlt");
+		}
+		return 0;
+	}
+	
+	public void zeigeAlleFreiePlaetze(Produkt name)
 	{
 		// 0 = belegt, 1 = frei, 2 = ausgew�hlter gegenstand
 		int checkliste[] = new int[27];
@@ -536,7 +748,8 @@ public class Lager {
 			System.out.println("Es wurde kein Lagerelement ausgew�hlt");
 		}
 	}
-	public void zeigeFreiePlaetze(int lagerplatz) {
+
+	public void zeigeAlleFreiePlaetze(int lagerplatz) {
 		// 0 = belegt, 1 = frei, 2 = ausgew�hlter gegenstand
 		int checkliste[] = new int[27];
 		for(int i = 0; i < checkliste.length; i++)
