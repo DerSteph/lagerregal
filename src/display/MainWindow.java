@@ -77,6 +77,13 @@ public class MainWindow {
 		});
 		
 		JButton umlagern = new JButton("Umlagern");
+		umlagern.addActionListener(new java.awt.event.ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new UmlagernWindow();
+			}
+		});
 		JButton verschrotten = new JButton("Verschrotten");
 		actionbuttons.add(neuerauftrag);
 		actionbuttons.add(umlagern);
