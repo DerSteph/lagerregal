@@ -8,6 +8,10 @@ public class Produkt {
 		return null;
 	}
 	
+	public String getInhaltFormatted () {
+		return null;
+	}
+	
 	public String getLagerungsart() {
 		return Lagerungsart;
 	}

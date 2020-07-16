@@ -180,137 +180,27 @@ public class Lager {
 			}
 			else if(auftrag instanceof Holz)
 			{
-				int k = 0;
-				if(lagerplatz < 9)
+				if(((Holz) auftrag).getForm().equals("Balken"))
 				{
-					if(lagerplatz % 3 == 0)
+					int k = HolzLagerstelleAbfragen(lagerplatz);
+					if(inhalt.get(k) == null && inhalt.get(k-3) == null && inhalt.get(k-6) == null)
 					{
-						k = 6;
+						inhalt.set(k, auftrag);
+						inhalt.set(k-3, auftrag);
+						inhalt.set(k-6, auftrag);
+						auftragLoeschen(auswahl);
+						Start.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten(), auftrag);
+						System.out.println("Erfolgreich eingelagert.");
+						return true;
 					}
-					if(lagerplatz % 3 == 1)
+					else
 					{
-						k = 7;
-					}
-					if(lagerplatz % 3 == 2)
-					{
-						k = 8;
-					}
-				}
-				else if(lagerplatz < 18)
-				{
-					if(lagerplatz % 3 == 0)
-					{
-						k = 15;
-					}
-					if(lagerplatz % 3 == 1)
-					{
-						k = 16;
-					}
-					if(lagerplatz % 3 == 2)
-					{
-						k = 17;
+						System.out.println("Holzbalken koennen nur auf 3 Plaetzen hintereinander gelagert werden!");
+						return false;
 					}
 				}
 				else
 				{
-					if(lagerplatz % 3 == 0)
-					{
-						k = 24;
-					}
-					if(lagerplatz % 3 == 1)
-					{
-						k = 25;
-					}
-					if(lagerplatz % 3 == 2)
-					{
-						k = 26;
-					}
-				}
-				if(inhalt.get(k) == null && inhalt.get(k-3) == null && inhalt.get(k-6) == null)
-				{
-					inhalt.set(k, auftrag);
-					inhalt.set(k-3, auftrag);
-					inhalt.set(k-6, auftrag);
-					auftragLoeschen(auswahl);
-					Start.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten(), auftrag);
-					System.out.println("Erfolgreich eingelagert.");
-					return true;
-				}
-				else
-				{
-					System.out.println("Die Lagerplatzreihe ist bereits durch andere Dinge belegt.");
-					return false;
-				}
-				// Für die volle Reihe
-				/*if(lagerplatz < 9) {
-					for(int i = 0; i < 9; i++) {
-						if(inhalt.get(i) != null)
-						{
-							pruefeObPlatzVerfuegbar = false;
-						}
-					}
-					if(pruefeObPlatzVerfuegbar == true) {
-						for(int i = 0; i < 9; i++) {
-							inhalt.set(i, (Produkt) auftrag);
-						}
-						auftragLoeschen(auswahl);
-						Start.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten(), auftrag);
-						System.out.println("Erfolgreich eingelagert.");
-						return true;
-					}
-					else
-					{
-						System.out.println("Die Lagerplatzreihe ist bereits durch andere Dinge belegt.");
-						return false;
-					}
-				}
-				else if(lagerplatz < 18) {
-					for(int i = 9; i < 18; i++) {
-						if(inhalt.get(i) != null)
-						{
-							pruefeObPlatzVerfuegbar = false;
-						}
-					}
-					if(pruefeObPlatzVerfuegbar == true) {
-						for(int i = 9; i < 18; i++) {
-							inhalt.set(i, (Produkt) auftrag);
-						}
-						auftragLoeschen(auswahl);
-						Start.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten(), auftrag);
-						System.out.println("Erfolgreich eingelagert.");
-						return true;
-					}
-					else
-					{
-						System.out.println("Die Lagerplatzreihe ist bereits durch andere Dinge belegt.");
-						return false;
-					}
-				}
-				else {
-					for(int i = 18; i < 27; i++) {
-						if(inhalt.get(i) != null)
-						{
-							pruefeObPlatzVerfuegbar = false;
-						}
-					}
-					if(pruefeObPlatzVerfuegbar == true) {
-						for(int i = 18; i < 27; i++) {
-							inhalt.set(i, (Produkt) auftrag);
-						}
-						auftragLoeschen(auswahl);
-						Start.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten(), auftrag);
-						System.out.println("Erfolgreich eingelagert.");
-						return true;
-					}
-					else
-					{
-						System.out.println("Die Lagerplatzreihe ist bereits durch andere Dinge belegt.");
-						return false;
-					}
-				}*/
-			}
-			else if(auftrag instanceof Stein) {
-				if(lagerplatz < 9) {
 					if(lagerplatz % 9 >= 0 && lagerplatz % 9 <= 2)
 					{
 						for(int i = 1; i < 3; i++) {
@@ -340,10 +230,76 @@ public class Lager {
 						return false;
 					}
 				}
+			}
+			else if(auftrag instanceof Stein) {
+				if(((Stein) auftrag).getGewicht().equals("Schwer"))
+				{
+					if(lagerplatz < 9) {
+						if(lagerplatz % 9 >= 0 && lagerplatz % 9 <= 2)
+						{
+							for(int i = 1; i < 3; i++) {
+								if(inhalt.get(lagerplatz + i*3) != null) {
+									System.out.println("Der Lagerplatz wird durch andere Dinge davor blockiert.");
+									return false;
+								}
+							}
+						}
+						if(lagerplatz % 9 >= 3 && lagerplatz % 9 <= 5)
+						{
+							if(inhalt.get(lagerplatz + 3) != null) {
+								System.out.println("Der Lagerplatz wird durch andere Dinge davor blockiert.");
+								return false;
+							}
+						}
+						if(inhalt.get(lagerplatz) == null) {
+							inhalt.set(lagerplatz, (Produkt) auftrag);
+							auftragLoeschen(auswahl);
+							Start.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten(), auftrag);
+							System.out.println("Erfolgreich eingelagert.");
+							return true;
+						}
+						else
+						{
+							System.out.println("Der Lagerplatz ist bereits belegt.");
+							return false;
+						}
+					}
+					else
+					{
+						System.out.println("Schwere Steine koennen nur unten gelagert werden!");
+						return false;
+					}	
+				}
 				else
 				{
-					System.out.println("Steine kï¿½nnen nur unten gelagert werden!");
-					return false;
+					if(lagerplatz % 9 >= 0 && lagerplatz % 9 <= 2)
+					{
+						for(int i = 1; i < 3; i++) {
+							if(inhalt.get(lagerplatz + i*3) != null) {
+								System.out.println("Der Lagerplatz wird durch andere Dinge davor blockiert.");
+								return false;
+							}
+						}
+					}
+					if(lagerplatz % 9 >= 3 && lagerplatz % 9 <= 5)
+					{
+						if(inhalt.get(lagerplatz + 3) != null) {
+							System.out.println("Der Lagerplatz wird durch andere Dinge davor blockiert.");
+							return false;
+						}
+					}
+					if(inhalt.get(lagerplatz) == null) {
+						inhalt.set(lagerplatz, (Produkt) auftrag);
+						auftragLoeschen(auswahl);
+						Start.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten(), auftrag);
+						System.out.println("Erfolgreich eingelagert.");
+						return true;
+					}
+					else
+					{
+						System.out.println("Der Lagerplatz ist bereits belegt.");
+						return false;
+					}
 				}
 			}
 			else {
@@ -387,59 +343,70 @@ public class Lager {
 					{
 						if(((Holz) inhalt.get(lagerplatz)).getForm().equals(((Holz) auftrag).getForm()))
 						{
-							int k = 0;
-							if(lagerplatz < 9)
+							if(((Holz) inhalt.get(lagerplatz)).getForm().equals("Balken"))
 							{
-								if(lagerplatz % 3 == 0)
+								int k = 0;
+								if(lagerplatz < 9)
 								{
-									k = 6;
+									if(lagerplatz % 3 == 0)
+									{
+										k = 6;
+									}
+									if(lagerplatz % 3 == 1)
+									{
+										k = 7;
+									}
+									if(lagerplatz % 3 == 2)
+									{
+										k = 8;
+									}
 								}
-								if(lagerplatz % 3 == 1)
+								else if(lagerplatz < 18)
 								{
-									k = 7;
+									if(lagerplatz % 3 == 0)
+									{
+										k = 15;
+									}
+									if(lagerplatz % 3 == 1)
+									{
+										k = 16;
+									}
+									if(lagerplatz % 3 == 2)
+									{
+										k = 17;
+									}
 								}
-								if(lagerplatz % 3 == 2)
+								else
 								{
-									k = 8;
+									if(lagerplatz % 3 == 0)
+									{
+										k = 24;
+									}
+									if(lagerplatz % 3 == 1)
+									{
+										k = 25;
+									}
+									if(lagerplatz % 3 == 2)
+									{
+										k = 26;
+									}
 								}
-							}
-							else if(lagerplatz < 18)
-							{
-								if(lagerplatz % 3 == 0)
-								{
-									k = 15;
-								}
-								if(lagerplatz % 3 == 1)
-								{
-									k = 16;
-								}
-								if(lagerplatz % 3 == 2)
-								{
-									k = 17;
-								}
+								inhalt.set(k, null);
+								inhalt.set(k-3, null);
+								inhalt.set(k-6, null);
+								auftragLoeschen(auswahl);
+								Start.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten(), auftrag);
+								System.out.println("Erfolgreich ausgelagert.");
+								return true;
 							}
 							else
 							{
-								if(lagerplatz % 3 == 0)
-								{
-									k = 24;
-								}
-								if(lagerplatz % 3 == 1)
-								{
-									k = 25;
-								}
-								if(lagerplatz % 3 == 2)
-								{
-									k = 26;
-								}
+								inhalt.set(lagerplatz, null);
+								auftragLoeschen(auswahl);
+								Start.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten(), auftrag);
+								System.out.println("Erfolgreich ausgelagert.");
+								return true;	
 							}
-							inhalt.set(k, null);
-							inhalt.set(k-3, null);
-							inhalt.set(k-6, null);
-							auftragLoeschen(auswahl);
-							Start.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten(), auftrag);
-							System.out.println("Erfolgreich ausgelagert.");
-							return true;
 						}
 					}
 				}
@@ -611,7 +578,7 @@ public class Lager {
 			{
 				for(int i = 26; i > 0; i--)
 				{
-					if(i > 8)
+					if(((Stein) name).getGewicht().equals("Schwer") && i > 8)
 					{
 						checkliste[i] = 0;
 						continue;
@@ -661,43 +628,75 @@ public class Lager {
 			}
 			if(name instanceof Holz)
 			{
-				int k = 0;
-				for(int j = 0; j < 3; j++)
+				if(((Holz) name).getForm().equals("Balken"))
 				{
-					for(int i = 0; i < 3; i++)
+					int k = 0;
+					for(int j = 0; j < 3; j++)
 					{
-						if(inhalt.get(i+k) != null || inhalt.get(i+k+3) != null || inhalt.get(i+k+6) != null)
+						for(int i = 0; i < 3; i++)
 						{
-							checkliste[i+k] = 0;
-							checkliste[i+k+3] = 0;
-							checkliste[i+k+6] = 0;
-						}
-					}	
-					k = k + 9;
+							if(inhalt.get(i+k) != null || inhalt.get(i+k+3) != null || inhalt.get(i+k+6) != null)
+							{
+								checkliste[i+k] = 0;
+								checkliste[i+k+3] = 0;
+								checkliste[i+k+6] = 0;
+							}
+						}	
+						k = k + 9;
+					}
 				}
-				/*for(int j = 0; j < 3; j++)
+				else
 				{
-					boolean pruefeObPlatzVerfuegbar = true;
-					for(int i = 0; i < 9; i++)
+					for(int i = 26; i >= 0; i--)
 					{
-						if(inhalt.get(i+j*9) != null)
+						if(checkliste[i] == 0)
 						{
-							pruefeObPlatzVerfuegbar = false;
+							continue;
+						}
+						if(ohneAbfrage != -1)
+						{
+							// Wenn der Gegenstand + 3 = Abgefragter Gegenstand ist
+							if(i % 9 >= 3 && i % 9 <= 5 && i+3 == ohneAbfrage)
+							{
+								checkliste[i] = 1;
+								continue;
+							}
+							if(i % 9 >= 0 && i % 9 <= 2 && i+6 == ohneAbfrage)
+							{
+								checkliste[i] = 1;
+								continue;
+							}
+						}
+						if(inhalt.get(i) == name)
+						{
+							ohneAbfrage = i;
+							checkliste[i] = 2;
+						}
+						else if(inhalt.get(i) != null)
+						{
+							if(i % 9 >= 6 && i % 9 <= 8)
+							{
+								checkliste[i] = 0;
+								checkliste[i - 1*3] = 0;
+								checkliste[i - 2*3] = 0;
+							}
+							if(i % 9 >= 3 && i % 9 <= 5)
+							{
+								checkliste[i] = 0;
+								checkliste[i - 1*3] = 0;
+							}
+							if(i % 9 >= 0 && i % 9 <= 2)
+							{
+								checkliste[i] = 0;
+							}
 						}
 					}
-					if(pruefeObPlatzVerfuegbar == false)
-					{
-						for(int i = 0; i < 9; i++)
-						{
-							checkliste[i+j*9] = 0;
-						}
-					}
-				}*/
+				}
 			}
 		}
 		else
 		{
-			System.out.println("Es wurde kein Lagerelement ausgewï¿½hlt");
+			System.out.println("Es wurde kein Lagerelement ausgewaehlt");
 		}
 		return checkliste;	
 	}
@@ -705,165 +704,7 @@ public class Lager {
 	public int[] getArrayVonFreienPlaetzen(int lagerquelle)
 	{
 		Produkt name = inhalt.get(lagerquelle);
-		// 0 = belegt, 1 = frei, 2 = ausgewï¿½hlter gegenstand
-		int checkliste[] = new int[27];
-		int ohneAbfrage = -1;
-		for(int i = 0; i < checkliste.length; i++)
-		{
-			checkliste[i] = 1;
-		}
-		if(name != null)
-		{
-			if(name instanceof Papier)
-			{
-				// Gucken, welche Plï¿½tze ï¿½berhaupt frei sind!
-				for(int i = 26; i > 0; i--)
-				{
-					if(checkliste[i] == 0)
-					{
-						continue;
-					}
-					if(ohneAbfrage != -1)
-					{
-						// Wenn der Gegenstand + 3 = Abgefragter Gegenstand ist
-						if(i % 9 >= 3 && i % 9 <= 5 && i+3 == ohneAbfrage)
-						{
-							checkliste[i] = 1;
-							continue;
-						}
-						if(i % 9 >= 0 && i % 9 <= 2 && i+6 == ohneAbfrage)
-						{
-							checkliste[i] = 1;
-							continue;
-						}
-					}
-					if(inhalt.get(i) == name)
-					{
-						ohneAbfrage = i;
-						checkliste[i] = 2;
-					}
-					else if(inhalt.get(i) != null)
-					{
-						if(i % 9 >= 6 && i % 9 <= 8)
-						{
-							/*if(inhalt.get(i).equals(name))
-							{
-								ohneAbfrage = i;
-							}*/
-							checkliste[i] = 0;
-							checkliste[i - 1*3] = 0;
-							checkliste[i - 2*3] = 0;
-						}
-						if(i % 9 >= 3 && i % 9 <= 5)
-						{
-							checkliste[i] = 0;
-							checkliste[i - 1*3] = 0;
-						}
-						if(i % 9 >= 0 && i % 9 <= 2)
-						{
-							checkliste[i] = 0;
-						}
-					}
-					else
-					{
-						
-					}
-				}
-				// Ausgeben
-			}
-			if(name instanceof Stein)
-			{
-				for(int i = 26; i > 0; i--)
-				{
-					if(i > 8)
-					{
-						checkliste[i] = 0;
-						continue;
-					}
-					if(checkliste[i] == 0)
-					{
-						continue;
-					}
-					if(ohneAbfrage != -1)
-					{
-						// Wenn der Gegenstand + 3 = Abgefragter Gegenstand ist
-						if(i % 9 >= 3 && i % 9 <= 5 && i+3 == ohneAbfrage)
-						{
-							checkliste[i] = 1;
-							continue;
-						}
-						if(i % 9 >= 0 && i % 9 <= 2 && i+6 == ohneAbfrage)
-						{
-							checkliste[i] = 1;
-							continue;
-						}
-					}
-					if(inhalt.get(i) == name)
-					{
-						ohneAbfrage = i;
-						checkliste[i] = 2;
-					}
-					else if(inhalt.get(i) != null)
-					{
-						if(i % 9 >= 6 && i % 9 <= 8)
-						{
-							checkliste[i] = 0;
-							checkliste[i - 1*3] = 0;
-							checkliste[i - 2*3] = 0;
-						}
-						if(i % 9 >= 3 && i % 9 <= 5)
-						{
-							checkliste[i] = 0;
-							checkliste[i - 1*3] = 0;
-						}
-						if(i % 9 >= 0 && i % 9 <= 2)
-						{
-							checkliste[i] = 0;
-						}
-					}
-				}
-			}
-			if(name instanceof Holz)
-			{
-				int k = 0;
-				for(int j = 0; j < 3; j++)
-				{
-					for(int i = 0; i < 3; i++)
-					{
-						if(inhalt.get(i+k) != null || inhalt.get(i+k+3) != null || inhalt.get(i+k+6) != null)
-						{
-							checkliste[i+k] = 0;
-							checkliste[i+k+3] = 0;
-							checkliste[i+k+6] = 0;
-						}
-					}	
-					k = k + 9;
-				}
-				/*for(int j = 0; j < 3; j++)
-				{
-					boolean pruefeObPlatzVerfuegbar = true;
-					for(int i = 0; i < 9; i++)
-					{
-						if(inhalt.get(i+j*9) != null)
-						{
-							pruefeObPlatzVerfuegbar = false;
-						}
-					}
-					if(pruefeObPlatzVerfuegbar == false)
-					{
-						for(int i = 0; i < 9; i++)
-						{
-							checkliste[i+j*9] = 0;
-						}
-					}
-				}*/
-			}
-		}
-		else
-		{
-			System.out.println("Es wurde kein Lagerelement ausgewï¿½hlt");
-		}
-		return checkliste;	
+		return getArrayVonFreienPlaetzen(name);
 	}
 	
 	public int getAnzahlFreierVerfuegbarerPlaetze(Produkt name) {
@@ -929,11 +770,6 @@ public class Lager {
 			{
 				for(int i = 26; i > 0; i--)
 				{
-					if(i > 8)
-					{
-						checkliste[i] = 0;
-						continue;
-					}
 					if(checkliste[i] == 0)
 					{
 						continue;
@@ -979,39 +815,70 @@ public class Lager {
 			}
 			if(name instanceof Holz)
 			{
-				int k = 0;
-				for(int j = 0; j < 3; j++)
+				if(((Holz) name).getForm().equals("Balken"))
 				{
-					for(int i = 0; i < 3; i++)
+					int k = 0;
+					for(int j = 0; j < 3; j++)
 					{
-						if(inhalt.get(i+k) != null || inhalt.get(i+k+3) != null || inhalt.get(i+k+6) != null)
+						for(int i = 0; i < 3; i++)
 						{
-							checkliste[i+k] = 0;
-							checkliste[i+k+3] = 0;
-							checkliste[i+k+6] = 0;
-						}
+							if(inhalt.get(i+k) != null || inhalt.get(i+k+3) != null || inhalt.get(i+k+6) != null)
+							{
+								checkliste[i+k] = 0;
+								checkliste[i+k+3] = 0;
+								checkliste[i+k+6] = 0;
+							}
+						}	
+						k = k + 9;
 					}	
-					k = k + 9;
 				}
-				/*
-				for(int j = 0; j < 3; j++)
+				else
 				{
-					boolean pruefeObPlatzVerfuegbar = true;
-					for(int i = 0; i < 9; i++)
+					for(int i = 26; i >= 0; i--)
 					{
-						if(inhalt.get(i+j*9) != null)
+						if(checkliste[i] == 0)
 						{
-							pruefeObPlatzVerfuegbar = false;
+							continue;
 						}
-					}
-					if(pruefeObPlatzVerfuegbar == false)
-					{
-						for(int i = 0; i < 9; i++)
+						if(ohneAbfrage != -1)
 						{
-							checkliste[i+j*9] = 0;
+							// Wenn der Gegenstand + 3 = Abgefragter Gegenstand ist
+							if(i % 9 >= 3 && i % 9 <= 5 && i+3 == ohneAbfrage)
+							{
+								checkliste[i] = 1;
+								continue;
+							}
+							if(i % 9 >= 0 && i % 9 <= 2 && i+6 == ohneAbfrage)
+							{
+								checkliste[i] = 1;
+								continue;
+							}
 						}
+						if(inhalt.get(i) == name)
+						{
+							ohneAbfrage = i;
+							checkliste[i] = 2;
+						}
+						else if(inhalt.get(i) != null)
+						{
+							if(i % 9 >= 6 && i % 9 <= 8)
+							{
+								checkliste[i] = 0;
+								checkliste[i - 1*3] = 0;
+								checkliste[i - 2*3] = 0;
+							}
+							if(i % 9 >= 3 && i % 9 <= 5)
+							{
+								checkliste[i] = 0;
+								checkliste[i - 1*3] = 0;
+							}
+							if(i % 9 >= 0 && i % 9 <= 2)
+							{
+								checkliste[i] = 0;
+							}	
+					}	
 					}
-				}*/
+				}
 			}
 			int check = 0;
 			for(int i = 0; i < 27; i++)
@@ -1074,11 +941,6 @@ public class Lager {
 			{
 				for(int i = 26; i > 0; i--)
 				{
-					if(i > 8)
-					{
-						checkliste[i] = 0;
-						continue;
-					}
 					if(checkliste[i] == 0)
 					{
 						continue;
@@ -1194,11 +1056,6 @@ public class Lager {
 			{
 				for(int i = 26; i > 0; i--)
 				{
-					if(i > 8)
-					{
-						checkliste[i] = 0;
-						continue;
-					}
 					if(checkliste[i] == 0)
 					{
 						continue;
@@ -1328,52 +1185,6 @@ public class Lager {
 						if(((Holz) inhalt.get(i)).getForm().equals(((Holz) name).getForm()))
 						{
 							System.out.print(" H ");
-							/*if(i < 9)
-							{
-								for(int j = 0; i < 9; i++)
-								{
-									if(i % 3 == 0)
-									{
-										System.out.println();
-									}
-									else
-									{
-										System.out.print(" H ");
-									}
-								}
-							}
-							else if(i < 18)
-							{
-								for(int j = 9; i < 18; i++)
-								{
-									if(i % 3 == 0)
-									{
-										System.out.println();
-									}
-									else
-									{
-										System.out.print(" H ");
-									}
-								}
-							}
-							else if(i < 27)
-							{
-								for(int j = 18; i < 27; i++)
-								{
-									if(i % 3 == 0)
-									{
-										System.out.println();
-									}
-									else
-									{
-										System.out.print(" H ");
-									}
-								}
-							}
-							else
-							{
-								
-							}*/
 						}
 						else
 						{
@@ -1480,56 +1291,6 @@ public class Lager {
 					{
 						System.out.print(" H ");
 						return true;
-						/*
-						if(i < 9)
-						{
-							for(int j = 0; i < 9; i++)
-							{
-								if(i % 3 == 0)
-								{
-									System.out.println();
-								}
-								else
-								{
-									System.out.print(" H ");
-								}
-							}
-							return true;
-						}
-						else if(i < 18)
-						{
-							for(int j = 9; i < 18; i++)
-							{
-								if(i % 3 == 0)
-								{
-									System.out.println();
-								}
-								else
-								{
-									System.out.print(" H ");
-								}
-							}
-							return true;
-						}
-						else if(i < 27)
-						{
-							for(int j = 18; i < 27; i++)
-							{
-								if(i % 3 == 0)
-								{
-									System.out.println();
-								}
-								else
-								{
-									System.out.print(" H ");
-								}
-							}
-							return true;
-						}
-						else
-						{
-							
-						}*/
 					}
 					else
 					{
@@ -1629,7 +1390,39 @@ public class Lager {
 		}
 		if(inhalt.get(i) instanceof Holz)
 		{
-			return true;
+			if(((Holz) inhalt.get(i)).getForm().equals("Balken"))
+			{
+				return true;
+			}
+			else
+			{
+				if(i % 9 >= 0 && i % 9 <= 2)
+				{
+					if(inhalt.get(i+1*3) == null && inhalt.get(i+2*3) == null)
+					{
+						return true;
+					}
+					else
+					{
+						return false;
+					}
+				}
+				if(i % 9 >= 3 && i % 9 <= 5)
+				{
+					if(inhalt.get(i+1*3) == null)
+					{
+						return true;
+					}
+					else
+					{
+						return false;
+					}
+				}
+				if(i % 9 >= 6 && i % 9 <= 8)
+				{
+					return true;
+				}
+			}
 		}
 		return false;
 	}
@@ -1683,55 +1476,6 @@ public class Lager {
 					{
 						System.out.print(" H ");
 						return true;
-						/*if(i < 9)
-						{
-							for(int j = 0; i < 9; i++)
-							{
-								if(i % 3 == 0)
-								{
-									System.out.println();
-								}
-								else
-								{
-									System.out.print(" H ");
-								}
-							}
-							return true;
-						}
-						else if(i < 18)
-						{
-							for(int j = 9; i < 18; i++)
-							{
-								if(i % 3 == 0)
-								{
-									System.out.println();
-								}
-								else
-								{
-									System.out.print(" H ");
-								}
-							}
-							return true;
-						}
-						else if(i < 27)
-						{
-							for(int j = 18; i < 27; i++)
-							{
-								if(i % 3 == 0)
-								{
-									System.out.println();
-								}
-								else
-								{
-									System.out.print(" H ");
-								}
-							}
-							return true;
-						}
-						else
-						{
-							
-						}*/
 					}
 					else
 					{
@@ -1823,119 +1567,44 @@ public class Lager {
 		}
 		if(inhalt.get(lagerquelle) instanceof Holz)
 		{
-			int holz_lagerziel = HolzLagerstelleAbfragen(lagerziel);
-			int holz_lagerquelle = HolzLagerstelleAbfragen(lagerquelle);
-			if(inhalt.get(holz_lagerziel) == null && inhalt.get(holz_lagerziel-3) == null && inhalt.get(holz_lagerziel-6) == null)
+			if(((Holz) inhalt.get(lagerquelle)).getForm().equals("Balken"))
 			{
-				inhalt.set(holz_lagerziel, inhalt.get(lagerquelle));
-				inhalt.set(holz_lagerziel-3, inhalt.get(lagerquelle));
-				inhalt.set(holz_lagerziel-6, inhalt.get(lagerquelle));
-				inhalt.set(holz_lagerquelle, null);
-				inhalt.set(holz_lagerquelle-3, null);
-				inhalt.set(holz_lagerquelle-6, null);
-				
-				Start.bilanz.removeGesamtkonto(100, inhalt.get(holz_lagerziel), "Umlagern");
-				System.out.println("Das Lagerziel wurde erfolgreich zur Lagerquelle umgelagert.");
-				return true;
-			}
-			else
-			{
-				System.out.println("Das Lagerziel ist bereits besetzt");
-			}
-			/*boolean pruefeObPlatzVerfuegbar = true;
-			if(lagerziel < 9)
-			{
-				for(int i = 0; i < 9; i++)
+				int holz_lagerziel = HolzLagerstelleAbfragen(lagerziel);
+				int holz_lagerquelle = HolzLagerstelleAbfragen(lagerquelle);
+				if(inhalt.get(holz_lagerziel) == null && inhalt.get(holz_lagerziel-3) == null && inhalt.get(holz_lagerziel-6) == null)
 				{
-					if(inhalt.get(i) != null)
-					{
-						pruefeObPlatzVerfuegbar = false;
-					}
-				}
-			}
-			else if(lagerziel < 18)
-			{
-				for(int i = 9; i < 18; i++)
-				{
-					if(inhalt.get(i) != null)
-					{
-						pruefeObPlatzVerfuegbar = false;
-					}
-				}
-			}
-			else if(lagerziel < 27)
-			{
-				for(int i = 18; i < 27; i++)
-				{
-					if(inhalt.get(i) != null)
-					{
-						pruefeObPlatzVerfuegbar = false;
-					}
-				}
-			}
-			else
-			{
-				
-			}
-			if(pruefeObPlatzVerfuegbar == false)
-			{
-				System.out.println("Das Lagerziel ist bereits besetzt");
-			}
-			else
-			{
-				if(lagerziel < 9)
-				{
-					for(int i = 0; i < 9; i++)
-					{
-						inhalt.set(i, inhalt.get(lagerquelle));
-					}
-				}
-				else if(lagerziel < 18)
-				{
-					for(int i = 9; i < 18; i++)
-					{
-						inhalt.set(i, inhalt.get(lagerquelle));
-					}
-				}
-				else if(lagerziel < 27)
-				{
-					for(int i = 18; i < 27; i++)
-					{
-						inhalt.set(i, inhalt.get(lagerquelle));
-					}
+					inhalt.set(holz_lagerziel, inhalt.get(lagerquelle));
+					inhalt.set(holz_lagerziel-3, inhalt.get(lagerquelle));
+					inhalt.set(holz_lagerziel-6, inhalt.get(lagerquelle));
+					inhalt.set(holz_lagerquelle, null);
+					inhalt.set(holz_lagerquelle-3, null);
+					inhalt.set(holz_lagerquelle-6, null);
+					
+					Start.bilanz.removeGesamtkonto(100, inhalt.get(holz_lagerziel), "Umlagern");
+					System.out.println("Das Lagerziel wurde erfolgreich zur Lagerquelle umgelagert.");
+					return true;
 				}
 				else
 				{
-					
+					System.out.println("Das Lagerziel ist bereits besetzt");
 				}
-				if(lagerquelle < 9)
+			}
+			else
+			{
+				if(inhalt.get(lagerziel) != null)
 				{
-					for(int i = 0; i < 9; i++)
-					{
-						inhalt.set(i, null);
-					}
-				}
-				else if(lagerquelle < 18)
-				{
-					for(int i = 9; i < 18; i++)
-					{
-						inhalt.set(i, null);
-					}
-				}
-				else if(lagerquelle < 27)
-				{
-					for(int i = 18; i < 27; i++)
-					{
-						inhalt.set(i, null);
-					}
+					System.out.println("Das Lagerziel ist bereits besetzt");
+					return false;
 				}
 				else
 				{
-					
+					inhalt.set(lagerziel, inhalt.get(lagerquelle));
+					inhalt.set(lagerquelle, null);
+					Start.bilanz.removeGesamtkonto(100, inhalt.get(lagerziel), "Umlagern");
+					System.out.println("Das Lagerziel wurde erfolgreich zur Lagerquelle umgelagert.");
+					return true;
 				}
-				System.out.println("Das Lagerziel wurde erfolgreich zur Lagerquelle umgelagert.");
-				return true;
-			}*/
+			}
 		}
 		if(inhalt.get(lagerquelle) instanceof Stein)
 		{
@@ -1946,9 +1615,20 @@ public class Lager {
 			}
 			else
 			{
-				if(lagerziel > 8)
+				if(((Stein) inhalt.get(lagerquelle)).getGewicht().equals("Schwer"))
 				{
-					System.out.println("Steine kï¿½nnen nur unten gelagert werden!");
+					if(lagerziel > 8)
+					{
+						System.out.println("Schwere Steine koennen nur unten gelagert werden!");
+					}
+					else
+					{
+						inhalt.set(lagerziel, inhalt.get(lagerquelle));
+						inhalt.set(lagerquelle, null);
+						Start.bilanz.removeGesamtkonto(100, inhalt.get(lagerziel), "Umlagern");
+						System.out.println("Das Lagerziel wurde erfolgreich zur Lagerquelle umgelagert.");
+						return true;	
+					}
 				}
 				else
 				{
@@ -1956,12 +1636,27 @@ public class Lager {
 					inhalt.set(lagerquelle, null);
 					Start.bilanz.removeGesamtkonto(100, inhalt.get(lagerziel), "Umlagern");
 					System.out.println("Das Lagerziel wurde erfolgreich zur Lagerquelle umgelagert.");
-					return true;	
+					return true;
 				}
 			}
 		}
 		System.out.println("Irgendwas ist falsch");
 		return false;
+	}
+	
+	public boolean isLagerEmpty() {
+		for(int i = 0; i < 27; i++)
+		{
+			if(inhalt.get(i) == null)
+			{
+				
+			}
+			else
+			{
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	public String getLagerplatzInhalt(int lagerplatz) {

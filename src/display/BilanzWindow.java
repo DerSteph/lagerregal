@@ -25,6 +25,10 @@ public class BilanzWindow {
 		JLabel gesamtplus = new JLabel("<html><body><center>Dein Gesamtplus <br>" + Integer.toString(Start.bilanz.getGesamtplus()) + "€</center></body></html>");
 		JLabel gesamtminus = new JLabel("<html><body><center>Dein Gesamtminus <br>" + Integer.toString(Start.bilanz.getGesamtminus()) + "€</center></body></html>");
 		
+		kontostand.setHorizontalAlignment(JLabel.CENTER);
+		gesamtplus.setHorizontalAlignment(JLabel.CENTER);
+		gesamtminus.setHorizontalAlignment(JLabel.CENTER);
+		
 		oben.add(kontostand);
 		oben.add(gesamtplus);
 		oben.add(gesamtminus);

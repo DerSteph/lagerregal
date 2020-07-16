@@ -34,4 +34,8 @@ public class Papier extends Produkt{
 	public String getInhalt() {
 		return this.getClass().getSimpleName() + ", " + this.getFarbe() + ", " + this.getGroesse();
 	}
+	@Override
+	public String getInhaltFormatted () {
+		return this.getClass().getSimpleName() + "<br>" + this.getFarbe() + "<br>" + this.getGroesse();
+	}
 }

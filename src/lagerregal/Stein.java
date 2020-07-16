@@ -26,4 +26,8 @@ public class Stein extends Produkt {
 	public String getInhalt() {
 		return this.getClass().getSimpleName() + ", " + this.getArt() + ", " + this.getGewicht();
 	}
+	@Override
+	public String getInhaltFormatted() {
+		return this.getClass().getSimpleName() + "<br>" + this.getArt() + "<br>" + this.getGewicht();
+	}
 }

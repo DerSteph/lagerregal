@@ -26,6 +26,7 @@ import javax.swing.border.LineBorder;
 
 import lagerregal.Start;
 import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
 
 public class MainWindowNew extends JFrame {
 	public JPanel anzeige = new JPanel();
@@ -64,9 +65,10 @@ public class MainWindowNew extends JFrame {
 	 * Create the frame.
 	 */
 	public MainWindowNew() {
+		setTitle("LagerRegal 2020");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 930, 600);
+		setBounds(100, 100, 940, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -85,39 +87,44 @@ public class MainWindowNew extends JFrame {
 		
 		JLabel icon = new JLabel("");
 		icon.setIcon(new ImageIcon(MainWindowNew.class.getResource("/display/lagerregal2020.png")));
+		
+		JSeparator separator = new JSeparator();
+		separator.setForeground(new Color(160, 160, 160));
+		separator.setBackground(new Color(255, 255, 255));
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 417, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-								.addComponent(panel_3, GroupLayout.DEFAULT_SIZE, 551, Short.MAX_VALUE)
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-										.addComponent(panel_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE)
-										.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE))
-									.addContainerGap())))
-						.addComponent(panel_4, GroupLayout.PREFERRED_SIZE, 417, GroupLayout.PREFERRED_SIZE)))
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(44)
-					.addComponent(icon, GroupLayout.PREFERRED_SIZE, 322, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(618, Short.MAX_VALUE))
+							.addContainerGap()
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(panel, GroupLayout.PREFERRED_SIZE, 417, GroupLayout.PREFERRED_SIZE)
+								.addComponent(panel_4, GroupLayout.PREFERRED_SIZE, 417, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(44)
+							.addComponent(icon, GroupLayout.PREFERRED_SIZE, 322, GroupLayout.PREFERRED_SIZE)))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, 477, Short.MAX_VALUE)
+						.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 477, Short.MAX_VALUE)
+						.addComponent(separator, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(panel_3, GroupLayout.DEFAULT_SIZE, 477, Short.MAX_VALUE))
+					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(panel_3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+							.addComponent(separator, GroupLayout.PREFERRED_SIZE, 2, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(panel_3, GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE))
 						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 407, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addComponent(panel_4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -139,6 +146,10 @@ public class MainWindowNew extends JFrame {
 							text = "leer";
 							lagerraum_feld[i].setForeground(Color.gray);
 						}
+						else
+						{
+							lagerraum_feld[i].setForeground(Color.black);
+						}
 						lagerraum_feld[i].setText(text);
 					}
 					lagerauswahl_main.setText("Lager 3");
@@ -152,6 +163,10 @@ public class MainWindowNew extends JFrame {
 							text = "leer";
 							lagerraum_feld[i].setForeground(Color.gray);
 						}
+						else
+						{
+							lagerraum_feld[i].setForeground(Color.black);
+						}
 						lagerraum_feld[i].setText(text);
 					}
 					lagerauswahl_main.setText("Lager 1");
@@ -164,6 +179,10 @@ public class MainWindowNew extends JFrame {
 						if(text == null) {
 							text = "leer";
 							lagerraum_feld[i].setForeground(Color.gray);
+						}
+						else
+						{
+							lagerraum_feld[i].setForeground(Color.black);
 						}
 						lagerraum_feld[i].setText(text);
 					}
@@ -193,6 +212,10 @@ public class MainWindowNew extends JFrame {
 							text = "leer";
 							lagerraum_feld[i].setForeground(Color.gray);
 						}
+						else
+						{
+							lagerraum_feld[i].setForeground(Color.black);
+						}
 						lagerraum_feld[i].setText(text);
 					}
 					lagerauswahl_main.setText("Lager 2");
@@ -206,6 +229,10 @@ public class MainWindowNew extends JFrame {
 							text = "leer";
 							lagerraum_feld[i].setForeground(Color.gray);
 						}
+						else
+						{
+							lagerraum_feld[i].setForeground(Color.black);
+						}
 						lagerraum_feld[i].setText(text);
 					}
 					lagerauswahl_main.setText("Lager 3");
@@ -218,6 +245,10 @@ public class MainWindowNew extends JFrame {
 						if(text == null) {
 							text = "leer";
 							lagerraum_feld[i].setForeground(Color.gray);
+						}
+						else
+						{
+							lagerraum_feld[i].setForeground(Color.black);
 						}
 						lagerraum_feld[i].setText(text);
 					}
@@ -237,6 +268,7 @@ public class MainWindowNew extends JFrame {
 		gbl_panel_3.columnWeights = new double[]{};
 		gbl_panel_3.rowWeights = new double[]{};
 		panel_3.setLayout(gbl_panel_3);
+		panel_3.setBackground(Color.white);
 		
 		/*for(int i = 0; i < 3; i++)
 		{
@@ -288,34 +320,88 @@ public class MainWindowNew extends JFrame {
 			auftrag_annehmen[i].setVisible(false);
 			auftrag_zurueckstellen[i].setVisible(false);
 		}*/
+		JLabel header_auftrag = new JLabel("Einlagern / Auslagern");
+		header_auftrag.setFont(new Font("Tahoma", Font.BOLD, 11));
+		GridBagConstraints gbc_header_auftrag = new GridBagConstraints();
+		gbc_header_auftrag.insets = new Insets(0, 0, 5, 5);
+		gbc_header_auftrag.gridx = 0;
+		gbc_header_auftrag.gridy = 0;
+		panel_3.add(header_auftrag, gbc_header_auftrag);
+		
+		JLabel header_produkt = new JLabel("Produkt");
+		header_produkt.setFont(new Font("Tahoma", Font.BOLD, 11));
+		GridBagConstraints gbc_header_produkt = new GridBagConstraints();
+		gbc_header_produkt.insets = new Insets(0, 0, 5, 5);
+		gbc_header_produkt.gridx = 1;
+		gbc_header_produkt.gridy = 0;
+		panel_3.add(header_produkt, gbc_header_produkt);
+		
+		JLabel header_kosten= new JLabel("Verdienst");
+		header_kosten.setFont(new Font("Tahoma", Font.BOLD, 11));
+		header_kosten.setBackground(SystemColor.window);
+		GridBagConstraints gbc_header_kosten = new GridBagConstraints();
+		gbc_header_kosten.insets = new Insets(0, 0, 5, 5);
+		gbc_header_kosten.gridx = 2;
+		gbc_header_kosten.gridy = 0;
+		panel_3.add(header_kosten, gbc_header_kosten);
+		
+		JLabel header_annehmen = new JLabel("Annehmen?");
+		header_annehmen.setFont(new Font("Tahoma", Font.BOLD, 11));
+		header_annehmen.setBackground(SystemColor.window);
+		GridBagConstraints gbc_header_annehmen = new GridBagConstraints();
+		gbc_header_annehmen.insets = new Insets(0, 0, 5, 5);
+		gbc_header_annehmen.gridx = 3;
+		gbc_header_annehmen.gridy = 0;
+		panel_3.add(header_annehmen, gbc_header_annehmen);
+		
+		JLabel header_zurueckstellen = new JLabel("Zurueckstellen?");
+		header_zurueckstellen.setFont(new Font("Tahoma", Font.BOLD, 11));
+		header_zurueckstellen.setBackground(SystemColor.window);
+		GridBagConstraints gbc_header_zurueckstellen = new GridBagConstraints();
+		gbc_header_zurueckstellen.insets = new Insets(0, 0, 5, 5);
+		gbc_header_zurueckstellen.gridx = 4;
+		gbc_header_zurueckstellen.gridy = 0;
+		panel_3.add(header_zurueckstellen, gbc_header_zurueckstellen);
+		
+		JLabel header_ablehnen = new JLabel("Loeschen?");
+		header_ablehnen.setFont(new Font("Tahoma", Font.BOLD, 11));
+		header_ablehnen.setBackground(SystemColor.window);
+		GridBagConstraints gbc_header_ablehnen = new GridBagConstraints();
+		gbc_header_ablehnen.insets = new Insets(0, 0, 5, 0);
+		gbc_header_ablehnen.gridx = 5;
+		gbc_header_ablehnen.gridy = 0;
+		panel_3.add(header_ablehnen, gbc_header_ablehnen);
+		
+		
+		
+		
 		
 		auftrag_art[0] = new JLabel("Att1");
 		GridBagConstraints gbc_lblNewLabel_5 = new GridBagConstraints();
 		gbc_lblNewLabel_5.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_5.gridx = 0;
-		gbc_lblNewLabel_5.gridy = 0;
+		gbc_lblNewLabel_5.gridy = 1;
 		panel_3.add(auftrag_art[0], gbc_lblNewLabel_5);
 		
 		auftrag_produkt[0] = new JLabel("Att2");
 		GridBagConstraints gbc_lblNewLabel_6 = new GridBagConstraints();
 		gbc_lblNewLabel_6.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_6.gridx = 1;
-		gbc_lblNewLabel_6.gridy = 0;
+		gbc_lblNewLabel_6.gridy = 1;
 		panel_3.add(auftrag_produkt[0], gbc_lblNewLabel_6);
 		
 		auftrag_kosten[0] = new JLabel("Att3");
 		GridBagConstraints gbc_lblNewLabel_7 = new GridBagConstraints();
 		gbc_lblNewLabel_7.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_7.gridx = 2;
-		gbc_lblNewLabel_7.gridy = 0;
+		gbc_lblNewLabel_7.gridy = 1;
 		panel_3.add(auftrag_kosten[0], gbc_lblNewLabel_7);
 		
 		auftrag_annehmen[0] = new JButton("\u2714");
 		GridBagConstraints gbc_btnNewButton_4 = new GridBagConstraints();
-		gbc_btnNewButton_4.anchor = GridBagConstraints.EAST;
 		gbc_btnNewButton_4.insets = new Insets(0, 0, 5, 5);
 		gbc_btnNewButton_4.gridx = 3;
-		gbc_btnNewButton_4.gridy = 0;
+		gbc_btnNewButton_4.gridy = 1;
 		auftrag_annehmen[0].addActionListener(new java.awt.event.ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -340,10 +426,9 @@ public class MainWindowNew extends JFrame {
 		
 		auftrag_zurueckstellen[0] = new JButton("\u274C");
 		GridBagConstraints gbc_btnNewButton_9 = new GridBagConstraints();
-		gbc_btnNewButton_9.anchor = GridBagConstraints.EAST;
 		gbc_btnNewButton_9.insets = new Insets(0, 0, 5, 5);
 		gbc_btnNewButton_9.gridx = 4;
-		gbc_btnNewButton_9.gridy = 0;
+		gbc_btnNewButton_9.gridy = 1;
 		auftrag_zurueckstellen[0].addActionListener(new java.awt.event.ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -355,10 +440,9 @@ public class MainWindowNew extends JFrame {
 		
 		auftrag_ablehnen[0] = new JButton("\uD83D\uDDD1\uFE0F");
 		GridBagConstraints gbc_btnNewButton_12 = new GridBagConstraints();
-		gbc_btnNewButton_12.anchor = GridBagConstraints.EAST;
 		gbc_btnNewButton_12.insets = new Insets(0, 0, 5, 0);
 		gbc_btnNewButton_12.gridx = 5;
-		gbc_btnNewButton_12.gridy = 0;
+		gbc_btnNewButton_12.gridy = 1;
 		auftrag_ablehnen[0].addActionListener(new java.awt.event.ActionListener() {
 
 			@Override
@@ -374,29 +458,29 @@ public class MainWindowNew extends JFrame {
 		GridBagConstraints gbc_lblNewLabel_8 = new GridBagConstraints();
 		gbc_lblNewLabel_8.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_8.gridx = 0;
-		gbc_lblNewLabel_8.gridy = 1;
+		gbc_lblNewLabel_8.gridy = 2;
+		gbc_lblNewLabel_8.weighty = 1;
 		panel_3.add(auftrag_art[1], gbc_lblNewLabel_8);
 		
 		auftrag_produkt[1] = new JLabel("Att2_2");
 		GridBagConstraints gbc_lblNewLabel_9 = new GridBagConstraints();
 		gbc_lblNewLabel_9.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_9.gridx = 1;
-		gbc_lblNewLabel_9.gridy = 1;
+		gbc_lblNewLabel_9.gridy = 2;
 		panel_3.add(auftrag_produkt[1], gbc_lblNewLabel_9);
 		
 		auftrag_kosten[1] = new JLabel("Att2_3");
 		GridBagConstraints gbc_lblNewLabel_10 = new GridBagConstraints();
 		gbc_lblNewLabel_10.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_10.gridx = 2;
-		gbc_lblNewLabel_10.gridy = 1;
+		gbc_lblNewLabel_10.gridy = 2;
 		panel_3.add(auftrag_kosten[1], gbc_lblNewLabel_10);
 		
 		auftrag_annehmen[1] = new JButton("\u2714");
 		GridBagConstraints gbc_btnNewButton_5 = new GridBagConstraints();
-		gbc_btnNewButton_5.anchor = GridBagConstraints.EAST;
 		gbc_btnNewButton_5.insets = new Insets(0, 0, 5, 5);
 		gbc_btnNewButton_5.gridx = 3;
-		gbc_btnNewButton_5.gridy = 1;
+		gbc_btnNewButton_5.gridy = 2;
 		auftrag_annehmen[1].addActionListener(new java.awt.event.ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -421,10 +505,9 @@ public class MainWindowNew extends JFrame {
 		
 		auftrag_zurueckstellen[1] = new JButton("\u274C");
 		GridBagConstraints gbc_btnNewButton_10 = new GridBagConstraints();
-		gbc_btnNewButton_10.anchor = GridBagConstraints.EAST;
 		gbc_btnNewButton_10.insets = new Insets(0, 0, 5, 5);
 		gbc_btnNewButton_10.gridx = 4;
-		gbc_btnNewButton_10.gridy = 1;
+		gbc_btnNewButton_10.gridy = 2;
 		auftrag_zurueckstellen[1].addActionListener(new java.awt.event.ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -436,10 +519,9 @@ public class MainWindowNew extends JFrame {
 		
 		auftrag_ablehnen[1] = new JButton("\uD83D\uDDD1\uFE0F");
 		GridBagConstraints gbc_btnNewButton_7 = new GridBagConstraints();
-		gbc_btnNewButton_7.anchor = GridBagConstraints.EAST;
 		gbc_btnNewButton_7.insets = new Insets(0, 0, 5, 0);
 		gbc_btnNewButton_7.gridx = 5;
-		gbc_btnNewButton_7.gridy = 1;
+		gbc_btnNewButton_7.gridy = 2;
 		auftrag_ablehnen[1].addActionListener(new java.awt.event.ActionListener() {
 
 			@Override
@@ -455,28 +537,28 @@ public class MainWindowNew extends JFrame {
 		GridBagConstraints gbc_lblNewLabel_11 = new GridBagConstraints();
 		gbc_lblNewLabel_11.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_11.gridx = 0;
-		gbc_lblNewLabel_11.gridy = 2;
+		gbc_lblNewLabel_11.gridy = 3;
 		panel_3.add(auftrag_art[2], gbc_lblNewLabel_11);
 		
 		auftrag_produkt[2] = new JLabel("Att2_3");
 		GridBagConstraints gbc_lblNewLabel_12 = new GridBagConstraints();
 		gbc_lblNewLabel_12.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_12.gridx = 1;
-		gbc_lblNewLabel_12.gridy = 2;
+		gbc_lblNewLabel_12.gridy = 3;
 		panel_3.add(auftrag_produkt[2], gbc_lblNewLabel_12);
 		
 		auftrag_kosten[2] = new JLabel("Att3_3");
 		GridBagConstraints gbc_lblNewLabel_13 = new GridBagConstraints();
 		gbc_lblNewLabel_13.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_13.gridx = 2;
-		gbc_lblNewLabel_13.gridy = 2;
+		gbc_lblNewLabel_13.gridy = 3;
 		panel_3.add(auftrag_kosten[2], gbc_lblNewLabel_13);
 		
 		auftrag_annehmen[2] = new JButton("\u2714");
 		GridBagConstraints gbc_btnNewButton_6 = new GridBagConstraints();
 		gbc_btnNewButton_6.insets = new Insets(0, 0, 5, 5);
 		gbc_btnNewButton_6.gridx = 3;
-		gbc_btnNewButton_6.gridy = 2;
+		gbc_btnNewButton_6.gridy = 3;
 		auftrag_annehmen[2].addActionListener(new java.awt.event.ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -501,10 +583,9 @@ public class MainWindowNew extends JFrame {
 		
 		auftrag_zurueckstellen[2] = new JButton("\u274C");
 		GridBagConstraints gbc_btnNewButton_11 = new GridBagConstraints();
-		gbc_btnNewButton_11.anchor = GridBagConstraints.EAST;
 		gbc_btnNewButton_11.insets = new Insets(0, 0, 5, 5);
 		gbc_btnNewButton_11.gridx = 4;
-		gbc_btnNewButton_11.gridy = 2;
+		gbc_btnNewButton_11.gridy = 3;
 		auftrag_zurueckstellen[2].addActionListener(new java.awt.event.ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -516,10 +597,9 @@ public class MainWindowNew extends JFrame {
 		
 		auftrag_ablehnen[2] = new JButton("\uD83D\uDDD1\uFE0F");
 		GridBagConstraints gbc_btnNewButton_8 = new GridBagConstraints();
-		gbc_btnNewButton_8.anchor = GridBagConstraints.EAST;
 		gbc_btnNewButton_8.insets = new Insets(0, 0, 5, 0);
 		gbc_btnNewButton_8.gridx = 5;
-		gbc_btnNewButton_8.gridy = 2;
+		gbc_btnNewButton_8.gridy = 3;
 		auftrag_ablehnen[2].addActionListener(new java.awt.event.ActionListener() {
 
 			@Override
@@ -532,6 +612,21 @@ public class MainWindowNew extends JFrame {
 		panel_3.add(auftrag_ablehnen[2], gbc_btnNewButton_8);
 		for(int i = 0; i< 3; i++)
 		{
+			if(i == 1)
+			{
+				auftrag_art[i].setBackground(Color.white);
+				auftrag_art[i].setOpaque(true);
+				auftrag_produkt[i].setBackground(Color.white);
+				auftrag_produkt[i].setOpaque(true);
+				auftrag_kosten[i].setBackground(Color.white);
+				auftrag_kosten[i].setOpaque(true);
+				auftrag_annehmen[i].setBackground(Color.white);
+				auftrag_annehmen[i].setOpaque(true);
+				auftrag_zurueckstellen[i].setBackground(Color.white);
+				auftrag_zurueckstellen[i].setOpaque(true);
+				auftrag_ablehnen[i].setBackground(Color.white);
+				auftrag_ablehnen[i].setOpaque(true);
+			}
 			auftrag_art[i].setText("-");
 			auftrag_produkt[i].setText("-");
 			auftrag_kosten[i].setText("-");
@@ -678,9 +773,12 @@ public class MainWindowNew extends JFrame {
 		panel_2.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		kontostand = new JLabel("Dein Kontostand: 0\u20AC");
+		kontostand.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		panel_2.add(kontostand);
 		
 		JButton btnNewButton = new JButton("Neuer Auftrag");
+		btnNewButton.setBackground(new Color(144, 238, 144));
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Start.lager.auftragHinzufuegen();
@@ -691,6 +789,8 @@ public class MainWindowNew extends JFrame {
 		panel_1.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Umlagern");
+		btnNewButton_1.setBackground(new Color(0, 139, 139));
+		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new UmlagernWindow();
@@ -699,6 +799,8 @@ public class MainWindowNew extends JFrame {
 		panel_1.add(btnNewButton_1);
 		
 		JButton btnNewButton_2 = new JButton("Verschrotten");
+		btnNewButton_2.setBackground(new Color(0, 139, 139));
+		btnNewButton_2.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new VerschrottenWindow();
@@ -707,6 +809,8 @@ public class MainWindowNew extends JFrame {
 		panel_1.add(btnNewButton_2);
 		
 		JButton btnNewButton_3 = new JButton("Bilanz");
+		btnNewButton_3.setBackground(new Color(100, 149, 237));
+		btnNewButton_3.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new BilanzWindow();
@@ -750,6 +854,7 @@ public class MainWindowNew extends JFrame {
 				text = "leer";
 				lagerraum_feld[i].setForeground(Color.gray);
 			}
+			lagerraum_feld[i].setHorizontalAlignment(JLabel.CENTER);
 			lagerraum_feld[i].setText("<html><div style='text-align: center;'>" + text + "</div></html>");
 			if(i % 2 == 0)
 			{
@@ -786,8 +891,8 @@ public class MainWindowNew extends JFrame {
 			if(Start.lager.getAuftrag(i) != null)
 			{
 				auftrag_art[i].setText(Start.lager.getAuftrag(i).getLagerungsart());
-				auftrag_produkt[i].setText(Start.lager.getAuftrag(i).getInhalt());
-				auftrag_kosten[i].setText(Integer.toString(Start.lager.getAuftrag(i).getKosten()));
+				auftrag_produkt[i].setText("<html><center>" + Start.lager.getAuftrag(i).getInhaltFormatted() + "</center></html>");
+				auftrag_kosten[i].setText(Integer.toString(Start.lager.getAuftrag(i).getKosten()) + "€");
 				auftrag_art[i].setEnabled(true);
 				auftrag_produkt[i].setEnabled(true);
 				auftrag_kosten[i].setEnabled(true);
@@ -817,8 +922,12 @@ public class MainWindowNew extends JFrame {
 			{
 				String text = Start.lager.getLagerplatzInhalt(getRightLagerplatz(i));
 				if(text == null) {
-					text = "leer";
+					text = "<html><center>leer</center></html>";
 					lagerraum_feld[i].setForeground(Color.gray);
+				}
+				else
+				{
+					lagerraum_feld[i].setForeground(Color.black);
 				}
 				lagerraum_feld[i].setText(text);
 			}
@@ -829,8 +938,12 @@ public class MainWindowNew extends JFrame {
 			{
 				String text = Start.lager.getLagerplatzInhalt(getRightLagerplatz(i+9));
 				if(text == null) {
-					text = "leer";
+					text = "<html><center>leer</center></html>";
 					lagerraum_feld[i].setForeground(Color.gray);
+				}
+				else
+				{
+					lagerraum_feld[i].setForeground(Color.black);
 				}
 				lagerraum_feld[i].setText(text);
 			}
@@ -841,8 +954,12 @@ public class MainWindowNew extends JFrame {
 			{
 				String text = Start.lager.getLagerplatzInhalt(getRightLagerplatz(i+18));
 				if(text == null) {
-					text = "leer";
+					text = "<html><center>leer</center></html>";
 					lagerraum_feld[i].setForeground(Color.gray);
+				}
+				else
+				{
+					lagerraum_feld[i].setForeground(Color.black);
 				}
 				lagerraum_feld[i].setText(text);
 			}

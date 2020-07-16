@@ -26,4 +26,8 @@ public class Holz extends Produkt {
 	public String getInhalt() {
 		return this.getClass().getSimpleName() + ", " + this.getArt() + ", " + this.getForm();
 	}
+	@Override
+	public String getInhaltFormatted() {
+		return this.getClass().getSimpleName() + "<br>" + this.getArt() + "<br>" + this.getForm();
+	}
 }
