@@ -21,11 +21,11 @@ public class Bilanzobjekt {
 		setZeit(LocalDateTime.now());
 		if(grund == "Verschrottung")
 		{
-			this.Kosten = 500;
+			this.Kosten = -500;
 		}
 		if(grund == "Umlagern")
 		{
-			this.Kosten = 100;
+			this.Kosten = -100;
 		}
 		if(grund == "Abgelehnt")
 		{

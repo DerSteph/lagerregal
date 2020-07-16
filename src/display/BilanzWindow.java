@@ -72,7 +72,7 @@ public class BilanzWindow {
 				data.add(e.getProdukt().getClass().getSimpleName());
 				if(e.getGrund() == "Umlagern" || e.getGrund() == "Verschrotten")
 				{
-					data.add("-"+Integer.toString(e.getKosten()));
+					data.add(Integer.toString(e.getKosten()));
 				}
 				else
 				{

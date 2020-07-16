@@ -9,50 +9,46 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.plaf.ButtonUI;
+import javax.swing.plaf.basic.BasicButtonUI;
 
 import lagerregal.Start;
 
 public class AddStuffToLagerWindow {
 	public AddStuffToLagerWindow(int num) {
 		JFrame auftraghinzufuegen = new JFrame();
-		auftraghinzufuegen.setSize(400,400);
+		auftraghinzufuegen.setSize(400, 400);
 		auftraghinzufuegen.setLocationRelativeTo(null);
 		auftraghinzufuegen.setTitle("Einlagerung");
-		
+
 		JLabel lagerauswahl = new JLabel("Lager 1");
-		
+
 		JPanel lagerraum = new JPanel();
-		lagerraum.setLayout(new java.awt.GridLayout(3,3));
+		lagerraum.setLayout(new java.awt.GridLayout(3, 3));
 		JButton[] label = new JButton[9];
-		
+
 		final int checkliste[] = Start.lager.getArrayVonFreienPlaetzen(Start.lager.getAuftrag(num));
 		int check = 0;
-		for(int i = 0; i < 27; i++)
-		{
-			if(checkliste[i] == 1)
-			{
+		for (int i = 0; i < 27; i++) {
+			if (checkliste[i] == 1) {
 				check++;
 			}
 		}
-		
-		for(int i = 0; i < 9; i++)
-		{
+
+		for (int i = 0; i < 9; i++) {
 			final int temp = i;
 			label[i] = new JButton();
 			String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i));
-			if(text == null) {
-					if(checkliste[Start.window.getRightLagerplatz(i)] == 0)
-					{
-						label[i].setEnabled(false);
-					}
-					else
-					{
-						label[i].setEnabled(true);
-					}
+			if (text == null) {
+				if (checkliste[Start.window.getRightLagerplatz(i)] == 0) {
+					label[i].setEnabled(false);
+				} else {
+					label[i].setBackground(Color.GREEN);
+					label[i].setEnabled(true);
+				}
 				text = "leer";
-			}
-			else
-			{
+			} else {
 				label[i].setEnabled(false);
 			}
 			label[i].setText(text);
@@ -60,245 +56,194 @@ public class AddStuffToLagerWindow {
 			label[i].addActionListener(new java.awt.event.ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					if(lagerauswahl.getText().equals("Lager 1"))
-					{
-						if(Start.lager.AuftragAbarbeiten(num, Start.window.getRightLagerplatz(temp)))
-						{
+					if (lagerauswahl.getText().equals("Lager 1")) {
+						if (Start.lager.AuftragAbarbeiten(num, Start.window.getRightLagerplatz(temp))) {
 							Start.window.UpdateMainLagerraum();
 							Start.window.UpdateAuftragListe();
-							auftraghinzufuegen.dispatchEvent(new WindowEvent(auftraghinzufuegen, WindowEvent.WINDOW_CLOSING));
+							auftraghinzufuegen
+									.dispatchEvent(new WindowEvent(auftraghinzufuegen, WindowEvent.WINDOW_CLOSING));
 							Start.window.kontostand.setText("Dein Kontostand: " + Start.bilanz.getGesamtkonto() + "€");
+						} else {
+							JOptionPane.showMessageDialog(null,
+									"Der Lagerplatz ist bereits durch andere Dinge davor blockiert.");
 						}
-						else
-						{
-							JOptionPane.showMessageDialog(null, "Der Lagerplatz ist bereits durch andere Dinge davor blockiert.");
-						}
-					}
-					else if(lagerauswahl.getText().equals("Lager 2"))
-					{
-						if(Start.lager.AuftragAbarbeiten(num, Start.window.getRightLagerplatz(temp+9)))
-						{
+					} else if (lagerauswahl.getText().equals("Lager 2")) {
+						if (Start.lager.AuftragAbarbeiten(num, Start.window.getRightLagerplatz(temp + 9))) {
 							Start.window.UpdateMainLagerraum();
 							Start.window.UpdateAuftragListe();
-							auftraghinzufuegen.dispatchEvent(new WindowEvent(auftraghinzufuegen, WindowEvent.WINDOW_CLOSING));
+							auftraghinzufuegen
+									.dispatchEvent(new WindowEvent(auftraghinzufuegen, WindowEvent.WINDOW_CLOSING));
 							Start.window.kontostand.setText("Dein Kontostand: " + Start.bilanz.getGesamtkonto() + "€");
+						} else {
+							JOptionPane.showMessageDialog(null,
+									"Der Lagerplatz ist bereits durch andere Dinge davor blockiert.");
 						}
-						else
-						{
-							JOptionPane.showMessageDialog(null, "Der Lagerplatz ist bereits durch andere Dinge davor blockiert.");
-						}
-					}
-					else if(lagerauswahl.getText().equals("Lager 3"))
-					{
-						if(Start.lager.AuftragAbarbeiten(num, Start.window.getRightLagerplatz(temp+18)))
-						{
+					} else if (lagerauswahl.getText().equals("Lager 3")) {
+						if (Start.lager.AuftragAbarbeiten(num, Start.window.getRightLagerplatz(temp + 18))) {
 							Start.window.UpdateMainLagerraum();
 							Start.window.UpdateAuftragListe();
-							auftraghinzufuegen.dispatchEvent(new WindowEvent(auftraghinzufuegen, WindowEvent.WINDOW_CLOSING));
-							Start.window.kontostand.setText("Dein Kontostand: " + Integer.toString(Start.bilanz.getGesamtkonto()) + "€");
+							auftraghinzufuegen
+									.dispatchEvent(new WindowEvent(auftraghinzufuegen, WindowEvent.WINDOW_CLOSING));
+							Start.window.kontostand.setText(
+									"Dein Kontostand: " + Integer.toString(Start.bilanz.getGesamtkonto()) + "€");
+						} else {
+							JOptionPane.showMessageDialog(null,
+									"Der Lagerplatz ist bereits durch andere Dinge davor blockiert.");
 						}
-						else
-						{
-							JOptionPane.showMessageDialog(null, "Der Lagerplatz ist bereits durch andere Dinge davor blockiert.");
-						}
-					}
-					else
-					{
-						
+					} else {
+
 					}
 				}
 			});
 			lagerraum.add(label[i]);
 		}
-		
-		
+
 		JPanel auswahl = new JPanel();
 		auswahl.setLayout(new java.awt.FlowLayout());
 		JButton links = new JButton("<");
 		links.addActionListener(new java.awt.event.ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-				if(lagerauswahl.getText().equals("Lager 1"))
-				{
-					for(int i = 0; i < 9; i++)
-					{
-						String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i+18));
-						if(text == null) {
-								if(checkliste[Start.window.getRightLagerplatz(i+18)] == 0)
-								{
-									label[i].setEnabled(false);
-								}
-								else
-								{
-									label[i].setEnabled(true);
-								}
+			public void actionPerformed(ActionEvent e) {
+				if (lagerauswahl.getText().equals("Lager 1")) {
+					for (int i = 0; i < 9; i++) {
+						label[i].setBackground(new JButton().getBackground());
+						String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i + 18));
+						if (text == null) {
+							if (checkliste[Start.window.getRightLagerplatz(i + 18)] == 0) {
+								label[i].setEnabled(false);
+							} else {
+								label[i].setBackground(Color.GREEN);
+								label[i].setEnabled(true);
+							}
 							text = "leer";
-						}
-						else
-						{
+						} else {
 							label[i].setEnabled(false);
 						}
 						label[i].setText(text);
 					}
 					lagerauswahl.setText("Lager 3");
-				}
-				else if(lagerauswahl.getText().equals("Lager 2"))
-				{
-					for(int i = 0; i < 9; i++)
-					{
+				} else if (lagerauswahl.getText().equals("Lager 2")) {
+					for (int i = 0; i < 9; i++) {
+						label[i].setBackground(new JButton().getBackground());
 						String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i));
-						if(text == null) {
-								if(checkliste[Start.window.getRightLagerplatz(i)] == 0)
-								{
-									label[i].setEnabled(false);
-								}
-								else
-								{
-									label[i].setEnabled(true);
-								}
+						if (text == null) {
+							if (checkliste[Start.window.getRightLagerplatz(i)] == 0) {
+								label[i].setEnabled(false);
+							} else {
+								label[i].setBackground(Color.GREEN);
+								label[i].setEnabled(true);
+							}
 							text = "leer";
-						}
-						else
-						{
+						} else {
 							label[i].setEnabled(false);
 						}
 						label[i].setText(text);
 					}
 					lagerauswahl.setText("Lager 1");
-				}
-				else if(lagerauswahl.getText().equals("Lager 3"))
-				{
-					for(int i = 0; i < 9; i++)
-					{
-						String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i+9));
-						if(text == null) {
-								if(checkliste[Start.window.getRightLagerplatz(i+9)] == 0)
-								{
-									label[i].setEnabled(false);
-								}
-								else
-								{
-									label[i].setEnabled(true);
-								}
+				} else if (lagerauswahl.getText().equals("Lager 3")) {
+					for (int i = 0; i < 9; i++) {
+						label[i].setBackground(new JButton().getBackground());
+						String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i + 9));
+						if (text == null) {
+							if (checkliste[Start.window.getRightLagerplatz(i + 9)] == 0) {
+								label[i].setEnabled(false);
+							} else {
+								label[i].setBackground(Color.GREEN);
+								label[i].setEnabled(true);
+							}
 							text = "leer";
-						}
-						else
-						{
+						} else {
 							label[i].setEnabled(false);
 						}
 						label[i].setText(text);
 					}
 					lagerauswahl.setText("Lager 2");
-				}
-				else
-				{
-					
+				} else {
+
 				}
 			}
 		});
 		JButton rechts = new JButton(">");
 		rechts.addActionListener(new java.awt.event.ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-				if(lagerauswahl.getText().equals("Lager 1"))
-				{
-					for(int i = 0; i < 9; i++)
-					{
-						String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i+9));
-						if(text == null) {
-								if(checkliste[Start.window.getRightLagerplatz(i+9)] == 0)
-								{
-									label[i].setEnabled(false);
-								}
-								else
-								{
-									label[i].setEnabled(true);
-								}
+			public void actionPerformed(ActionEvent e) {
+				if (lagerauswahl.getText().equals("Lager 1")) {
+					for (int i = 0; i < 9; i++) {
+						label[i].setBackground(new JButton().getBackground());
+						String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i + 9));
+						if (text == null) {
+							if (checkliste[Start.window.getRightLagerplatz(i + 9)] == 0) {
+								label[i].setEnabled(false);
+							} else {
+								label[i].setBackground(Color.GREEN);
+								label[i].setEnabled(true);
+							}
 							text = "leer";
-						}
-						else
-						{
+						} else {
 							label[i].setEnabled(false);
 						}
-						label[i].setText(text);	
+						label[i].setText(text);
 					}
 					lagerauswahl.setText("Lager 2");
-				}
-				else if(lagerauswahl.getText().equals("Lager 2"))
-				{
-					for(int i = 0; i < 9; i++)
-					{
-						String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i+18));
-						if(text == null) {
-								if(checkliste[Start.window.getRightLagerplatz(i+18)] == 0)
-								{
-									label[i].setEnabled(false);
-								}
-								else
-								{
-									label[i].setEnabled(true);
-								}
+				} else if (lagerauswahl.getText().equals("Lager 2")) {
+					for (int i = 0; i < 9; i++) {
+						label[i].setBackground(new JButton().getBackground());
+						String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i + 18));
+						if (text == null) {
+							if (checkliste[Start.window.getRightLagerplatz(i + 18)] == 0) {
+								label[i].setEnabled(false);
+							} else {
+								label[i].setBackground(Color.GREEN);
+								label[i].setEnabled(true);
+							}
 							text = "leer";
-						}
-						else
-						{
+						} else {
 							label[i].setEnabled(false);
 						}
 						label[i].setText(text);
 					}
 					lagerauswahl.setText("Lager 3");
-				}
-				else if(lagerauswahl.getText().equals("Lager 3"))
-				{
-					for(int i = 0; i < 9; i++)
-					{
+				} else if (lagerauswahl.getText().equals("Lager 3")) {
+					for (int i = 0; i < 9; i++) {
+						label[i].setBackground(new JButton().getBackground());
 						String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i));
-						if(text == null) {
-								if(checkliste[Start.window.getRightLagerplatz(i)] == 0)
-								{
-									label[i].setEnabled(false);
-								}
-								else
-								{
-									label[i].setEnabled(true);
-								}
+						if (text == null) {
+							if (checkliste[Start.window.getRightLagerplatz(i)] == 0) {
+								label[i].setEnabled(false);
+							} else {
+								label[i].setBackground(Color.GREEN);
+								label[i].setEnabled(true);
+							}
 							text = "leer";
-						}
-						else
-						{
+						} else {
 							label[i].setEnabled(false);
 						}
 						label[i].setText(text);
 					}
 					lagerauswahl.setText("Lager 1");
-				}
-				else
-				{
-					
+				} else {
+
 				}
 			}
 		});
 		auswahl.add(links);
 		auswahl.add(lagerauswahl);
 		auswahl.add(rechts);
-		
+
 		JPanel text_panel = new JPanel();
 		JLabel text = new JLabel();
-		if(check != 0)
-		{
-			text.setText("<html><body><center>" + Start.lager.getAuftrag(num).getInhalt() + "<br>Es sind noch " + check + " Plaetze frei.</center></body></html>");	
-		}
-		else
-		{
+		if (check != 0) {
+			text.setText("<html><body><center>" + Start.lager.getAuftrag(num).getInhalt() + "<br>Es sind noch " + check
+					+ " Plaetze frei.</center></body></html>");
+		} else {
 			text.setForeground(Color.RED);
-			text.setText("<html><body><center>Es sind keine Plaetze mehr frei! <br>Du musst einige Produkte umlagern oder loeschen!</center></body></html>");
+			text.setText(
+					"<html><body><center>Es sind keine Plaetze mehr frei! <br>Du musst einige Produkte umlagern oder loeschen!</center></body></html>");
 		}
 		text_panel.add(text);
-		
+
 		JPanel anzeige = new JPanel();
-		anzeige.setLayout(new java.awt.GridLayout(3,1));
+		anzeige.setLayout(new java.awt.GridLayout(3, 1));
 		anzeige.add(lagerraum);
 		anzeige.add(auswahl);
 		anzeige.add(text_panel);

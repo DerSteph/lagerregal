@@ -9,11 +9,16 @@ import java.util.Queue;
 
 public class CSV {
 	public File file;
+	public String name;
 	public BufferedReader in = null;
 	public Queue<Produkt> schlangecsv;
 	public CSV(String name) {
 		file = new File(name);
         schlangecsv = new LinkedList<Produkt>();
+        this.name = name;
+        readFile(name);
+	}
+	public void readFile(String name) {
 		if (!file.canRead() || !file.isFile())
         {
         	System.out.println("Datei kann nicht gelesen werden");
@@ -106,5 +111,9 @@ public class CSV {
 	}
 	public void removeSchlange() {
 		schlangecsv.poll();
+		if(schlangecsv.isEmpty())
+		{
+			readFile(this.name);
+		}
 	}
 }

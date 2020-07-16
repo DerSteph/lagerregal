@@ -16,6 +16,7 @@ public class UmlagernWindow {
 	private String modus = "Lagerquelle";
 	private int lagerquelle = 0;
 	private JLabel textbeschreibung = new JLabel();
+	private int[] checkliste;
 	public UmlagernWindow() {
 		JFrame fenster = new JFrame();
 		fenster.setSize(400,400);
@@ -34,15 +35,12 @@ public class UmlagernWindow {
 			String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i));
 			if(text == null) {
 				text = "leer";
-				label[i].setBorderPainted(false);
 				label[i].setEnabled(false);
 			}
 			else
 			{
-				label[i].setBorderPainted(true);
 				label[i].setEnabled(true);
 			}
-			label[i].setText(text);
 			label[i].setText(text);
 			label[i].addActionListener(new java.awt.event.ActionListener() {
 				@Override
@@ -53,14 +51,17 @@ public class UmlagernWindow {
 						if(lagerauswahl.getText().equals("Lager 1"))
 						{
 							lagerquelle = Start.window.getRightLagerplatz(temp);
+							checkliste = Start.lager.getArrayVonFreienPlaetzen(Start.window.getRightLagerplatz(temp));
 						}
 						else if(lagerauswahl.getText().equals("Lager 2"))
 						{
 							lagerquelle = Start.window.getRightLagerplatz(temp+9);
+							checkliste = Start.lager.getArrayVonFreienPlaetzen(Start.window.getRightLagerplatz(temp+9));
 						}
 						else
 						{
 							lagerquelle = Start.window.getRightLagerplatz(temp+18);
+							checkliste = Start.lager.getArrayVonFreienPlaetzen(Start.window.getRightLagerplatz(temp+18));
 						}
 						JButton button = (JButton)e.getSource();
 						button.setEnabled(false);
@@ -68,13 +69,50 @@ public class UmlagernWindow {
 						textbeschreibung.setText("Wähle nun das Ziel aus, wo das Produkt umgelagert werden soll.");
 						for(int i = 0; i < 9; i++)
 						{
-							if(label[i].getText().equals("leer"))
+							if(lagerauswahl.getText().equals("Lager 1"))
 							{
-								label[i].setEnabled(true);
+								if(label[i].getText().equals("leer"))
+								{
+									if (checkliste[Start.window.getRightLagerplatz(i)] == 0) {
+										label[i].setEnabled(false);
+									} else {
+										label[i].setEnabled(true);
+									}
+								}
+								else
+								{
+									label[i].setEnabled(false);
+								}	
 							}
-							else
+							if(lagerauswahl.getText().equals("Lager 2"))
 							{
-								label[i].setEnabled(false);
+								if(label[i].getText().equals("leer"))
+								{
+									if (checkliste[Start.window.getRightLagerplatz(i+9)] == 0) {
+										label[i].setEnabled(false);
+									} else {
+										label[i].setEnabled(true);
+									}
+								}
+								else
+								{
+									label[i].setEnabled(false);
+								}	
+							}
+							if(lagerauswahl.getText().equals("Lager 3"))
+							{
+								if(label[i].getText().equals("leer"))
+								{
+									if (checkliste[Start.window.getRightLagerplatz(i+18)] == 0) {
+										label[i].setEnabled(false);
+									} else {
+										label[i].setEnabled(true);
+									}
+								}
+								else
+								{
+									label[i].setEnabled(false);
+								}	
 							}
 						}
 					}
@@ -126,12 +164,10 @@ public class UmlagernWindow {
 							String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i+18));
 							if(text == null) {
 								text = "leer";
-								label[i].setBorderPainted(false);
 								label[i].setEnabled(false);
 							}
 							else
 							{
-								label[i].setBorderPainted(true);
 								label[i].setEnabled(true);
 							}
 							label[i].setText(text);
@@ -146,12 +182,14 @@ public class UmlagernWindow {
 							if(text == null)
 							{
 								text = "leer";
-								label[i].setBorderPainted(true);
-								label[i].setBorderPainted(true);
+								if (checkliste[Start.window.getRightLagerplatz(i+18)] == 0) {
+									label[i].setEnabled(false);
+								} else {
+									label[i].setEnabled(true);
+								}
 							}
 							else
 							{
-								label[i].setBorderPainted(false);
 								label[i].setEnabled(false);
 							}
 							label[i].setText(text);
@@ -168,12 +206,10 @@ public class UmlagernWindow {
 							String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i));
 							if(text == null) {
 								text = "leer";
-								label[i].setBorderPainted(false);
 								label[i].setEnabled(false);
 							}
 							else
 							{
-								label[i].setBorderPainted(true);
 								label[i].setEnabled(true);
 							}
 							label[i].setText(text);
@@ -187,12 +223,14 @@ public class UmlagernWindow {
 							String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i));
 							if(text == null) {
 								text = "leer";
-								label[i].setBorderPainted(true);
-								label[i].setEnabled(true);
+								if (checkliste[Start.window.getRightLagerplatz(i)] == 0) {
+									label[i].setEnabled(false);
+								} else {
+									label[i].setEnabled(true);
+								}
 							}
 							else
 							{
-								label[i].setBorderPainted(false);
 								label[i].setEnabled(false);
 							}
 							label[i].setText(text);
@@ -209,12 +247,10 @@ public class UmlagernWindow {
 							String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i+9));
 							if(text == null) {
 								text = "leer";
-								label[i].setBorderPainted(false);
 								label[i].setEnabled(false);
 							}
 							else
 							{
-								label[i].setBorderPainted(true);
 								label[i].setEnabled(true);
 							}
 							label[i].setText(text);
@@ -228,12 +264,14 @@ public class UmlagernWindow {
 							String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i+9));
 							if(text == null) {
 								text = "leer";
-								label[i].setBorderPainted(true);
-								label[i].setEnabled(true);
+								if (checkliste[Start.window.getRightLagerplatz(i+9)] == 0) {
+									label[i].setEnabled(false);
+								} else {
+									label[i].setEnabled(true);
+								}
 							}
 							else
 							{
-								label[i].setBorderPainted(false);
 								label[i].setEnabled(false);
 							}
 							label[i].setText(text);
@@ -261,12 +299,10 @@ public class UmlagernWindow {
 							String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i+9));
 							if(text == null) {
 								text = "leer";
-								label[i].setBorderPainted(false);
 								label[i].setEnabled(false);
 							}
 							else
 							{
-								label[i].setBorderPainted(true);
 								label[i].setEnabled(true);
 							}
 							label[i].setText(text);
@@ -280,12 +316,14 @@ public class UmlagernWindow {
 							String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i+9));
 							if(text == null) {
 								text = "leer";
-								label[i].setBorderPainted(true);
-								label[i].setEnabled(true);
+								if (checkliste[Start.window.getRightLagerplatz(i+9)] == 0) {
+									label[i].setEnabled(false);
+								} else {
+									label[i].setEnabled(true);
+								}
 							}
 							else
 							{
-								label[i].setBorderPainted(false);
 								label[i].setEnabled(false);
 							}
 							label[i].setText(text);
@@ -302,12 +340,10 @@ public class UmlagernWindow {
 							String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i+18));
 							if(text == null) {
 								text = "leer";
-								label[i].setBorderPainted(false);
 								label[i].setEnabled(false);
 							}
 							else
 							{
-								label[i].setBorderPainted(true);
 								label[i].setEnabled(true);
 							}
 							label[i].setText(text);
@@ -321,12 +357,14 @@ public class UmlagernWindow {
 							String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i+18));
 							if(text == null) {
 								text = "leer";
-								label[i].setBorderPainted(true);
-								label[i].setEnabled(true);
+								if (checkliste[Start.window.getRightLagerplatz(i+18)] == 0) {
+									label[i].setEnabled(false);
+								} else {
+									label[i].setEnabled(true);
+								}
 							}
 							else
 							{
-								label[i].setBorderPainted(false);
 								label[i].setEnabled(false);
 							}
 							label[i].setText(text);
@@ -342,12 +380,10 @@ public class UmlagernWindow {
 							String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i));
 							if(text == null) {
 								text = "leer";
-								label[i].setBorderPainted(false);
 								label[i].setEnabled(false);
 							}
 							else
 							{
-								label[i].setBorderPainted(true);
 								label[i].setEnabled(true);
 							}
 							label[i].setText(text);
@@ -361,12 +397,14 @@ public class UmlagernWindow {
 							String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i));
 							if(text == null) {
 								text = "leer";
-								label[i].setBorderPainted(true);
-								label[i].setEnabled(true);
+								if (checkliste[Start.window.getRightLagerplatz(i)] == 0) {
+									label[i].setEnabled(false);
+								} else {
+									label[i].setEnabled(true);
+								}
 							}
 							else
 							{
-								label[i].setBorderPainted(false);
 								label[i].setEnabled(false);
 							}
 							label[i].setText(text);

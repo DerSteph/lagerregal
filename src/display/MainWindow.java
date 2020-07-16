@@ -33,6 +33,14 @@ public class MainWindow {
 		fenster.setTitle("Lagerregal - das Spiel");
 		fenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+		try
+		{
+		    //setUIFont(new javax.swing.plaf.FontUIResource("Arial",Font.PLAIN,12));
+		}
+		catch(Exception e){}
+		
+		fenster.setBackground(Color.WHITE);
+		
 		lagerraum.setLayout(new java.awt.GridLayout(3,3));
 		/*JLabel label1 = new JLabel();
 		label1.setText("Lager 1");
@@ -58,7 +66,8 @@ public class MainWindow {
 		for(int i = 0; i < 3; i++)
 		{
 			final int temp = i;
-			auftrag_annehmen[i] = new JButton("Ann");
+			auftrag_annehmen[i] = new JButton("\u2714");
+			auftrag_annehmen[i].setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
 			auftrag_annehmen[i].addActionListener(new java.awt.event.ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -133,15 +142,12 @@ public class MainWindow {
 			auftrag_produkt[i] = new JLabel();
 			auftrag_kosten[i] = new JLabel();
 			//auftrag_kosten[i].setText(Integer.toString(Start.lager.getAuftrag(i).getKosten()));
-			auftrag_zurueckstellen[i] = new JButton("Abl");
+			auftrag_zurueckstellen[i] = new JButton("\u274C");
 			auftrag_zurueckstellen[i].addActionListener(new java.awt.event.ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					/*
-					 * 
-					 * Noch nicht implementiert
-					 * 
-					 */
+					Start.lager.auftragZurueckstellen(temp);
+					UpdateAuftragListe();
 				}
 			});
 			
@@ -329,6 +335,7 @@ public class MainWindow {
 		anzeige.add(buttons);
 		anzeige.add(auswahl);
 		anzeige.add(geld);
+		anzeige.setBackground(Color.white);
 		
 		//fenster.getContentPane().add(lagerraum);
 		fenster.getContentPane().add(anzeige);
@@ -403,5 +410,15 @@ public class MainWindow {
 		{
 			
 		}
+	}
+	public static void setUIFont(javax.swing.plaf.FontUIResource f)
+	{   
+	    java.util.Enumeration keys = UIManager.getDefaults().keys();
+	    while(keys.hasMoreElements())
+	    {
+	        Object key = keys.nextElement();
+	        Object value = UIManager.get(key);
+	        if(value instanceof javax.swing.plaf.FontUIResource) UIManager.put(key, f);
+	    }
 	}
 }

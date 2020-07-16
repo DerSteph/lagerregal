@@ -1,5 +1,6 @@
 package display;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
 
@@ -29,12 +30,24 @@ public class RemoveStuffFromLagerWindow {
 			label[i] = new JButton();
 			String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i));
 			Boolean check = Start.lager.pruefeObProduktDortGelagert(Start.window.getRightLagerplatz(i), Start.lager.getAuftrag(num));
+			Boolean check2 = false;
+			label[i].setBackground(new JButton().getBackground());
+			if(check)
+			{
+				check2 = Start.lager.pruefeObProduktNichtBlockiert(Start.window.getRightLagerplatz(i));	
+			}
 			if(text == null) {
 				text = "leer";
 				label[i].setEnabled(false);
 			}
-			else if(check)
+			else if(check && check2)
 			{
+				label[i].setBackground(Color.green);
+				label[i].setEnabled(true);
+			}
+			else if(check && !check2)
+			{
+				label[i].setBackground(Color.yellow);
 				label[i].setEnabled(true);
 			}
 			else
@@ -56,7 +69,7 @@ public class RemoveStuffFromLagerWindow {
 						}
 						else
 						{
-							JOptionPane.showMessageDialog(null, "Der Lagerplatz ist bereits durch andere Dinge davor blockiert.");
+							JOptionPane.showMessageDialog(null, "<html><body><center>Der Lagerplatz ist bereits durch andere Produkte davor blockiert!<br> Versuche mit der Funktion <font color='red'>Umlagern</font> die davorstehenden Produkte umzulagern<br>oder mit der Funktion <font color='red'>Verschrotten</font> die davorstehenden Produkte zu verschrotten.</center></body></html>");
 						}
 					}
 					else if(lagerauswahl.getText().equals("Lager 2"))
@@ -70,7 +83,7 @@ public class RemoveStuffFromLagerWindow {
 						}
 						else
 						{
-							JOptionPane.showMessageDialog(null, "Der Lagerplatz ist bereits durch andere Dinge davor blockiert.");
+							JOptionPane.showMessageDialog(null, "<html><body><center>Der Lagerplatz ist bereits durch andere Produkte davor blockiert!<br> Versuche mit der Funktion <font color='red'>Umlagern</font> die davorstehenden Produkte umzulagern<br>oder mit der Funktion <font color='red'>Verschrotten</font> die davorstehenden Produkte zu verschrotten.</center></body></html>");
 						}
 					}
 					else if(lagerauswahl.getText().equals("Lager 3"))
@@ -84,7 +97,7 @@ public class RemoveStuffFromLagerWindow {
 						}
 						else
 						{
-							JOptionPane.showMessageDialog(null, "Der Lagerplatz ist bereits durch andere Dinge davor blockiert.");
+							JOptionPane.showMessageDialog(null, "<html><body><center>Der Lagerplatz ist bereits durch andere Produkte davor blockiert!<br> Versuche mit der Funktion <font color='red'>Umlagern</font> die davorstehenden Produkte umzulagern<br>oder mit der Funktion <font color='red'>Verschrotten</font> die davorstehenden Produkte zu verschrotten.</center></body></html>");
 						}
 					}
 					else
@@ -108,13 +121,26 @@ public class RemoveStuffFromLagerWindow {
 				{
 					for(int i = 0; i < 9; i++)
 					{
+						label[i].setBackground(new JButton().getBackground());
 						String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i+18));
 						Boolean check = Start.lager.pruefeObProduktDortGelagert(Start.window.getRightLagerplatz(i+18), Start.lager.getAuftrag(num));
+						Boolean check2 = false;
+						if(check)
+						{
+							check2 = Start.lager.pruefeObProduktNichtBlockiert(Start.window.getRightLagerplatz(i+18));	
+						}
 						if(text == null) {
 							text = "leer";
+							label[i].setEnabled(false);
 						}
-						else if(check)
+						else if(check && check2)
 						{
+							label[i].setBackground(Color.green);
+							label[i].setEnabled(true);
+						}
+						else if(check && !check2)
+						{
+							label[i].setBackground(Color.yellow);
 							label[i].setEnabled(true);
 						}
 						else
@@ -129,13 +155,26 @@ public class RemoveStuffFromLagerWindow {
 				{
 					for(int i = 0; i < 9; i++)
 					{
+						label[i].setBackground(new JButton().getBackground());
 						String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i));
 						Boolean check = Start.lager.pruefeObProduktDortGelagert(Start.window.getRightLagerplatz(i), Start.lager.getAuftrag(num));
+						Boolean check2 = false;
+						if(check)
+						{
+							check2 = Start.lager.pruefeObProduktNichtBlockiert(Start.window.getRightLagerplatz(i));	
+						}
 						if(text == null) {
 							text = "leer";
+							label[i].setEnabled(false);
 						}
-						else if(check)
+						else if(check && check2)
 						{
+							label[i].setBackground(Color.green);
+							label[i].setEnabled(true);
+						}
+						else if(check && !check2)
+						{
+							label[i].setBackground(Color.yellow);
 							label[i].setEnabled(true);
 						}
 						else
@@ -150,13 +189,26 @@ public class RemoveStuffFromLagerWindow {
 				{
 					for(int i = 0; i < 9; i++)
 					{
+						label[i].setBackground(new JButton().getBackground());
 						String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i+9));
 						Boolean check = Start.lager.pruefeObProduktDortGelagert(Start.window.getRightLagerplatz(i+9), Start.lager.getAuftrag(num));
+						Boolean check2 = false;
+						if(check)
+						{
+							check2 = Start.lager.pruefeObProduktNichtBlockiert(Start.window.getRightLagerplatz(i+9));	
+						}
 						if(text == null) {
 							text = "leer";
+							label[i].setEnabled(false);
 						}
-						else if(check)
+						else if(check && check2)
 						{
+							label[i].setBackground(Color.green);
+							label[i].setEnabled(true);
+						}
+						else if(check && !check2)
+						{
+							label[i].setBackground(Color.yellow);
 							label[i].setEnabled(true);
 						}
 						else
@@ -182,13 +234,26 @@ public class RemoveStuffFromLagerWindow {
 				{
 					for(int i = 0; i < 9; i++)
 					{
+						label[i].setBackground(new JButton().getBackground());
 						String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i+9));
 						Boolean check = Start.lager.pruefeObProduktDortGelagert(Start.window.getRightLagerplatz(i+9), Start.lager.getAuftrag(num));
+						Boolean check2 = false;
+						if(check)
+						{
+							check2 = Start.lager.pruefeObProduktNichtBlockiert(Start.window.getRightLagerplatz(i+9));	
+						}
 						if(text == null) {
 							text = "leer";
+							label[i].setEnabled(false);
 						}
-						else if(check)
+						else if(check && check2)
 						{
+							label[i].setBackground(Color.green);
+							label[i].setEnabled(true);
+						}
+						else if(check && !check2)
+						{
+							label[i].setBackground(Color.yellow);
 							label[i].setEnabled(true);
 						}
 						else
@@ -203,13 +268,26 @@ public class RemoveStuffFromLagerWindow {
 				{
 					for(int i = 0; i < 9; i++)
 					{
+						label[i].setBackground(new JButton().getBackground());
 						String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i+18));
 						Boolean check = Start.lager.pruefeObProduktDortGelagert(Start.window.getRightLagerplatz(i+18), Start.lager.getAuftrag(num));
+						Boolean check2 = false;
+						if(check)
+						{
+							check2 = Start.lager.pruefeObProduktNichtBlockiert(Start.window.getRightLagerplatz(i+18));	
+						}
 						if(text == null) {
 							text = "leer";
+							label[i].setEnabled(false);
 						}
-						else if(check)
+						else if(check && check2)
 						{
+							label[i].setBackground(Color.green);
+							label[i].setEnabled(true);
+						}
+						else if(check && !check2)
+						{
+							label[i].setBackground(Color.yellow);
 							label[i].setEnabled(true);
 						}
 						else
@@ -224,13 +302,26 @@ public class RemoveStuffFromLagerWindow {
 				{
 					for(int i = 0; i < 9; i++)
 					{
+						label[i].setBackground(new JButton().getBackground());
 						String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i));
 						Boolean check = Start.lager.pruefeObProduktDortGelagert(Start.window.getRightLagerplatz(i), Start.lager.getAuftrag(num));
+						Boolean check2 = false;
+						if(check)
+						{
+							check2 = Start.lager.pruefeObProduktNichtBlockiert(Start.window.getRightLagerplatz(i));	
+						}
 						if(text == null) {
 							text = "leer";
+							label[i].setEnabled(false);
 						}
-						else if(check)
+						else if(check && check2)
 						{
+							label[i].setBackground(Color.green);
+							label[i].setEnabled(true);
+						}
+						else if(check && !check2)
+						{
+							label[i].setBackground(Color.yellow);
 							label[i].setEnabled(true);
 						}
 						else
