@@ -14,16 +14,16 @@ import java.util.Vector;
 public class BilanzWindow {
 	public BilanzWindow() {
 		JFrame bilanzfenster = new JFrame();
-		bilanzfenster.setSize(600,600);
+		bilanzfenster.setSize(new Dimension(600,600));
 		bilanzfenster.setLocationRelativeTo(null);
 		bilanzfenster.setTitle("Bilanz");
 		
 		JPanel oben = new JPanel();
 		oben.setLayout(new GridLayout(1,3));
 		
-		JLabel kontostand = new JLabel(Integer.toString(Start.bilanz.getGesamtkonto()));
-		JLabel gesamtplus = new JLabel(Integer.toString(Start.bilanz.getGesamtplus()));
-		JLabel gesamtminus = new JLabel(Integer.toString(Start.bilanz.getGesamtminus()));
+		JLabel kontostand = new JLabel("<html><body><center>Dein Kontostand <br>" + Integer.toString(Start.bilanz.getGesamtkonto()) + "€</center></body></html>");
+		JLabel gesamtplus = new JLabel("<html><body><center>Dein Gesamtplus <br>" + Integer.toString(Start.bilanz.getGesamtplus()) + "€</center></body></html>");
+		JLabel gesamtminus = new JLabel("<html><body><center>Dein Gesamtminus <br>" + Integer.toString(Start.bilanz.getGesamtminus()) + "€</center></body></html>");
 		
 		oben.add(kontostand);
 		oben.add(gesamtplus);
@@ -37,15 +37,21 @@ public class BilanzWindow {
 				"Grund", "Produkt", "Kosten", "Datum"
 		};
 		
-		final DefaultTableModel model = new DefaultTableModel(title, 0);
+		final DefaultTableModel model = new DefaultTableModel();
+		model.addColumn("Grund");
+		model.addColumn("Produkt");
+		model.addColumn("Kosten");
+		model.addColumn("Datum");
 		
-		JTable verlauf = new JTable(model);
-		Container content = new Container();
+		JTable table = new JTable(model);
+		table.setPreferredScrollableViewportSize(new Dimension(450,63));
+        table.setFillsViewportHeight(true);
+		JPanel content = new JPanel();
 		
-		content.add(new JScrollPane());
+		JScrollPane js = new JScrollPane(table);
+		js.setVisible(true);
 		content.setLayout(new BorderLayout());
-		content.add(verlauf.getTableHeader(), BorderLayout.PAGE_START);
-		content.add(verlauf, BorderLayout.CENTER);
+		content.add(js, BorderLayout.CENTER);
 		unten.add(content);
 		
 		if(Start.bilanz.getGeldverlauf().isEmpty())
@@ -98,10 +104,10 @@ public class BilanzWindow {
 		
 		//verlauf.setDefaultRenderer(Object.class, new ColorTableCellRenderer());
 		ColorTableCellRenderer ctr = new ColorTableCellRenderer();
-		verlauf.getColumnModel().getColumn(0).setCellRenderer(ctr);
-		verlauf.getColumnModel().getColumn(1).setCellRenderer(ctr);
-		verlauf.getColumnModel().getColumn(2).setCellRenderer(ctr);
-		verlauf.getColumnModel().getColumn(3).setCellRenderer(ctr);
+		table.getColumnModel().getColumn(0).setCellRenderer(ctr);
+		table.getColumnModel().getColumn(1).setCellRenderer(ctr);
+		table.getColumnModel().getColumn(2).setCellRenderer(ctr);
+		table.getColumnModel().getColumn(3).setCellRenderer(ctr);
 		
 		JPanel anzeige = new JPanel();
 		anzeige.setLayout(new GridLayout(2,1));

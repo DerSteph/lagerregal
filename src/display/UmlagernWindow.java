@@ -424,7 +424,7 @@ public class UmlagernWindow {
 		
 		JPanel unten = new JPanel();
 		
-		textbeschreibung.setText("Wähle ein Produkt aus, was du umlagern möchtest.");
+		textbeschreibung.setText("<html><center>Wähle ein Produkt aus, was du umlagern möchtest.<br>Umlagern kostet 100€</center></html>");
 		unten.add(textbeschreibung);
 		
 		JPanel anzeige = new JPanel();

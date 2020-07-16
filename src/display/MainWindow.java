@@ -22,6 +22,7 @@ public class MainWindow {
 	/*public JLabel auftrag_produkt[][] = new JLabel[3][3];*/
 	public JLabel auftrag_produkt[] = new JLabel[3];
 	public JLabel auftrag_kosten[] = new JLabel[3];
+	public JButton auftrag_ablehnen[] = new JButton[3];
 	
 	public JLabel lagerauswahl_main = new JLabel("Lager 1");
 	public JLabel kontostand = new JLabel();
@@ -39,51 +40,50 @@ public class MainWindow {
 		}
 		catch(Exception e){}
 		
-		anzeige.setLayout(new GridBagLayout());
-		fenster.setContentPane(anzeige);
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.weightx = 1;
-		gbc.weighty = 1;
+		//fenster.setContentPane(anzeige);
+
 		
 		JPanel lagerraum = new JPanel();
-		lagerraum.setLayout(new GridBagLayout());
-		GridBagConstraints lagerraum_gbc = new GridBagConstraints();
-		lagerraum_gbc.fill = GridBagConstraints.BOTH;
-		lagerraum_gbc.weightx = 1;
-		lagerraum_gbc.weighty = 1;
+		lagerraum.setLayout(null);
 		
-		for(int i = 0; i < 3; i++)
+		lagerraum.setLocation(0, 0);
+		lagerraum.setSize(new Dimension(402,600));
+		
+		int j = 0;
+		int k = 0;
+		for(int i = 0; i < 9; i++)
 		{
-			for(int j = 0; j < 3; j++)
+			lagerraum_feld[i] = new JLabel();
+			String text = Start.lager.getLagerplatzInhalt(getRightLagerplatz(i));
+			if(text == null) {
+				text = "leer";
+				lagerraum_feld[i].setForeground(Color.gray);
+			}
+			lagerraum_feld[i].setText("<html><div style='text-align: center;'>" + text + "</div></html>");
+			lagerraum_feld[i].setBounds(j*134, k*150, 134, 150);
+			if(i % 2 == 0)
 			{
-				lagerraum_feld[i] = new JLabel();
-				String text = Start.lager.getLagerplatzInhalt(getRightLagerplatz(i));
-				if(text == null) {
-					text = "leer";
-					lagerraum_feld[i].setForeground(Color.gray);
-				}
-				lagerraum_feld[i].setText(text);
-				lagerraum_gbc.gridx = j;
-				lagerraum_gbc.gridy = i;
-				lagerraum.add(lagerraum_feld[i], lagerraum_gbc);
+				lagerraum_feld[i].setBackground(Color.white);
+				lagerraum_feld[i].setOpaque(true);
+			}
+			lagerraum.add(lagerraum_feld[i]);
+			if(j == 2)
+			{
+				j = 0;
+				k++;
+			}
+			else
+			{
+				j++;
 			}
 		}
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		gbc.gridheight = 2;
-		gbc.gridwidth = 2;
-		anzeige.add(lagerraum, gbc);
+		fenster.add(lagerraum);
 		
-		JPanel actionbuttons = new JPanel();
-		actionbuttons.setLayout(new GridBagLayout());
-		GridBagConstraints actionbuttons_gbc = new GridBagConstraints();
-		actionbuttons_gbc.weightx = 1;
-		actionbuttons_gbc.weighty = 1;
-		actionbuttons_gbc.gridx = 0;
-		actionbuttons_gbc.gridy = 0;
 		
+		JPanel actionbuttons = new JPanel(null);
+		actionbuttons.setLocation(403, 0);
 		JButton neuerauftrag = new JButton("Neuer Auftrag");
+		neuerauftrag.setBounds(403,10,120,30);
 		neuerauftrag.addActionListener(new java.awt.event.ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -92,10 +92,8 @@ public class MainWindow {
 				UpdateAuftragListe();
 			}
 		});
-		actionbuttons.add(neuerauftrag, actionbuttons_gbc);
-		actionbuttons_gbc.gridx = 1;
-		actionbuttons_gbc.gridy = 0;
 		JButton umlagern = new JButton("Umlagern");
+		umlagern.setBounds(523,10,120,30);
 		umlagern.addActionListener(new java.awt.event.ActionListener() {
 
 			@Override
@@ -103,10 +101,8 @@ public class MainWindow {
 				new UmlagernWindow();
 			}
 		});
-		actionbuttons.add(umlagern, actionbuttons_gbc);
-		actionbuttons_gbc.gridx = 2;
-		actionbuttons_gbc.gridy = 0;
 		JButton verschrotten = new JButton("Verschrotten");
+		verschrotten.setBounds(643,10,120,30);
 		verschrotten.addActionListener(new java.awt.event.ActionListener() {
 
 			@Override
@@ -115,35 +111,29 @@ public class MainWindow {
 			}
 			
 		});
-		actionbuttons.add(verschrotten, actionbuttons_gbc);
 		
-		/*JLabel leer[] = new JLabel[3];
-		for(int i = 0; i < 3; i++)
-		{
-			leer[i] = new JLabel();
-			actionbuttons_gbc.gridx = i;
-			actionbuttons_gbc.gridy = 1;
-			actionbuttons.add(leer[i], actionbuttons_gbc);
-		}*/
+		JButton bilanz = new JButton("Bilanz");
+		actionbuttons.add(bilanz);
+		bilanz.setBounds(643, 55, 120, 30);
+		bilanz.addActionListener(new java.awt.event.ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				new BilanzWindow();
+			}
+		});
+		
+		actionbuttons.add(neuerauftrag);
+		actionbuttons.add(umlagern);
+		actionbuttons.add(verschrotten);
+		
 		kontostand.setText("Kontostand: 0€");
 		kontostand.setFont(new Font(kontostand.getFont().getName(), Font.PLAIN, 20));
-		actionbuttons_gbc.gridx = 0;
-		actionbuttons_gbc.gridy = 1;
-		actionbuttons_gbc.gridwidth = 3;
-		actionbuttons.add(kontostand, actionbuttons_gbc);
-		
-		gbc.gridx = 1;
-		gbc.gridy = 0;
-		gbc.gridwidth = 1;
-		gbc.gridheight = 1;
-		anzeige.add(actionbuttons,gbc);
+		kontostand.setBounds(403, 50, 400, 40);
+		actionbuttons.add(kontostand);
+		fenster.add(actionbuttons);
 		
 		
-		JPanel auftragsauswahl = new JPanel();
-		auftragsauswahl.setLayout(new GridBagLayout());
-		GridBagConstraints gbc2 = new GridBagConstraints();
-		gbc2.weightx = 1;
-		gbc2.weighty = 1;
 		for(int i = 0; i < 3; i++)
 		{
 			final int temp = i;
@@ -170,59 +160,8 @@ public class MainWindow {
 				}
 			});
 			auftrag_art[i] = new JLabel();
-			//auftrag_art[i].setText(Start.lager.getAuftrag(i).getLagerungsart());
-			/*for(int k = 0; k < 3; k++)
-			{
-				auftrag_produkt[i][k] = new JLabel();
-				if(Start.lager.getAuftrag(i) instanceof Papier)
-				{
-					if(k == 0)
-					{
-						auftrag_produkt[i][k].setText(Start.lager.getAuftrag(i).toString());
-					}
-					if(k == 1)
-					{
-						auftrag_produkt[i][k].setText(((Papier) Start.lager.getAuftrag(i)).getFarbe());
-					}
-					if(k == 2)
-					{
-						auftrag_produkt[i][k].setText(((Papier) Start.lager.getAuftrag(i)).getGroesse());
-					}
-				}
-				if(Start.lager.getAuftrag(i) instanceof Holz)
-				{
-					if(k == 0)
-					{
-						auftrag_produkt[i][k].setText(Start.lager.getAuftrag(i).toString());
-					}
-					if(k == 1)
-					{
-						auftrag_produkt[i][k].setText(((Holz) Start.lager.getAuftrag(i)).getArt());
-					}
-					if(k == 2)
-					{
-						auftrag_produkt[i][k].setText(((Holz) Start.lager.getAuftrag(i)).getForm());
-					}
-				}
-				if(Start.lager.getAuftrag(i) instanceof Stein)
-				{
-					if(k == 0)
-					{
-						auftrag_produkt[i][k].setText(Start.lager.getAuftrag(i).toString());
-					}
-					if(k == 1)
-					{
-						auftrag_produkt[i][k].setText(((Stein) Start.lager.getAuftrag(i)).getArt());
-					}
-					if(k == 2)
-					{
-						auftrag_produkt[i][k].setText(((Stein) Start.lager.getAuftrag(i)).getGewicht());
-					}
-				}
-			}*/
 			auftrag_produkt[i] = new JLabel();
 			auftrag_kosten[i] = new JLabel();
-			//auftrag_kosten[i].setText(Integer.toString(Start.lager.getAuftrag(i).getKosten()));
 			auftrag_zurueckstellen[i] = new JButton("\u274C");
 			auftrag_zurueckstellen[i].addActionListener(new java.awt.event.ActionListener() {
 				@Override
@@ -231,48 +170,34 @@ public class MainWindow {
 					UpdateAuftragListe();
 				}
 			});
-			gbc2.gridx = 0;
-			gbc2.gridy = i;
-			auftragsauswahl.add(auftrag_art[i], gbc2);
-			/*JPanel produktdetails = new JPanel();
-			//produktdetails.setLayout(new java.awt.GridLayout(3,1));
-			for(int k = 0; k < 3; k++)
-			{
-				produktdetails.add(auftrag_produkt[i][k]);
-			}
-			auftragsauswahl.add(produktdetails);*/
-			gbc2.gridx = 1;
-			gbc2.gridy = i;
-			auftragsauswahl.add(auftrag_produkt[i], gbc2);
-			gbc2.gridx = 2;
-			gbc2.gridy = i;
-			auftragsauswahl.add(auftrag_kosten[i], gbc2);
-			gbc2.gridx = 3;
-			gbc2.gridy = i;
-			auftragsauswahl.add(auftrag_annehmen[i], gbc2);
-			gbc2.gridx = 4;
-			gbc2.gridy = i;
-			auftragsauswahl.add(auftrag_zurueckstellen[i], gbc2);
+			auftrag_ablehnen[i] = new JButton("\uD83D\uDDD1\uFE0F");
+			auftrag_ablehnen[i].setFont(new Font(kontostand.getFont().getName(), Font.PLAIN, 30));
+			auftrag_ablehnen[i].addActionListener(new java.awt.event.ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					Start.lager.auftragAblehnen(temp);
+					UpdateAuftragListe();
+				}
+				
+			});
+			actionbuttons.add(auftrag_art[i]);
+			auftrag_art[i].setBounds(403, 90+i*70, 240, 40);
+			actionbuttons.add(auftrag_produkt[i]);
+			auftrag_produkt[i].setBounds(403, 110+i*70, 240, 40);
+			actionbuttons.add(auftrag_kosten[i]);
+			auftrag_kosten[i].setBounds(403, 130+i*70, 240, 40);
+			actionbuttons.add(auftrag_annehmen[i]);
+			auftrag_annehmen[i].setBounds(573, 108+i*70, 60, 40);
+			actionbuttons.add(auftrag_zurueckstellen[i]);
+			auftrag_zurueckstellen[i].setBounds(633, 108+i*70, 60, 40);
+			actionbuttons.add(auftrag_ablehnen[i]);
+			auftrag_ablehnen[i].setBounds(703, 108+i*70, 60, 40);
+			auftrag_ablehnen[i].setVisible(false);
 			auftrag_annehmen[i].setVisible(false);
 			auftrag_zurueckstellen[i].setVisible(false);
 		}
-		gbc.gridx = 1;
-		gbc.gridy = 1;
-		gbc.gridwidth = 1;
-		gbc.gridheight = 1;
-		anzeige.add(auftragsauswahl, gbc);
-		
-		
-		JPanel auswahl = new JPanel();
-		auswahl.setLayout(new GridBagLayout());
-		GridBagConstraints gbc3 = new GridBagConstraints();
-		gbc3.weightx = 1;
-		gbc3.weighty = 1;
-		gbc3.gridx = 0;
-		gbc3.gridy = 0;
-		gbc3.gridwidth = 2;
 		JButton links = new JButton("<");
-		auswahl.add(links, gbc3);
 		links.addActionListener(new java.awt.event.ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e)
@@ -324,15 +249,11 @@ public class MainWindow {
 				Start.lager.getLagerinhalt();
 			}
 		});
-		gbc3.gridx = 2;
-		gbc3.gridy = 0;
-		gbc3.gridwidth = 1;
-		auswahl.add(lagerauswahl_main, gbc3);
-		gbc3.gridx = 3;
-		gbc3.gridy = 0;
-		gbc3.gridwidth = 2;
+		links.setBounds(5, 450, 124, 25);
+		lagerraum.add(links);
+		lagerauswahl_main.setBounds(180, 450, 124, 25);
+		lagerraum.add(lagerauswahl_main);
 		JButton rechts = new JButton(">");
-		auswahl.add(rechts, gbc3);
 		rechts.addActionListener(new java.awt.event.ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e)
@@ -383,15 +304,14 @@ public class MainWindow {
 				Start.lager.getLagerinhalt();
 			}
 		});
-		
-		gbc.gridx = 0;
-		gbc.gridy = 2;
-		gbc.gridwidth = 1;
-		fenster.add(auswahl, gbc);
-		
-		JPanel geld = new JPanel();
-		
-		// Füge die Dinge zum Fenster hinzu
+		rechts.setBounds(273,450,124,25);
+		lagerraum.add(rechts);
+		ImageIcon icon = new ImageIcon("lagerregal2020.png");
+		System.out.println(System.getProperty("user.dir"));
+		JLabel logo = new JLabel();
+		logo.setIcon(icon);
+		actionbuttons.add(logo);
+		logo.setBounds(450,450,350,100);
 		fenster.setVisible(true);
 	}
 	
@@ -410,6 +330,7 @@ public class MainWindow {
 				auftrag_kosten[i].setText(Integer.toString(Start.lager.getAuftrag(i).getKosten()));
 				auftrag_annehmen[i].setVisible(true);
 				auftrag_zurueckstellen[i].setVisible(true);
+				auftrag_ablehnen[i].setVisible(true);
 			}
 			else
 			{
@@ -418,6 +339,7 @@ public class MainWindow {
 				auftrag_kosten[i].setText("");
 				auftrag_annehmen[i].setVisible(false);
 				auftrag_zurueckstellen[i].setVisible(false);
+				auftrag_ablehnen[i].setVisible(false);
 			}
 		}
 	}
