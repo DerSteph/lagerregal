@@ -139,6 +139,17 @@ public class Lager {
 		}
 		System.out.println();
 	}
+	
+	public boolean isAuftragListeVoll() {
+		if(listlaenge == 3)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 	public boolean AuftragAbarbeiten(int auswahl, int lagerplatz) {
 		if(auswahl > 3 || auswahl < 0)
 		{
@@ -1361,6 +1372,26 @@ public class Lager {
 			}
 		}
 		return false;
+	}
+	
+	public int[] getPlaetzeZumUmlagern() {
+		int[] checkliste = new int[27];
+		for(int i = 0; i < 27; i++)
+		{
+			checkliste[i] = 1;
+		}
+		for(int i = 0; i < 27; i++)
+		{
+			if(pruefeObProduktNichtBlockiert(i) == false)
+			{
+				checkliste[i] = 0;
+			}
+			else
+			{
+				System.out.println(getLagerplatzInhalt(i));
+			}
+		}
+		return checkliste;
 	}
 	
 	public boolean pruefeObProduktNichtBlockiert(int i) {

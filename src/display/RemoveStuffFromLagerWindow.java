@@ -1,9 +1,11 @@
 package display;
 
 import java.awt.Color;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -344,7 +346,6 @@ public class RemoveStuffFromLagerWindow {
 		
 		JPanel text_panel = new JPanel();
 		JLabel text = new JLabel();
-		text.setText(Start.lager.getAuftrag(num).getInhalt());
 		text_panel.add(text);
 		
 		JPanel anzeige = new JPanel();

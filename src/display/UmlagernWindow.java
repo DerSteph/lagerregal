@@ -35,6 +35,9 @@ public class UmlagernWindow {
 			
 			JPanel lagerraum = new JPanel();
 			lagerraum.setLayout(new java.awt.GridLayout(3,3));
+			
+			checkliste = Start.lager.getPlaetzeZumUmlagern();
+			
 			label = new JButton[9];
 			for(int i = 0; i < 9; i++)
 			{
@@ -43,6 +46,10 @@ public class UmlagernWindow {
 				String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i));
 				if(text == null) {
 					text = "leer";
+					label[i].setEnabled(false);
+				}
+				else if(checkliste[Start.window.getRightLagerplatz(i)] == 0)
+				{
 					label[i].setEnabled(false);
 				}
 				else
@@ -71,21 +78,7 @@ public class UmlagernWindow {
 							button.setEnabled(false);
 							fenster.setTitle("Wähle das Ziel");
 							textbeschreibung.setText("Wähle nun das Ziel aus, wo das Produkt umgelagert werden soll.");
-							for(int i = 0; i < 9; i++)
-							{
-									if(label[i].getText().equals("leer"))
-									{
-										if (checkliste[Start.window.getRightLagerplatz(adder)] == 0) {
-											label[i].setEnabled(false);
-										} else {
-											label[i].setEnabled(true);
-										}
-									}
-									else
-									{
-										label[i].setEnabled(false);
-									}	
-							}
+							UpdateLager();
 						}
 						else
 						{
@@ -187,6 +180,10 @@ public class UmlagernWindow {
 				String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i+adder));
 				if(text == null) {
 					text = "leer";
+					label[i].setEnabled(false);
+				}
+				if(checkliste[Start.window.getRightLagerplatz(i+adder)] == 0)
+				{
 					label[i].setEnabled(false);
 				}
 				else

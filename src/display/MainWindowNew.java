@@ -12,14 +12,19 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.GridLayout;
+import java.awt.Image;
+
 import javax.swing.JButton;
 import javax.swing.JSeparator;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.RenderingHints;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.awt.SystemColor;
@@ -36,7 +41,7 @@ import javax.swing.SwingConstants;
 
 public class MainWindowNew extends JFrame {
 	public JPanel anzeige = new JPanel();
-	public JLabel[] lagerraum_feld = new JLabel[9];
+	public JLabel[] lagerraum_feld = new JLabel[27];
 	
 	public JLabel auftrag_art[] = new JLabel[3];
 	public JButton auftrag_annehmen[] = new JButton[3];
@@ -52,6 +57,9 @@ public class MainWindowNew extends JFrame {
 	private JPanel contentPane;
 	private JLabel header_auftrag;
 	public JLabel letzteAktion;
+	JButton button_neuerauftrag;
+	JButton button_umlagern;
+	JButton button_verschrotten;
 
 	/**
 	 * Launch the application.
@@ -76,7 +84,7 @@ public class MainWindowNew extends JFrame {
 		setTitle("LagerRegal 2020");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 940, 600);
+		setBounds(100, 100, 1000, 665);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -91,8 +99,6 @@ public class MainWindowNew extends JFrame {
 		
 		JPanel panel_3 = new JPanel();
 		
-		JPanel panel_4 = new JPanel();
-		
 		JLabel icon = new JLabel("");
 		icon.setIcon(new ImageIcon(MainWindowNew.class.getResource("/display/lagerregal2020.png")));
 		
@@ -101,26 +107,37 @@ public class MainWindowNew extends JFrame {
 		separator.setBackground(new Color(255, 255, 255));
 		
 		letzteAktion = new JLabel("");
+		
+		JPanel panel_4 = new JPanel();
+		panel_4.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel_4.setBackground(SystemColor.inactiveCaptionBorder);
+		panel_4.setLayout(new GridLayout(0, 3, 0, 0));
+		
+		JPanel panel_5 = new JPanel();
+		panel_5.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel_5.setBackground(SystemColor.inactiveCaptionBorder);
+		panel_5.setLayout(new GridLayout(0, 3, 0, 0));
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 417, GroupLayout.PREFERRED_SIZE)
+						.addComponent(panel_4, GroupLayout.PREFERRED_SIZE, 417, GroupLayout.PREFERRED_SIZE)
+						.addComponent(panel_5, GroupLayout.PREFERRED_SIZE, 417, GroupLayout.PREFERRED_SIZE))
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addContainerGap()
+							.addGap(10)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(panel, GroupLayout.PREFERRED_SIZE, 417, GroupLayout.PREFERRED_SIZE)
-								.addComponent(panel_4, GroupLayout.PREFERRED_SIZE, 417, GroupLayout.PREFERRED_SIZE)))
+								.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, 537, Short.MAX_VALUE)
+								.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 537, Short.MAX_VALUE)
+								.addComponent(separator, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(panel_3, GroupLayout.DEFAULT_SIZE, 537, Short.MAX_VALUE)
+								.addComponent(letzteAktion, GroupLayout.DEFAULT_SIZE, 537, Short.MAX_VALUE)))
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(44)
+							.addGap(100)
 							.addComponent(icon, GroupLayout.PREFERRED_SIZE, 322, GroupLayout.PREFERRED_SIZE)))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, 477, Short.MAX_VALUE)
-						.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 477, Short.MAX_VALUE)
-						.addComponent(separator, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(panel_3, GroupLayout.DEFAULT_SIZE, 477, Short.MAX_VALUE)
-						.addComponent(letzteAktion, GroupLayout.DEFAULT_SIZE, 477, Short.MAX_VALUE))
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
@@ -129,84 +146,25 @@ public class MainWindowNew extends JFrame {
 					.addContainerGap()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 195, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(panel_4, GroupLayout.PREFERRED_SIZE, 195, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(panel_5, GroupLayout.PREFERRED_SIZE, 195, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(separator, GroupLayout.PREFERRED_SIZE, 2, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(panel_3, GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE))
-						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 407, GroupLayout.PREFERRED_SIZE))
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addComponent(panel_4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(icon, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE)
-							.addGap(16))
-						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(panel_3, GroupLayout.DEFAULT_SIZE, 384, Short.MAX_VALUE)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(letzteAktion)
-							.addContainerGap())))
+							.addGap(37)
+							.addComponent(icon, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap())
 		);
-		
-		JButton links = new JButton("<");
-		links.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String text;
-				if(lagerauswahl_main.getText().equals("Lager 1"))
-				{
-					lagerauswahl_main.setText("Lager 3");
-					UpdateMainLagerraum();
-				}
-				else if(lagerauswahl_main.getText().equals("Lager 2"))
-				{
-					lagerauswahl_main.setText("Lager 1");
-					UpdateMainLagerraum();
-				}
-				else if(lagerauswahl_main.getText().equals("Lager 3"))
-				{
-					lagerauswahl_main.setText("Lager 2");
-					UpdateMainLagerraum();
-				}
-				else
-				{
-					
-				}
-				Start.lager.getLagerinhalt();
-			}
-		});
-		panel_4.add(links);
-		
-		lagerauswahl_main = new JLabel("Lager 1");
-		panel_4.add(lagerauswahl_main);
-		
-		JButton rechts = new JButton(">");
-		rechts.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(lagerauswahl_main.getText().equals("Lager 1"))
-				{
-					lagerauswahl_main.setText("Lager 2");
-					UpdateMainLagerraum();
-				}
-				else if(lagerauswahl_main.getText().equals("Lager 2"))
-				{
-					lagerauswahl_main.setText("Lager 3");
-					UpdateMainLagerraum();
-				}
-				else if(lagerauswahl_main.getText().equals("Lager 3"))
-				{
-					lagerauswahl_main.setText("Lager 1");
-					UpdateMainLagerraum();
-				}
-				else
-				{
-					
-				}
-				Start.lager.getLagerinhalt();
-			}
-		});
-		panel_4.add(rechts);
 		GridBagLayout gbl_panel_3 = new GridBagLayout();
 		gbl_panel_3.rowHeights = new int[] {3};
 		gbl_panel_3.columnWidths = new int[] {3};
@@ -357,11 +315,12 @@ public class MainWindowNew extends JFrame {
 					{
 						if(Start.lager.getAuftrag(0).getLagerungsart().equals("Einlagerung"))
 						{
-							new AddStuffToLagerWindow(0);
+							//new AddStuffToLagerWindow(0);
+							new AddStuffToLagerWindowNew(0);
 						}
 						else
 						{
-							new RemoveStuffFromLagerWindow(0);
+							new RemoveStuffFromLagerWindowNew(0);
 						}
 					}
 				}
@@ -436,11 +395,12 @@ public class MainWindowNew extends JFrame {
 					{
 						if(Start.lager.getAuftrag(1).getLagerungsart().equals("Einlagerung"))
 						{
-							new AddStuffToLagerWindow(1);
+							//new AddStuffToLagerWindow(1);
+							new AddStuffToLagerWindowNew(1);
 						}
 						else
 						{
-							new RemoveStuffFromLagerWindow(1);
+							new RemoveStuffFromLagerWindowNew(1);
 						}
 					}
 				}
@@ -514,11 +474,12 @@ public class MainWindowNew extends JFrame {
 					{
 						if(Start.lager.getAuftrag(2).getLagerungsart().equals("Einlagerung"))
 						{
-							new AddStuffToLagerWindow(2);
+							//new AddStuffToLagerWindow(2);
+							new AddStuffToLagerWindowNew(2);
 						}
 						else
 						{
-							new RemoveStuffFromLagerWindow(2);
+							new RemoveStuffFromLagerWindowNew(2);
 						}
 					}
 				}
@@ -721,37 +682,37 @@ public class MainWindowNew extends JFrame {
 		kontostand.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		panel_2.add(kontostand);
 		
-		JButton btnNewButton = new JButton("Neuer Auftrag");
-		btnNewButton.setBackground(new Color(144, 238, 144));
-		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnNewButton.addActionListener(new ActionListener() {
+		button_neuerauftrag = new JButton("Neuer Auftrag");
+		button_neuerauftrag.setBackground(new Color(144, 238, 144));
+		button_neuerauftrag.setFont(new Font("Tahoma", Font.BOLD, 11));
+		button_neuerauftrag.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Start.lager.auftragHinzufuegen();
 				Start.lager.printAuftraege();
 				UpdateAuftragListe();
 			}
 		});
-		panel_1.add(btnNewButton);
+		panel_1.add(button_neuerauftrag);
 		
-		JButton btnNewButton_1 = new JButton("Umlagern");
-		btnNewButton_1.setBackground(new Color(0, 139, 139));
-		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnNewButton_1.addActionListener(new ActionListener() {
+		button_umlagern = new JButton("Umlagern");
+		button_umlagern.setBackground(new Color(0, 139, 139));
+		button_umlagern.setFont(new Font("Tahoma", Font.BOLD, 11));
+		button_umlagern.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new UmlagernWindow();
+				new UmlagernWindowNew();
 			}
 		});
-		panel_1.add(btnNewButton_1);
+		panel_1.add(button_umlagern);
 		
-		JButton btnNewButton_2 = new JButton("Verschrotten");
-		btnNewButton_2.setBackground(new Color(0, 139, 139));
-		btnNewButton_2.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnNewButton_2.addActionListener(new ActionListener() {
+		button_verschrotten = new JButton("Verschrotten");
+		button_verschrotten.setBackground(new Color(0, 139, 139));
+		button_verschrotten.setFont(new Font("Tahoma", Font.BOLD, 11));
+		button_verschrotten.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new VerschrottenWindow();
+				new VerschrottenWindowNew();
 			}
 		});
-		panel_1.add(btnNewButton_2);
+		panel_1.add(button_verschrotten);
 		
 		JButton btnNewButton_3 = new JButton("Bilanz");
 		btnNewButton_3.setBackground(new Color(100, 149, 237));
@@ -781,25 +742,10 @@ public class MainWindowNew extends JFrame {
 		
 		JLabel grafik_lagerraum8 = new JLabel("New label");*/
 		
-		lagerraum_feld[0] = new JLabel("New label");
-		lagerraum_feld[1] = new JLabel("New label");
-		lagerraum_feld[2] = new JLabel("New label");
-		lagerraum_feld[3] = new JLabel("New label");
-		lagerraum_feld[4] = new JLabel("New label");
-		lagerraum_feld[5] = new JLabel("New label");
-		lagerraum_feld[6] = new JLabel("New label");
-		lagerraum_feld[7] = new JLabel("New label");
-		lagerraum_feld[8] = new JLabel("New label");
-		
-		for(int i = 0; i < 9; i++)
+		for(int i = 0; i < 27; i++)
 		{
 			lagerraum_feld[i] = new JLabel();
 			lagerraum_feld[i].setHorizontalAlignment(JLabel.CENTER);
-			if(i % 2 == 0)
-			{
-				lagerraum_feld[i].setBackground(Color.white);
-				lagerraum_feld[i].setOpaque(true);
-			}
 		}
 		UpdateMainLagerraum();
 		
@@ -813,16 +759,35 @@ public class MainWindowNew extends JFrame {
 		panel.add(grafik_lagerraum6);
 		panel.add(grafik_lagerraum7);
 		panel.add(grafik_lagerraum8);*/
-		for(int i = 0; i < 9; i++)
+		for(int i = 0; i < 27; i++)
 		{
-			panel.add(lagerraum_feld[i]);
+			if(i < 9)
+			{
+				panel.add(lagerraum_feld[i]);
+			}
+			else if(i < 18)
+			{
+				panel_4.add(lagerraum_feld[i]);
+			}
+			else
+			{
+				panel_5.add(lagerraum_feld[i]);
+			}
 		}
+		
+		button_umlagern.setEnabled(false);
+		button_verschrotten.setEnabled(false);
 		
 		contentPane.setLayout(gl_contentPane);
 		
 	}
 	public int getRightLagerplatz(int number) {
 		int rightNumber[] = new int[]{24,25,26,15,16,17,6,7,8,21,22,23,12,13,14,3,4,5,18,19,20,9,10,11,0,1,2};
+		return rightNumber[number];
+	}
+	
+	public int getRightLagerplatzMain(int number) {
+		int rightNumber[] = new int[]{18,19,20,21,22,23,24,25,26,9,10,11,12,13,14,15,16,17,0,1,2,3,4,5,6,7,8};
 		return rightNumber[number];
 	}
 	
@@ -858,6 +823,14 @@ public class MainWindowNew extends JFrame {
 				auftrag_zurueckstellen[i].setEnabled(false);
 				auftrag_ablehnen[i].setEnabled(false);
 			}
+		}
+		if(Start.lager.isAuftragListeVoll())
+		{
+			button_neuerauftrag.setEnabled(false);
+		}
+		else
+		{
+			button_neuerauftrag.setEnabled(true);
 		}
 	}
 	
@@ -1000,27 +973,57 @@ public class MainWindowNew extends JFrame {
 	
 	public void UpdateMainLagerraum () {
 		int adder = 0;
-		if(lagerauswahl_main.getText().equals("Lager 2"))
+		/*if(lagerauswahl_main.getText().equals("Lager 2"))
 		{
 			adder = 9;
 		}
 		if(lagerauswahl_main.getText().equals("Lager 3"))
 		{
 			adder = 18;
-		}
-		for(int i = 0; i < 9; i++)
+		}*/
+		int j = 0;
+		for(int i = 0; i < 27; i++)
 		{
 			String text = Start.lager.getLagerplatzInhalt(getRightLagerplatz(i + adder));
-			if(text == null) {
-				text = "leer";
-				lagerraum_feld[i].setForeground(Color.gray);
+			if(j < 3)
+			{
+				lagerraum_feld[i].setHorizontalAlignment(JLabel.RIGHT);
+				lagerraum_feld[i].setBackground(new Color(14745599));
+				lagerraum_feld[i].setOpaque(true);
+				j++;
+			}
+			else if(j < 6)
+			{
+				lagerraum_feld[i].setHorizontalAlignment(JLabel.CENTER);
+				lagerraum_feld[i].setBackground(new Color(15728639));
+				lagerraum_feld[i].setOpaque(true);
+				j++;
 			}
 			else
 			{
-				lagerraum_feld[i].setForeground(Color.black);
+				lagerraum_feld[i].setHorizontalAlignment(JLabel.LEFT);
+				lagerraum_feld[i].setBackground(Color.white);
+				lagerraum_feld[i].setOpaque(true);
+				j++;
 			}
-			lagerraum_feld[i].setIcon(bekommeBild(Start.lager.getInhalt(getRightLagerplatz(i + adder))));
+			if(j == 9)
+			{
+				j = 0;
+			}
+			ImageIcon icon2 = bekommeBild(Start.lager.getInhalt(getRightLagerplatzMain(i)));
+			Image test = getScaledImage(icon2.getImage(), 64, 64);
+			lagerraum_feld[i].setIcon(new ImageIcon(test));
 			lagerraum_feld[i].setToolTipText(text);
 		}
+	}
+	public Image getScaledImage(Image srcImg, int w, int h){
+	    BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+	    Graphics2D g2 = resizedImg.createGraphics();
+
+	    g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+	    g2.drawImage(srcImg, 0, 0, w, h, null);
+	    g2.dispose();
+
+	    return resizedImg;
 	}
 }
