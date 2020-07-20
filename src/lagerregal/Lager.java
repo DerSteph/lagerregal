@@ -89,6 +89,11 @@ public class Lager {
 	public Produkt getAuftrag(int nummer) {
 		return schlange.get(nummer);
 	}
+	
+	public Produkt getInhalt(int nummer) {
+		return inhalt.get(nummer);
+	}
+	
 	public void printAuftraege() {
 		System.out.println("Auftraege zur Abarbeitung:");
 		for(int i = 0; i < 3; i++)
@@ -1553,6 +1558,8 @@ public class Lager {
 		{
 			if(inhalt.get(lagerziel) != null)
 			{
+				getLagerinhalt();
+				System.out.println(inhalt.get(lagerziel));
 				System.out.println("Das Lagerziel ist bereits besetzt");
 				return false;
 			}
@@ -1670,6 +1677,21 @@ public class Lager {
 			//System.out.println(inhalt.get(lagerplatz).getInhalt());
 			return inhalt.get(lagerplatz).getInhalt();
 		}
+	}
+	public int getLagerplatzFromInhalt(int i) {
+		if(i < 9)
+		{
+			return 1;
+		}
+		if(i < 18)
+		{
+			return 2;
+		}
+		if(i < 27)
+		{
+			return 3;
+		}
+		return 1;
 	}
 	
 	public int HolzLagerstelleAbfragen(int lagerziel) {

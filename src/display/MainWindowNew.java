@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.GridLayout;
 import javax.swing.JButton;
@@ -24,7 +25,12 @@ import java.awt.Color;
 import java.awt.SystemColor;
 import javax.swing.border.LineBorder;
 
+import lagerregal.Holz;
+import lagerregal.Papier;
+import lagerregal.Produkt;
 import lagerregal.Start;
+import lagerregal.Stein;
+
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 
@@ -44,6 +50,8 @@ public class MainWindowNew extends JFrame {
 	public JLabel kontostand = new JLabel();
 	
 	private JPanel contentPane;
+	private JLabel header_auftrag;
+	public JLabel letzteAktion;
 
 	/**
 	 * Launch the application.
@@ -91,6 +99,8 @@ public class MainWindowNew extends JFrame {
 		JSeparator separator = new JSeparator();
 		separator.setForeground(new Color(160, 160, 160));
 		separator.setBackground(new Color(255, 255, 255));
+		
+		letzteAktion = new JLabel("");
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -109,7 +119,8 @@ public class MainWindowNew extends JFrame {
 						.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, 477, Short.MAX_VALUE)
 						.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 477, Short.MAX_VALUE)
 						.addComponent(separator, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(panel_3, GroupLayout.DEFAULT_SIZE, 477, Short.MAX_VALUE))
+						.addComponent(panel_3, GroupLayout.DEFAULT_SIZE, 477, Short.MAX_VALUE)
+						.addComponent(letzteAktion, GroupLayout.DEFAULT_SIZE, 477, Short.MAX_VALUE))
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
@@ -126,11 +137,17 @@ public class MainWindowNew extends JFrame {
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(panel_3, GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE))
 						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 407, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addComponent(panel_4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(icon, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE)
-					.addGap(16))
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(panel_4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(icon, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE)
+							.addGap(16))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(letzteAktion)
+							.addContainerGap())))
 		);
 		
 		JButton links = new JButton("<");
@@ -139,54 +156,18 @@ public class MainWindowNew extends JFrame {
 				String text;
 				if(lagerauswahl_main.getText().equals("Lager 1"))
 				{
-					for(int i = 0; i < 9; i++)
-					{
-						text = Start.lager.getLagerplatzInhalt(getRightLagerplatz(i+18));
-						if(text == null) {
-							text = "leer";
-							lagerraum_feld[i].setForeground(Color.gray);
-						}
-						else
-						{
-							lagerraum_feld[i].setForeground(Color.black);
-						}
-						lagerraum_feld[i].setText(text);
-					}
 					lagerauswahl_main.setText("Lager 3");
+					UpdateMainLagerraum();
 				}
 				else if(lagerauswahl_main.getText().equals("Lager 2"))
 				{
-					for(int i = 0; i < 9; i++)
-					{
-						text = Start.lager.getLagerplatzInhalt(getRightLagerplatz(i));
-						if(text == null) {
-							text = "leer";
-							lagerraum_feld[i].setForeground(Color.gray);
-						}
-						else
-						{
-							lagerraum_feld[i].setForeground(Color.black);
-						}
-						lagerraum_feld[i].setText(text);
-					}
 					lagerauswahl_main.setText("Lager 1");
+					UpdateMainLagerraum();
 				}
 				else if(lagerauswahl_main.getText().equals("Lager 3"))
 				{
-					for(int i = 0; i < 9; i++)
-					{
-						text = Start.lager.getLagerplatzInhalt(getRightLagerplatz(i+9));
-						if(text == null) {
-							text = "leer";
-							lagerraum_feld[i].setForeground(Color.gray);
-						}
-						else
-						{
-							lagerraum_feld[i].setForeground(Color.black);
-						}
-						lagerraum_feld[i].setText(text);
-					}
 					lagerauswahl_main.setText("Lager 2");
+					UpdateMainLagerraum();
 				}
 				else
 				{
@@ -205,54 +186,18 @@ public class MainWindowNew extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(lagerauswahl_main.getText().equals("Lager 1"))
 				{
-					for(int i = 0; i < 9; i++)
-					{
-						String text = Start.lager.getLagerplatzInhalt(getRightLagerplatz(i+9));
-						if(text == null) {
-							text = "leer";
-							lagerraum_feld[i].setForeground(Color.gray);
-						}
-						else
-						{
-							lagerraum_feld[i].setForeground(Color.black);
-						}
-						lagerraum_feld[i].setText(text);
-					}
 					lagerauswahl_main.setText("Lager 2");
+					UpdateMainLagerraum();
 				}
 				else if(lagerauswahl_main.getText().equals("Lager 2"))
 				{
-					for(int i = 0; i < 9; i++)
-					{
-						String text = Start.lager.getLagerplatzInhalt(getRightLagerplatz(i+18));
-						if(text == null) {
-							text = "leer";
-							lagerraum_feld[i].setForeground(Color.gray);
-						}
-						else
-						{
-							lagerraum_feld[i].setForeground(Color.black);
-						}
-						lagerraum_feld[i].setText(text);
-					}
 					lagerauswahl_main.setText("Lager 3");
+					UpdateMainLagerraum();
 				}
 				else if(lagerauswahl_main.getText().equals("Lager 3"))
 				{
-					for(int i = 0; i < 9; i++)
-					{
-						String text = Start.lager.getLagerplatzInhalt(getRightLagerplatz(i));
-						if(text == null) {
-							text = "leer";
-							lagerraum_feld[i].setForeground(Color.gray);
-						}
-						else
-						{
-							lagerraum_feld[i].setForeground(Color.black);
-						}
-						lagerraum_feld[i].setText(text);
-					}
 					lagerauswahl_main.setText("Lager 1");
+					UpdateMainLagerraum();
 				}
 				else
 				{
@@ -320,7 +265,7 @@ public class MainWindowNew extends JFrame {
 			auftrag_annehmen[i].setVisible(false);
 			auftrag_zurueckstellen[i].setVisible(false);
 		}*/
-		JLabel header_auftrag = new JLabel("Einlagern / Auslagern");
+		header_auftrag = new JLabel("Einlagern / Auslagern");
 		header_auftrag.setFont(new Font("Tahoma", Font.BOLD, 11));
 		GridBagConstraints gbc_header_auftrag = new GridBagConstraints();
 		gbc_header_auftrag.insets = new Insets(0, 0, 5, 5);
@@ -849,19 +794,14 @@ public class MainWindowNew extends JFrame {
 		for(int i = 0; i < 9; i++)
 		{
 			lagerraum_feld[i] = new JLabel();
-			String text = Start.lager.getLagerplatzInhalt(getRightLagerplatz(i));
-			if(text == null) {
-				text = "leer";
-				lagerraum_feld[i].setForeground(Color.gray);
-			}
 			lagerraum_feld[i].setHorizontalAlignment(JLabel.CENTER);
-			lagerraum_feld[i].setText("<html><div style='text-align: center;'>" + text + "</div></html>");
 			if(i % 2 == 0)
 			{
 				lagerraum_feld[i].setBackground(Color.white);
 				lagerraum_feld[i].setOpaque(true);
 			}
 		}
+		UpdateMainLagerraum();
 		
 		panel.setLayout(new GridLayout(0, 3, 0, 0));
 		/*panel.add(grafik_lagerraum0);
@@ -877,11 +817,17 @@ public class MainWindowNew extends JFrame {
 		{
 			panel.add(lagerraum_feld[i]);
 		}
+		
 		contentPane.setLayout(gl_contentPane);
 		
 	}
 	public int getRightLagerplatz(int number) {
 		int rightNumber[] = new int[]{24,25,26,15,16,17,6,7,8,21,22,23,12,13,14,3,4,5,18,19,20,9,10,11,0,1,2};
+		return rightNumber[number];
+	}
+	
+	public int getGrafikLagerplatz(int number) {
+		int rightNumber[] = new int[]{0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26};
 		return rightNumber[number];
 	}
 	
@@ -915,58 +861,166 @@ public class MainWindowNew extends JFrame {
 		}
 	}
 	
-	public void UpdateMainLagerraum () {
-		if(lagerauswahl_main.getText().equals("Lager 1"))
+	public ImageIcon bekommeBild(Produkt name) {
+		if(name instanceof Papier)
 		{
-			for(int i = 0; i < 9; i++)
+			if(((Papier) name).getFarbe().equals("Weiß") && ((Papier) name).getGroesse().equals("A3"))
 			{
-				String text = Start.lager.getLagerplatzInhalt(getRightLagerplatz(i));
-				if(text == null) {
-					text = "<html><center>leer</center></html>";
-					lagerraum_feld[i].setForeground(Color.gray);
-				}
-				else
-				{
-					lagerraum_feld[i].setForeground(Color.black);
-				}
-				lagerraum_feld[i].setText(text);
+				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Papier_weiss_a3.png"));
+			}
+			if(((Papier) name).getFarbe().equals("Weiß") && ((Papier) name).getGroesse().equals("A4"))
+			{
+				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Papier_weiss_a4.png"));
+			}
+			if(((Papier) name).getFarbe().equals("Weiß") && ((Papier) name).getGroesse().equals("A5"))
+			{
+				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Papier_weiss_a5.png"));
+			}
+			if(((Papier) name).getFarbe().equals("Grün") && ((Papier) name).getGroesse().equals("A3"))
+			{
+				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Papier_gruen_a3.png"));
+			}
+			if(((Papier) name).getFarbe().equals("Grün") && ((Papier) name).getGroesse().equals("A4"))
+			{
+				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Papier_gruen_a4.png"));
+			}
+			if(((Papier) name).getFarbe().equals("Grün") && ((Papier) name).getGroesse().equals("A5"))
+			{
+				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Papier_gruen_a5.png"));
+			}
+			if(((Papier) name).getFarbe().equals("Blau") && ((Papier) name).getGroesse().equals("A3"))
+			{
+				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Papier_blau_a3.png"));
+			}
+			if(((Papier) name).getFarbe().equals("Blau") && ((Papier) name).getGroesse().equals("A4"))
+			{
+				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Papier_blau_a4.png"));
+			}
+			if(((Papier) name).getFarbe().equals("Blau") && ((Papier) name).getGroesse().equals("A5"))
+			{
+				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Papier_blau_a5.png"));
 			}
 		}
-		else if(lagerauswahl_main.getText().equals("Lager 2"))
+		if(name instanceof Holz)
 		{
-			for(int i = 0; i < 9; i++)
+			if(((Holz) name).getArt().equals("Kiefer") && ((Holz) name).getForm().equals("Bretter"))
 			{
-				String text = Start.lager.getLagerplatzInhalt(getRightLagerplatz(i+9));
-				if(text == null) {
-					text = "<html><center>leer</center></html>";
-					lagerraum_feld[i].setForeground(Color.gray);
-				}
-				else
-				{
-					lagerraum_feld[i].setForeground(Color.black);
-				}
-				lagerraum_feld[i].setText(text);
+				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Holz_kiefer_bretter.png"));
+			}
+			if(((Holz) name).getArt().equals("Buche") && ((Holz) name).getForm().equals("Bretter"))
+			{
+				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Holz_buche_bretter.png"));
+			}
+			if(((Holz) name).getArt().equals("Eiche") && ((Holz) name).getForm().equals("Bretter"))
+			{
+				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Holz_eiche_bretter.png"));
+			}
+			if(((Holz) name).getArt().equals("Kiefer") && ((Holz) name).getForm().equals("Balken"))
+			{
+				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Holz_kiefer_balken.png"));
+			}
+			if(((Holz) name).getArt().equals("Buche") && ((Holz) name).getForm().equals("Balken"))
+			{
+				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Holz_buche_balken.png"));
+			}
+			if(((Holz) name).getArt().equals("Eiche") && ((Holz) name).getForm().equals("Balken"))
+			{
+				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Holz_eiche_balken.png"));
+			}
+			if(((Holz) name).getArt().equals("Kiefer") && ((Holz) name).getForm().equals("Scheit"))
+			{
+				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Holz_kiefer_scheit.png"));
+			}
+			if(((Holz) name).getArt().equals("Buche") && ((Holz) name).getForm().equals("Scheit"))
+			{
+				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Holz_buche_scheit.png"));
+			}
+			if(((Holz) name).getArt().equals("Eiche") && ((Holz) name).getForm().equals("Scheit"))
+			{
+				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Holz_eiche_scheit.png"));
 			}
 		}
-		else if(lagerauswahl_main.getText().equals("Lager 3"))
+		if(name instanceof Stein)
 		{
-			for(int i = 0; i < 9; i++)
+			if(((Stein) name).getArt().equals("Marmor") && ((Stein) name).getGewicht().equals("Leicht"))
 			{
-				String text = Start.lager.getLagerplatzInhalt(getRightLagerplatz(i+18));
-				if(text == null) {
-					text = "<html><center>leer</center></html>";
-					lagerraum_feld[i].setForeground(Color.gray);
-				}
-				else
-				{
-					lagerraum_feld[i].setForeground(Color.black);
-				}
-				lagerraum_feld[i].setText(text);
+				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Stein_marmor_leicht.png"));
 			}
+			if(((Stein) name).getArt().equals("Marmor") && ((Stein) name).getGewicht().equals("Mittel"))
+			{
+				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Stein_marmor_mittel.png"));
+			}
+			if(((Stein) name).getArt().equals("Marmor") && ((Stein) name).getGewicht().equals("Schwer"))
+			{
+				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Stein_marmor_schwer.png"));
+			}
+			if(((Stein) name).getArt().equals("Granit") && ((Stein) name).getGewicht().equals("Leicht"))
+			{
+				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Stein_granit_leicht.png"));
+			}
+			if(((Stein) name).getArt().equals("Granit") && ((Stein) name).getGewicht().equals("Mittel"))
+			{
+				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Stein_granit_mittel.png"));
+			}
+			if(((Stein) name).getArt().equals("Granit") && ((Stein) name).getGewicht().equals("Schwer"))
+			{
+				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Stein_granit_schwer.png"));
+			}
+			if(((Stein) name).getArt().equals("Sandstein") && ((Stein) name).getGewicht().equals("Leicht"))
+			{
+				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Stein_sandstein_leicht.png"));
+			}
+			if(((Stein) name).getArt().equals("Sandstein") && ((Stein) name).getGewicht().equals("Mittel"))
+			{
+				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Stein_sandstein_mittel.png"));
+			}
+			if(((Stein) name).getArt().equals("Sandstein") && ((Stein) name).getGewicht().equals("Schwer"))
+			{
+				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Stein_sandstein_schwer.png"));
+			}
+		}
+		return new ImageIcon(MainWindowNew.class.getResource("/bilder/leer.png"));
+	}
+	
+	public void GotoLager(int lagerplatz) {
+		if(lagerplatz < 9)
+		{
+			lagerauswahl_main.setText("Lager 1");
+		}
+		else if(lagerplatz < 18)
+		{
+			lagerauswahl_main.setText("Lager 2");
 		}
 		else
 		{
-			
+			lagerauswahl_main.setText("Lager 3");
+		}
+		UpdateMainLagerraum();
+	}
+	
+	public void UpdateMainLagerraum () {
+		int adder = 0;
+		if(lagerauswahl_main.getText().equals("Lager 2"))
+		{
+			adder = 9;
+		}
+		if(lagerauswahl_main.getText().equals("Lager 3"))
+		{
+			adder = 18;
+		}
+		for(int i = 0; i < 9; i++)
+		{
+			String text = Start.lager.getLagerplatzInhalt(getRightLagerplatz(i + adder));
+			if(text == null) {
+				text = "leer";
+				lagerraum_feld[i].setForeground(Color.gray);
+			}
+			else
+			{
+				lagerraum_feld[i].setForeground(Color.black);
+			}
+			lagerraum_feld[i].setIcon(bekommeBild(Start.lager.getInhalt(getRightLagerplatz(i + adder))));
+			lagerraum_feld[i].setToolTipText(text);
 		}
 	}
 }
