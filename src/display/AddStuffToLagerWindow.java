@@ -79,7 +79,7 @@ public class AddStuffToLagerWindow {
 						Start.window.UpdateMainLagerraum();
 						//Start.window.GotoLager(i);
 						Start.window.UpdateAuftragListe();
-						Start.window.letzteAktion.setText("Letzte Aktion: Einlagerung von " + Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i)) + " in Lager " + Start.lager.getLagerplatzFromInhalt(Start.window.getRightLagerplatz(i)));
+						Start.window.letzteAktion.setText("Letzte Aktion: Einlagerung von " + Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(i)) + " in Lager " + Start.window.getLagerplatzFromInhalt(i));
 						auftraghinzufuegen
 								.dispatchEvent(new WindowEvent(auftraghinzufuegen, WindowEvent.WINDOW_CLOSING));
 						Start.window.kontostand.setText("Dein Kontostand: " + Start.bilanz.getGesamtkonto() + "€");

@@ -1709,21 +1709,6 @@ public class Lager {
 			return inhalt.get(lagerplatz).getInhalt();
 		}
 	}
-	public int getLagerplatzFromInhalt(int i) {
-		if(i < 9)
-		{
-			return 1;
-		}
-		if(i < 18)
-		{
-			return 2;
-		}
-		if(i < 27)
-		{
-			return 3;
-		}
-		return 1;
-	}
 	
 	public int HolzLagerstelleAbfragen(int lagerziel) {
 		int k = 0;

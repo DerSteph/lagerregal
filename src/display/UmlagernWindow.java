@@ -88,7 +88,7 @@ public class UmlagernWindow {
 							{
 								Start.window.GotoLager(adder);
 								System.out.println(Start.window.getGrafikLagerplatz(lagerquelle) + ","+ Start.window.getGrafikLagerplatz(lagerziel));
-								Start.window.letzteAktion.setText("Letzte Aktion: Umlagerung von " + Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(adder)) + " von Lager " + Start.lager.getLagerplatzFromInhalt(Start.window.getGrafikLagerplatz(lagerquelle)) + " zu Lager " + Start.lager.getLagerplatzFromInhalt(Start.window.getGrafikLagerplatz(lagerziel)));
+								Start.window.letzteAktion.setText("Letzte Aktion: Umlagerung von " + Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatz(adder)) + " von Lager " + Start.window.getLagerplatzFromInhalt(lagerquelle) + " zu Lager " + Start.window.getLagerplatzFromInhalt(lagerziel));
 								fenster.dispatchEvent(new WindowEvent(fenster, WindowEvent.WINDOW_CLOSING));
 								Start.window.kontostand.setText("Dein Kontostand: " + Start.bilanz.getGesamtkonto() + "€");
 							}

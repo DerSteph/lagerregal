@@ -132,7 +132,7 @@ public class UmlagernWindowNew extends JFrame {
 						{
 							Start.window.UpdateMainLagerraum();
 							System.out.println(Start.window.getGrafikLagerplatz(lagerquelle) + ","+ Start.window.getGrafikLagerplatz(lagerziel));
-							Start.window.letzteAktion.setText("Letzte Aktion: Umlagerung von " + Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatzMain(temp)) + " von Lager " + Start.lager.getLagerplatzFromInhalt(Start.window.getGrafikLagerplatz(lagerquelle)) + " zu Lager " + Start.lager.getLagerplatzFromInhalt(Start.window.getGrafikLagerplatz(lagerziel)));
+							Start.window.letzteAktion.setText("Letzte Aktion: Umlagerung von " + Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatzMain(temp)) + " von Lager " + Start.window.getLagerplatzFromInhalt(lagerquelle) + " zu Lager " + Start.window.getLagerplatzFromInhalt(lagerziel));
 							Start.window.kontostand.setText("Dein Kontostand: " + Start.bilanz.getGesamtkonto() + "€");
 							dispose();
 						}

@@ -135,7 +135,7 @@ public class AddStuffToLagerWindowNew extends JFrame {
 						Start.window.UpdateMainLagerraum();
 						//Start.window.GotoLager(i);
 						Start.window.UpdateAuftragListe();
-						Start.window.letzteAktion.setText("Letzte Aktion: Einlagerung von " + Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatzMain(i)) + " in Lager " + Start.lager.getLagerplatzFromInhalt(Start.window.getRightLagerplatzMain(i)));
+						Start.window.letzteAktion.setText("Letzte Aktion: Einlagerung von " + Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatzMain(i)) + " in Lager " + Start.window.getLagerplatzFromInhalt(Start.window.getRightLagerplatz(i)));
 						//dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 						Start.window.kontostand.setText("Dein Kontostand: " + Start.bilanz.getGesamtkonto() + "€");
 						Start.window.button_umlagern.setEnabled(true);

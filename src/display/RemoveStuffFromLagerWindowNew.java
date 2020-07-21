@@ -126,7 +126,7 @@ public class RemoveStuffFromLagerWindowNew extends JFrame {
 						Start.window.UpdateMainLagerraum();
 						Start.window.UpdateAuftragListe();
 						Start.window.kontostand.setText("Dein Kontostand: " + Start.bilanz.getGesamtkonto() + "€");
-						Start.window.letzteAktion.setText("Letzte Aktion: Auslagern von " + text + " in Lager " + Start.lager.getLagerplatzFromInhalt(Start.window.getRightLagerplatzMain(temp)));
+						Start.window.letzteAktion.setText("Letzte Aktion: Auslagern von " + text + " in Lager " + Start.window.getLagerplatzFromInhalt(temp));
 						dispose();
 					}
 					else

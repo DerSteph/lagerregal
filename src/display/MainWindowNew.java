@@ -352,6 +352,7 @@ public class MainWindowNew extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Start.lager.auftragAblehnen(0);
+				Start.window.kontostand.setText("Dein Kontostand: " + Start.bilanz.getGesamtkonto() + "€");
 				UpdateAuftragListe();
 			}
 			
@@ -432,6 +433,7 @@ public class MainWindowNew extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Start.lager.auftragAblehnen(1);
+				Start.window.kontostand.setText("Dein Kontostand: " + Start.bilanz.getGesamtkonto() + "€");
 				UpdateAuftragListe();
 			}
 			
@@ -512,6 +514,7 @@ public class MainWindowNew extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				Start.lager.auftragAblehnen(2);
 				UpdateAuftragListe();
+				Start.window.kontostand.setText("Dein Kontostand: " + Start.bilanz.getGesamtkonto() + "€");
 			}
 			
 		});
@@ -1025,5 +1028,20 @@ public class MainWindowNew extends JFrame {
 	    g2.dispose();
 
 	    return resizedImg;
+	}
+	public int getLagerplatzFromInhalt(int i) {
+		if(i < 9)
+		{
+			return 1;
+		}
+		if(i < 18)
+		{
+			return 2;
+		}
+		if(i < 27)
+		{
+			return 3;
+		}
+		return 1;
 	}
 }

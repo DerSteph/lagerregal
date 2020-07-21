@@ -1,5 +1,7 @@
 package lagerregal;
 
+import java.net.URL;
+
 import display.MainWindow;
 import display.MainWindowNew;
 
@@ -13,7 +15,8 @@ public class Start {
 	public static void main(String[] args) {
 		try
 		{
-			datei = new CSV("auftrag.csv");
+			URL name = Start.class.getResource("auftrag.csv");
+			datei = new CSV(name.toString().substring(5));
 		}
 		catch(Exception e) {
 			System.out.println("Datei kann nicht geladen werden.");

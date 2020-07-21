@@ -113,7 +113,7 @@ public class VerschrottenWindowNew extends JFrame {
 					if(Start.lager.Verschrotten(Start.window.getRightLagerplatzMain(temp)))
 					{
 						Start.window.UpdateMainLagerraum();
-						Start.window.letzteAktion.setText("Letzte Aktion: Verschrotten von " + text + " in Lager " + Start.lager.getLagerplatzFromInhalt(Start.window.getRightLagerplatzMain(temp)));
+						Start.window.letzteAktion.setText("Letzte Aktion: Verschrotten von " + text + " in Lager " + Start.window.getLagerplatzFromInhalt(temp));
 						Start.window.kontostand.setText("Dein Kontostand: " + Start.bilanz.getGesamtkonto() + "€");
 						dispose();
 					}
