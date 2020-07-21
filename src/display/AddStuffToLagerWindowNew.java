@@ -16,6 +16,7 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.border.LineBorder;
 
+import lagerregal.Holz;
 import lagerregal.Start;
 
 import java.awt.Color;
@@ -36,6 +37,7 @@ public class AddStuffToLagerWindowNew extends JFrame {
 	private JLabel lagertext;
 	JButton[] label;
 	int checkliste[];
+	private JLabel aufgabenbeschreibung;
 
 	/**
 	 * Create the frame.
@@ -87,7 +89,6 @@ public class AddStuffToLagerWindowNew extends JFrame {
 		lagerraum3.setLayout(new GridLayout(3,3));
 		lagerraum2.setLayout(new GridLayout(3,3));
 		lagerraum1.setLayout(new GridLayout(3,3));
-		panel_3.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		lagertext = new JLabel("New label");
 		
@@ -135,7 +136,17 @@ public class AddStuffToLagerWindowNew extends JFrame {
 						Start.window.UpdateMainLagerraum();
 						//Start.window.GotoLager(i);
 						Start.window.UpdateAuftragListe();
-						Start.window.letzteAktion.setText("Letzte Aktion: Einlagerung von " + Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatzMain(i)) + " in Lager " + Start.window.getLagerplatzFromInhalt(Start.window.getRightLagerplatz(i)));
+						if(Start.lager.getInhalt(Start.window.getRightLagerplatzMain(i)) instanceof Holz)
+						{
+							if(((Holz) Start.lager.getInhalt(Start.window.getRightLagerplatzMain(i))).getForm() == "Balken")
+							{
+								Start.window.letzteAktion.setText("Letzte Aktion: Einlagerung von " + Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatzMain(i)));								
+							}
+						}
+						else
+						{
+							Start.window.letzteAktion.setText("Letzte Aktion: Einlagerung von " + Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatzMain(i)) + " in Lager " + Start.window.getLagerplatzFromInhalt(Start.window.getRightLagerplatz(i)));
+						}
 						//dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 						Start.window.kontostand.setText("Dein Kontostand: " + Start.bilanz.getGesamtkonto() + "€");
 						Start.window.button_umlagern.setEnabled(true);
@@ -196,9 +207,13 @@ public class AddStuffToLagerWindowNew extends JFrame {
 			lagertext.setText(
 					"<html><body><center>Es sind keine Plaetze mehr frei! <br>Du musst einige Produkte umlagern oder loeschen!</center></body></html>");
 		}
+		panel_3.setLayout(new GridLayout(1, 2));
 		lagertext.setHorizontalAlignment(JLabel.CENTER);
 		
 		panel_3.add(lagertext);
+		
+		aufgabenbeschreibung = new JLabel("Aufgabenbeschreibung");
+		panel_3.add(aufgabenbeschreibung);
 		contentPane.setLayout(gl_contentPane);
 		setVisible(true);
 	}

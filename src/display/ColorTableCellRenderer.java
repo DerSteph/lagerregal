@@ -18,7 +18,6 @@ public class ColorTableCellRenderer implements TableCellRenderer{
 				if(Test < 0)
 				{
 					label.setForeground(Color.RED);
-					System.out.println("WE");
 				}
 				else
 				{

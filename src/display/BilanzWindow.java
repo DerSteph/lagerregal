@@ -14,7 +14,7 @@ import java.util.Vector;
 public class BilanzWindow {
 	public BilanzWindow() {
 		JFrame bilanzfenster = new JFrame();
-		bilanzfenster.setSize(new Dimension(600,600));
+		bilanzfenster.setPreferredSize(new Dimension(500,300));
 		bilanzfenster.setLocationRelativeTo(null);
 		bilanzfenster.setTitle("Bilanz");
 		
