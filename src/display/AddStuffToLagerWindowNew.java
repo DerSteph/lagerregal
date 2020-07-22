@@ -131,7 +131,7 @@ public class AddStuffToLagerWindowNew extends JFrame {
 					{
 						i = temp + 18;
 					}*/
-					if(Start.lager.AuftragAbarbeiten(num, Start.window.getRightLagerplatzMain(i)))
+					if(Start.lager.auftragAbarbeiten(num, Start.window.getRightLagerplatzMain(i)))
 					{
 						Start.window.UpdateMainLagerraum();
 						//Start.window.GotoLager(i);
@@ -207,13 +207,13 @@ public class AddStuffToLagerWindowNew extends JFrame {
 			lagertext.setText(
 					"<html><body><center>Es sind keine Plaetze mehr frei! <br>Du musst einige Produkte umlagern oder loeschen!</center></body></html>");
 		}
-		panel_3.setLayout(new GridLayout(1, 2));
+		panel_3.setLayout(new GridLayout(1, 1));
 		lagertext.setHorizontalAlignment(JLabel.CENTER);
 		
 		panel_3.add(lagertext);
 		
-		aufgabenbeschreibung = new JLabel("Aufgabenbeschreibung");
-		panel_3.add(aufgabenbeschreibung);
+		/*aufgabenbeschreibung = new JLabel("Aufgabenbeschreibung");
+		panel_3.add(aufgabenbeschreibung);*/
 		contentPane.setLayout(gl_contentPane);
 		setVisible(true);
 	}

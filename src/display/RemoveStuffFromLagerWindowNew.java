@@ -93,12 +93,12 @@ public class RemoveStuffFromLagerWindowNew extends JFrame {
 			final int temp = i;
 			label[i] = new JButton();
 			String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatzMain(i));
-			Boolean check = Start.lager.pruefeObProduktDortGelagert(Start.window.getRightLagerplatzMain(i), Start.lager.getAuftrag(num));
+			Boolean check = Start.lager.checkObProduktDortGelagert(Start.window.getRightLagerplatzMain(i), Start.lager.getAuftrag(num));
 			Boolean check2 = false;
 			label[i].setBackground(new JButton().getBackground());
 			if(check)
 			{
-				check2 = Start.lager.pruefeObProduktNichtBlockiert(Start.window.getRightLagerplatzMain(i));	
+				check2 = Start.lager.checkObProduktNichtBlockiert(Start.window.getRightLagerplatzMain(i));	
 			}
 			if(text == null) {
 				label[i].setEnabled(false);
@@ -121,7 +121,7 @@ public class RemoveStuffFromLagerWindowNew extends JFrame {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatzMain(temp));
-					if(Start.lager.AuftragAbarbeiten(num, Start.window.getRightLagerplatzMain(temp)))
+					if(Start.lager.auftragAbarbeiten(num, Start.window.getRightLagerplatzMain(temp)))
 					{
 						Start.window.UpdateMainLagerraum();
 						Start.window.UpdateAuftragListe();

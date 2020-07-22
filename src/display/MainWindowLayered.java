@@ -63,22 +63,6 @@ public class MainWindowLayered extends JFrame {
 	public JLabel letzteAktion;
 
 	/**
-	 * Launch the application.
-	 */
-	/*public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MainWindowNew frame = new MainWindowNew();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}*/
-
-	/**
 	 * Create the frame.
 	 */
 	public MainWindowLayered() {
@@ -102,7 +86,7 @@ public class MainWindowLayered extends JFrame {
 		JPanel panel_3 = new JPanel();
 		
 		JLabel icon = new JLabel("");
-		icon.setIcon(new ImageIcon(MainWindowNew.class.getResource("/display/lagerregal2020.png")));
+		icon.setIcon(new ImageIcon(MainWindowLayered.class.getResource("/display/lagerregal2020.png")));
 		
 		JSeparator separator = new JSeparator();
 		separator.setForeground(new Color(160, 160, 160));
@@ -735,8 +719,9 @@ public class MainWindowLayered extends JFrame {
 		button_neuerauftrag.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Start.lager.auftragHinzufuegen();
-				Start.lager.printAuftraege();
+				Start.lager.consolePrintAuftraege();
 				UpdateAuftragListe();
+				letzteAktion.setText("Letzte Aktion: Auftrag zur Auftragsliste hinzugefügt");
 			}
 		});
 		panel_1.add(button_neuerauftrag);
@@ -817,17 +802,17 @@ public class MainWindowLayered extends JFrame {
 				if(i < 3)
 				{
 					lagerraum_feld[i].setBounds(140*(i)+10, 10, 138, 64);
-					ueberpanel[0].add(lagerraum_feld[i], new Integer(1));
+					ueberpanel[0].add(lagerraum_feld[i], 1);
 				}
 				else if(i < 6)
 				{
 					lagerraum_feld[i].setBounds(140*(i-3)+10, 40, 138, 64);
-					ueberpanel[0].add(lagerraum_feld[i], new Integer(2));
+					ueberpanel[0].add(lagerraum_feld[i], 2);
 				}
 				else
 				{
 					lagerraum_feld[i].setBounds(140*(i-6)+10, 70, 138, 64);
-					ueberpanel[0].add(lagerraum_feld[i],new Integer(3));
+					ueberpanel[0].add(lagerraum_feld[i], 3);
 				}
 			}
 			for(int i = 9; i < 18; i++)
@@ -835,17 +820,17 @@ public class MainWindowLayered extends JFrame {
 				if(i < 12)
 				{
 					lagerraum_feld[i].setBounds(140*(i-9)+10, 10, 138, 64);
-					ueberpanel[1].add(lagerraum_feld[i], new Integer(1));
+					ueberpanel[1].add(lagerraum_feld[i], 1);
 				}
 				else if(i < 15)
 				{
 					lagerraum_feld[i].setBounds(140*(i-12)+10, 40, 138, 64);
-					ueberpanel[1].add(lagerraum_feld[i], new Integer(2));
+					ueberpanel[1].add(lagerraum_feld[i], 2);
 				}
 				else
 				{
 					lagerraum_feld[i].setBounds(140*(i-15)+10, 70, 138, 64);
-					ueberpanel[1].add(lagerraum_feld[i],new Integer(3));
+					ueberpanel[1].add(lagerraum_feld[i], 3);
 				}
 			}
 			for(int i = 18; i < 27; i++)
@@ -853,17 +838,17 @@ public class MainWindowLayered extends JFrame {
 				if(i < 21)
 				{
 					lagerraum_feld[i].setBounds(140*(i-18)+10, 10, 138, 64);
-					ueberpanel[2].add(lagerraum_feld[i], new Integer(1));
+					ueberpanel[2].add(lagerraum_feld[i], 1);
 				}
 				else if(i < 24)
 				{
 					lagerraum_feld[i].setBounds(140*(i-21)+10, 40, 138, 64);
-					ueberpanel[2].add(lagerraum_feld[i], new Integer(2));
+					ueberpanel[2].add(lagerraum_feld[i], 2);
 				}
 				else
 				{
 					lagerraum_feld[i].setBounds(140*(i-24)+10, 70, 138, 64);
-					ueberpanel[2].add(lagerraum_feld[i],new Integer(3));
+					ueberpanel[2].add(lagerraum_feld[i], 3);
 				}
 			}
 		
@@ -932,120 +917,120 @@ public class MainWindowLayered extends JFrame {
 		{
 			if(((Papier) name).getFarbe().equals("Weiß") && ((Papier) name).getGroesse().equals("A3"))
 			{
-				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Papier_weiss_a3.png"));
+				return new ImageIcon(MainWindowLayered.class.getResource("/bilder/Papier_weiss_a3.png"));
 			}
 			if(((Papier) name).getFarbe().equals("Weiß") && ((Papier) name).getGroesse().equals("A4"))
 			{
-				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Papier_weiss_a4.png"));
+				return new ImageIcon(MainWindowLayered.class.getResource("/bilder/Papier_weiss_a4.png"));
 			}
 			if(((Papier) name).getFarbe().equals("Weiß") && ((Papier) name).getGroesse().equals("A5"))
 			{
-				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Papier_weiss_a5.png"));
+				return new ImageIcon(MainWindowLayered.class.getResource("/bilder/Papier_weiss_a5.png"));
 			}
 			if(((Papier) name).getFarbe().equals("Grün") && ((Papier) name).getGroesse().equals("A3"))
 			{
-				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Papier_gruen_a3.png"));
+				return new ImageIcon(MainWindowLayered.class.getResource("/bilder/Papier_gruen_a3.png"));
 			}
 			if(((Papier) name).getFarbe().equals("Grün") && ((Papier) name).getGroesse().equals("A4"))
 			{
-				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Papier_gruen_a4.png"));
+				return new ImageIcon(MainWindowLayered.class.getResource("/bilder/Papier_gruen_a4.png"));
 			}
 			if(((Papier) name).getFarbe().equals("Grün") && ((Papier) name).getGroesse().equals("A5"))
 			{
-				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Papier_gruen_a5.png"));
+				return new ImageIcon(MainWindowLayered.class.getResource("/bilder/Papier_gruen_a5.png"));
 			}
 			if(((Papier) name).getFarbe().equals("Blau") && ((Papier) name).getGroesse().equals("A3"))
 			{
-				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Papier_blau_a3.png"));
+				return new ImageIcon(MainWindowLayered.class.getResource("/bilder/Papier_blau_a3.png"));
 			}
 			if(((Papier) name).getFarbe().equals("Blau") && ((Papier) name).getGroesse().equals("A4"))
 			{
-				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Papier_blau_a4.png"));
+				return new ImageIcon(MainWindowLayered.class.getResource("/bilder/Papier_blau_a4.png"));
 			}
 			if(((Papier) name).getFarbe().equals("Blau") && ((Papier) name).getGroesse().equals("A5"))
 			{
-				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Papier_blau_a5.png"));
+				return new ImageIcon(MainWindowLayered.class.getResource("/bilder/Papier_blau_a5.png"));
 			}
 		}
 		if(name instanceof Holz)
 		{
 			if(((Holz) name).getArt().equals("Kiefer") && ((Holz) name).getForm().equals("Bretter"))
 			{
-				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Holz_kiefer_bretter.png"));
+				return new ImageIcon(MainWindowLayered.class.getResource("/bilder/Holz_kiefer_bretter.png"));
 			}
 			if(((Holz) name).getArt().equals("Buche") && ((Holz) name).getForm().equals("Bretter"))
 			{
-				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Holz_buche_bretter.png"));
+				return new ImageIcon(MainWindowLayered.class.getResource("/bilder/Holz_buche_bretter.png"));
 			}
 			if(((Holz) name).getArt().equals("Eiche") && ((Holz) name).getForm().equals("Bretter"))
 			{
-				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Holz_eiche_bretter.png"));
+				return new ImageIcon(MainWindowLayered.class.getResource("/bilder/Holz_eiche_bretter.png"));
 			}
 			if(((Holz) name).getArt().equals("Kiefer") && ((Holz) name).getForm().equals("Balken"))
 			{
-				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Holz_kiefer_balken.png"));
+				return new ImageIcon(MainWindowLayered.class.getResource("/bilder/Holz_kiefer_balken.png"));
 			}
 			if(((Holz) name).getArt().equals("Buche") && ((Holz) name).getForm().equals("Balken"))
 			{
-				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Holz_buche_balken.png"));
+				return new ImageIcon(MainWindowLayered.class.getResource("/bilder/Holz_buche_balken.png"));
 			}
 			if(((Holz) name).getArt().equals("Eiche") && ((Holz) name).getForm().equals("Balken"))
 			{
-				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Holz_eiche_balken.png"));
+				return new ImageIcon(MainWindowLayered.class.getResource("/bilder/Holz_eiche_balken.png"));
 			}
 			if(((Holz) name).getArt().equals("Kiefer") && ((Holz) name).getForm().equals("Scheit"))
 			{
-				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Holz_kiefer_scheit.png"));
+				return new ImageIcon(MainWindowLayered.class.getResource("/bilder/Holz_kiefer_scheit.png"));
 			}
 			if(((Holz) name).getArt().equals("Buche") && ((Holz) name).getForm().equals("Scheit"))
 			{
-				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Holz_buche_scheit.png"));
+				return new ImageIcon(MainWindowLayered.class.getResource("/bilder/Holz_buche_scheit.png"));
 			}
 			if(((Holz) name).getArt().equals("Eiche") && ((Holz) name).getForm().equals("Scheit"))
 			{
-				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Holz_eiche_scheit.png"));
+				return new ImageIcon(MainWindowLayered.class.getResource("/bilder/Holz_eiche_scheit.png"));
 			}
 		}
 		if(name instanceof Stein)
 		{
 			if(((Stein) name).getArt().equals("Marmor") && ((Stein) name).getGewicht().equals("Leicht"))
 			{
-				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Stein_marmor_leicht.png"));
+				return new ImageIcon(MainWindowLayered.class.getResource("/bilder/Stein_marmor_leicht.png"));
 			}
 			if(((Stein) name).getArt().equals("Marmor") && ((Stein) name).getGewicht().equals("Mittel"))
 			{
-				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Stein_marmor_mittel.png"));
+				return new ImageIcon(MainWindowLayered.class.getResource("/bilder/Stein_marmor_mittel.png"));
 			}
 			if(((Stein) name).getArt().equals("Marmor") && ((Stein) name).getGewicht().equals("Schwer"))
 			{
-				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Stein_marmor_schwer.png"));
+				return new ImageIcon(MainWindowLayered.class.getResource("/bilder/Stein_marmor_schwer.png"));
 			}
 			if(((Stein) name).getArt().equals("Granit") && ((Stein) name).getGewicht().equals("Leicht"))
 			{
-				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Stein_granit_leicht.png"));
+				return new ImageIcon(MainWindowLayered.class.getResource("/bilder/Stein_granit_leicht.png"));
 			}
 			if(((Stein) name).getArt().equals("Granit") && ((Stein) name).getGewicht().equals("Mittel"))
 			{
-				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Stein_granit_mittel.png"));
+				return new ImageIcon(MainWindowLayered.class.getResource("/bilder/Stein_granit_mittel.png"));
 			}
 			if(((Stein) name).getArt().equals("Granit") && ((Stein) name).getGewicht().equals("Schwer"))
 			{
-				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Stein_granit_schwer.png"));
+				return new ImageIcon(MainWindowLayered.class.getResource("/bilder/Stein_granit_schwer.png"));
 			}
 			if(((Stein) name).getArt().equals("Sandstein") && ((Stein) name).getGewicht().equals("Leicht"))
 			{
-				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Stein_sandstein_leicht.png"));
+				return new ImageIcon(MainWindowLayered.class.getResource("/bilder/Stein_sandstein_leicht.png"));
 			}
 			if(((Stein) name).getArt().equals("Sandstein") && ((Stein) name).getGewicht().equals("Mittel"))
 			{
-				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Stein_sandstein_mittel.png"));
+				return new ImageIcon(MainWindowLayered.class.getResource("/bilder/Stein_sandstein_mittel.png"));
 			}
 			if(((Stein) name).getArt().equals("Sandstein") && ((Stein) name).getGewicht().equals("Schwer"))
 			{
-				return new ImageIcon(MainWindowNew.class.getResource("/bilder/Stein_sandstein_schwer.png"));
+				return new ImageIcon(MainWindowLayered.class.getResource("/bilder/Stein_sandstein_schwer.png"));
 			}
 		}
-		return new ImageIcon(MainWindowNew.class.getResource("/bilder/leer.png"));
+		return new ImageIcon(MainWindowLayered.class.getResource("/bilder/leer.png"));
 	}
 	
 	public void GotoLager(int lagerplatz) {

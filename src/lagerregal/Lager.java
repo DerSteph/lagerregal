@@ -1,24 +1,38 @@
 package lagerregal;
 
+import java.net.URL;
 import java.util.*;
 
 public class Lager {
-	private double Umsatz;
-	private ArrayList<Produkt> inhalt;
-	private ArrayList<Produkt> schlange;
+	private ArrayList<Produkt> lagerinhalt;
+	private ArrayList<Produkt> auftragsliste;
+	private ArrayList<Aufgabe> aufgabeninhalt;
 	private int listlaenge = 0;
+	private CSV datei;
 	public Lager() {
-		this.inhalt = new ArrayList<Produkt>();
+		this.lagerinhalt = new ArrayList<Produkt>();
 		for(int i = 0; i < 27; i++) {
-			inhalt.add(i, null);
+			lagerinhalt.add(i, null);
 		}
 		// Jo, also zweidimensionales und als Stack
-		this.schlange = new ArrayList<Produkt>();
+		this.auftragsliste = new ArrayList<Produkt>();
 		for(int i = 0; i < 3; i++)
 		{
-			schlange.add(i, null);
+			auftragsliste.add(i, null);
 		}
-		this.Umsatz = 0;
+		this.aufgabeninhalt = new ArrayList<Aufgabe>();
+		for(int i = 0; i < 27; i++)
+		{
+			aufgabeninhalt.add(i, null);
+		}
+		try
+		{
+			URL name = Start.class.getResource("auftrag.csv");
+			datei = new CSV(name.toString().substring(5));
+		}
+		catch(Exception e) {
+			System.out.println("Datei kann nicht geladen werden.");
+		}
 	}
 	public boolean auftragHinzufuegen() {
 		if(listlaenge == 3)
@@ -30,19 +44,19 @@ public class Lager {
 		{
 			if(getAuftrag(0) == null)
 			{
-				schlange.set(0, Start.datei.firstSchlange());
+				auftragsliste.set(0, datei.firstSchlange());
 			}
 			else if(getAuftrag(1) == null) {
-				schlange.set(1, Start.datei.firstSchlange());
+				auftragsliste.set(1, datei.firstSchlange());
 			}
 			else if(getAuftrag(2) == null) {
-				schlange.set(2, Start.datei.firstSchlange());
+				auftragsliste.set(2, datei.firstSchlange());
 			}
 			else
 			{
-				schlange.set(listlaenge, Start.datei.firstSchlange());
+				auftragsliste.set(listlaenge, datei.firstSchlange());
 			}
-			Start.datei.removeSchlange();
+			datei.removeSchlange();
 			listlaenge++;
 			return true;
 		}
@@ -54,8 +68,8 @@ public class Lager {
 		}
 		else
 		{
-			Start.datei.addSchlange(schlange.get(nummer));
-			schlange.set(nummer, null);
+			datei.addSchlange(auftragsliste.get(nummer));
+			auftragsliste.set(nummer, null);
 			listlaenge--;
 			return true;
 		}
@@ -68,7 +82,7 @@ public class Lager {
 		else
 		{
 			Start.bilanz.removeGesamtkonto(getAuftrag(nummer).getKosten(), getAuftrag(nummer), "Abgelehnt");
-			schlange.set(nummer, null);
+			auftragsliste.set(nummer, null);
 			listlaenge--;
 			return true;
 		}
@@ -80,21 +94,21 @@ public class Lager {
 		}
 		else
 		{
-			schlange.set(nummer, null);
+			auftragsliste.set(nummer, null);
 			listlaenge--;
 			return true;
 		}
 	}
 
 	public Produkt getAuftrag(int nummer) {
-		return schlange.get(nummer);
+		return auftragsliste.get(nummer);
 	}
 	
 	public Produkt getInhalt(int nummer) {
-		return inhalt.get(nummer);
+		return lagerinhalt.get(nummer);
 	}
 	
-	public void printAuftraege() {
+	public void consolePrintAuftraege() {
 		System.out.println("Auftraege zur Abarbeitung:");
 		for(int i = 0; i < 3; i++)
 		{
@@ -108,7 +122,7 @@ public class Lager {
 			}
 		}
 	}
-	public void getLagerinhalt() {
+	public void consolePrintGesamtesLager() {
 		System.out.println("");
 		for(int i = 0; i < 27; i++)
 		{
@@ -120,15 +134,15 @@ public class Lager {
 			{
 				System.out.println();
 			}
-			if(inhalt.get(i) instanceof Papier)
+			if(lagerinhalt.get(i) instanceof Papier)
 			{
 				System.out.print(" P ");	
 			}
-			else if(inhalt.get(i) instanceof Stein)
+			else if(lagerinhalt.get(i) instanceof Stein)
 			{
 				System.out.print(" S ");
 			}
-			else if(inhalt.get(i) instanceof Holz)
+			else if(lagerinhalt.get(i) instanceof Holz)
 			{
 				System.out.print(" H ");
 			}
@@ -150,15 +164,15 @@ public class Lager {
 			return false;
 		}
 	}
-	public boolean AuftragAbarbeiten(int auswahl, int lagerplatz) {
+	public boolean auftragAbarbeiten(int auswahl, int lagerplatz) {
 		if(auswahl > 3 || auswahl < 0)
 		{
-			System.out.println("Es k�nnen nur aktive Auftr�ge zwischen 0 und 2 gew�hlt werden!");
+			System.out.println("Es koennen nur aktive Auftraege zwischen 0 und 2 gewaehlt werden!");
 		}
 		Produkt auftrag = (Produkt) getAuftrag(auswahl);
 		if(lagerplatz > 26 || lagerplatz < 0)
 		{
-			System.out.println("Der Lagerplatz ist au�erhalb des m�glichen");
+			System.out.println("Der Lagerplatz ist ausserhalb des moeglichen");
 			return false;
 		}
 		if(((Produkt) auftrag).getLagerungsart().equals("Einlagerung"))
@@ -168,7 +182,7 @@ public class Lager {
 				if(lagerplatz % 9 >= 0 && lagerplatz % 9 <= 2)
 				{
 					for(int i = 1; i < 3; i++) {
-						if(inhalt.get(lagerplatz + i*3) != null) {
+						if(lagerinhalt.get(lagerplatz + i*3) != null) {
 							System.out.println("Der Lagerplatz wird durch andere Dinge davor blockiert.");
 							return false;
 						}
@@ -176,13 +190,13 @@ public class Lager {
 				}
 				if(lagerplatz % 9 >= 3 && lagerplatz % 9 <= 5)
 				{
-					if(inhalt.get(lagerplatz + 3) != null) {
+					if(lagerinhalt.get(lagerplatz + 3) != null) {
 						System.out.println("Der Lagerplatz wird durch andere Dinge davor blockiert.");
 						return false;
 					}
 				}
-				if(inhalt.get(lagerplatz) == null) {
-					inhalt.set(lagerplatz, (Produkt) auftrag);
+				if(lagerinhalt.get(lagerplatz) == null) {
+					lagerinhalt.set(lagerplatz, (Produkt) auftrag);
 					auftragLoeschen(auswahl);
 					Start.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten(), auftrag);
 					System.out.println("Erfolgreich eingelagert.");
@@ -199,11 +213,11 @@ public class Lager {
 				if(((Holz) auftrag).getForm().equals("Balken"))
 				{
 					int k = HolzLagerstelleAbfragen(lagerplatz);
-					if(inhalt.get(k) == null && inhalt.get(k-3) == null && inhalt.get(k-6) == null)
+					if(lagerinhalt.get(k) == null && lagerinhalt.get(k-3) == null && lagerinhalt.get(k-6) == null)
 					{
-						inhalt.set(k, auftrag);
-						inhalt.set(k-3, auftrag);
-						inhalt.set(k-6, auftrag);
+						lagerinhalt.set(k, auftrag);
+						lagerinhalt.set(k-3, auftrag);
+						lagerinhalt.set(k-6, auftrag);
 						auftragLoeschen(auswahl);
 						Start.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten(), auftrag);
 						System.out.println("Erfolgreich eingelagert.");
@@ -220,7 +234,7 @@ public class Lager {
 					if(lagerplatz % 9 >= 0 && lagerplatz % 9 <= 2)
 					{
 						for(int i = 1; i < 3; i++) {
-							if(inhalt.get(lagerplatz + i*3) != null) {
+							if(lagerinhalt.get(lagerplatz + i*3) != null) {
 								System.out.println("Der Lagerplatz wird durch andere Dinge davor blockiert.");
 								return false;
 							}
@@ -228,13 +242,13 @@ public class Lager {
 					}
 					if(lagerplatz % 9 >= 3 && lagerplatz % 9 <= 5)
 					{
-						if(inhalt.get(lagerplatz + 3) != null) {
+						if(lagerinhalt.get(lagerplatz + 3) != null) {
 							System.out.println("Der Lagerplatz wird durch andere Dinge davor blockiert.");
 							return false;
 						}
 					}
-					if(inhalt.get(lagerplatz) == null) {
-						inhalt.set(lagerplatz, (Produkt) auftrag);
+					if(lagerinhalt.get(lagerplatz) == null) {
+						lagerinhalt.set(lagerplatz, (Produkt) auftrag);
 						auftragLoeschen(auswahl);
 						Start.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten(), auftrag);
 						System.out.println("Erfolgreich eingelagert.");
@@ -254,7 +268,7 @@ public class Lager {
 						if(lagerplatz % 9 >= 0 && lagerplatz % 9 <= 2)
 						{
 							for(int i = 1; i < 3; i++) {
-								if(inhalt.get(lagerplatz + i*3) != null) {
+								if(lagerinhalt.get(lagerplatz + i*3) != null) {
 									System.out.println("Der Lagerplatz wird durch andere Dinge davor blockiert.");
 									return false;
 								}
@@ -262,13 +276,13 @@ public class Lager {
 						}
 						if(lagerplatz % 9 >= 3 && lagerplatz % 9 <= 5)
 						{
-							if(inhalt.get(lagerplatz + 3) != null) {
+							if(lagerinhalt.get(lagerplatz + 3) != null) {
 								System.out.println("Der Lagerplatz wird durch andere Dinge davor blockiert.");
 								return false;
 							}
 						}
-						if(inhalt.get(lagerplatz) == null) {
-							inhalt.set(lagerplatz, (Produkt) auftrag);
+						if(lagerinhalt.get(lagerplatz) == null) {
+							lagerinhalt.set(lagerplatz, (Produkt) auftrag);
 							auftragLoeschen(auswahl);
 							Start.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten(), auftrag);
 							System.out.println("Erfolgreich eingelagert.");
@@ -291,7 +305,7 @@ public class Lager {
 					if(lagerplatz % 9 >= 0 && lagerplatz % 9 <= 2)
 					{
 						for(int i = 1; i < 3; i++) {
-							if(inhalt.get(lagerplatz + i*3) != null) {
+							if(lagerinhalt.get(lagerplatz + i*3) != null) {
 								System.out.println("Der Lagerplatz wird durch andere Dinge davor blockiert.");
 								return false;
 							}
@@ -299,13 +313,13 @@ public class Lager {
 					}
 					if(lagerplatz % 9 >= 3 && lagerplatz % 9 <= 5)
 					{
-						if(inhalt.get(lagerplatz + 3) != null) {
+						if(lagerinhalt.get(lagerplatz + 3) != null) {
 							System.out.println("Der Lagerplatz wird durch andere Dinge davor blockiert.");
 							return false;
 						}
 					}
-					if(inhalt.get(lagerplatz) == null) {
-						inhalt.set(lagerplatz, (Produkt) auftrag);
+					if(lagerinhalt.get(lagerplatz) == null) {
+						lagerinhalt.set(lagerplatz, (Produkt) auftrag);
 						auftragLoeschen(auswahl);
 						Start.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten(), auftrag);
 						System.out.println("Erfolgreich eingelagert.");
@@ -328,15 +342,15 @@ public class Lager {
 		{
 			if(auftrag instanceof Papier)
 			{
-				if(inhalt.get(lagerplatz) instanceof Papier)
+				if(lagerinhalt.get(lagerplatz) instanceof Papier)
 				{
-					if(((Papier) inhalt.get(lagerplatz)).getFarbe().equals(((Papier) auftrag).getFarbe()))
+					if(((Papier) lagerinhalt.get(lagerplatz)).getFarbe().equals(((Papier) auftrag).getFarbe()))
 					{
-						if(((Papier) inhalt.get(lagerplatz)).getGroesse().equals(((Papier) auftrag).getGroesse()))
+						if(((Papier) lagerinhalt.get(lagerplatz)).getGroesse().equals(((Papier) auftrag).getGroesse()))
 						{
-							if(pruefeObProduktNichtBlockiert(lagerplatz))
+							if(checkObProduktNichtBlockiert(lagerplatz))
 							{
-								inhalt.set(lagerplatz, null);
+								lagerinhalt.set(lagerplatz, null);
 								auftragLoeschen(auswahl);
 								Start.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten(), auftrag);
 								System.out.println("Erfolgreich ausgelagert.");
@@ -353,13 +367,13 @@ public class Lager {
 			}
 			else if(auftrag instanceof Holz)
 			{
-				if(inhalt.get(lagerplatz) instanceof Holz)
+				if(lagerinhalt.get(lagerplatz) instanceof Holz)
 				{
-					if(((Holz) inhalt.get(lagerplatz)).getArt().equals(((Holz) auftrag).getArt()))
+					if(((Holz) lagerinhalt.get(lagerplatz)).getArt().equals(((Holz) auftrag).getArt()))
 					{
-						if(((Holz) inhalt.get(lagerplatz)).getForm().equals(((Holz) auftrag).getForm()))
+						if(((Holz) lagerinhalt.get(lagerplatz)).getForm().equals(((Holz) auftrag).getForm()))
 						{
-							if(((Holz) inhalt.get(lagerplatz)).getForm().equals("Balken"))
+							if(((Holz) lagerinhalt.get(lagerplatz)).getForm().equals("Balken"))
 							{
 								int k = 0;
 								if(lagerplatz < 9)
@@ -407,9 +421,9 @@ public class Lager {
 										k = 26;
 									}
 								}
-								inhalt.set(k, null);
-								inhalt.set(k-3, null);
-								inhalt.set(k-6, null);
+								lagerinhalt.set(k, null);
+								lagerinhalt.set(k-3, null);
+								lagerinhalt.set(k-6, null);
 								auftragLoeschen(auswahl);
 								Start.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten(), auftrag);
 								System.out.println("Erfolgreich ausgelagert.");
@@ -417,7 +431,7 @@ public class Lager {
 							}
 							else
 							{
-								inhalt.set(lagerplatz, null);
+								lagerinhalt.set(lagerplatz, null);
 								auftragLoeschen(auswahl);
 								Start.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten(), auftrag);
 								System.out.println("Erfolgreich ausgelagert.");
@@ -429,14 +443,14 @@ public class Lager {
 			}
 			else if(auftrag instanceof Stein)
 			{
-				if(inhalt.get(lagerplatz) instanceof Stein)
+				if(lagerinhalt.get(lagerplatz) instanceof Stein)
 				{
-					if(((Stein) inhalt.get(lagerplatz)).getArt().equals(((Stein) auftrag).getArt()))
+					if(((Stein) lagerinhalt.get(lagerplatz)).getArt().equals(((Stein) auftrag).getArt()))
 					{
-						if(((Stein) inhalt.get(lagerplatz)).getGewicht().equals(((Stein) auftrag).getGewicht()))
+						if(((Stein) lagerinhalt.get(lagerplatz)).getGewicht().equals(((Stein) auftrag).getGewicht()))
 						{
-							if(pruefeObProduktNichtBlockiert(lagerplatz)) {
-								inhalt.set(lagerplatz, null);
+							if(checkObProduktNichtBlockiert(lagerplatz)) {
+								lagerinhalt.set(lagerplatz, null);
 								auftragLoeschen(auswahl);
 								Start.bilanz.addGesamtkonto(((Produkt) auftrag).getKosten(), auftrag);
 								System.out.println("Erfolgreich ausgelagert.");
@@ -465,12 +479,12 @@ public class Lager {
 	}
 
 	public boolean Verschrotten(int lagerplatz) {
-		if(inhalt.get(lagerplatz) != null) {
-			Produkt verschrottung = inhalt.get(lagerplatz);
-			if(inhalt.get(lagerplatz) instanceof Papier || inhalt.get(lagerplatz) instanceof Stein) {
-				inhalt.set(lagerplatz, null);
+		if(lagerinhalt.get(lagerplatz) != null) {
+			Produkt verschrottung = lagerinhalt.get(lagerplatz);
+			if(lagerinhalt.get(lagerplatz) instanceof Papier || lagerinhalt.get(lagerplatz) instanceof Stein) {
+				lagerinhalt.set(lagerplatz, null);
 			}
-			if(inhalt.get(lagerplatz) instanceof Holz)
+			if(lagerinhalt.get(lagerplatz) instanceof Holz)
 			{
 				int k = 0;
 				if(lagerplatz < 9)
@@ -518,9 +532,9 @@ public class Lager {
 						k = 26;
 					}
 				}
-				inhalt.set(k, null);
-				inhalt.set(k-3, null);
-				inhalt.set(k-6, null);
+				lagerinhalt.set(k, null);
+				lagerinhalt.set(k-3, null);
+				lagerinhalt.set(k-6, null);
 			}
 			Start.bilanz.removeGesamtkonto(500, verschrottung, "Verschrottung");
 			System.out.println("Erfolgreich verschrottet");
@@ -564,12 +578,12 @@ public class Lager {
 							continue;
 						}
 					}
-					if(inhalt.get(i) == name)
+					if(lagerinhalt.get(i) == name)
 					{
 						ohneAbfrage = i;
 						checkliste[i] = 2;
 					}
-					else if(inhalt.get(i) != null)
+					else if(lagerinhalt.get(i) != null)
 					{
 						if(i % 9 >= 6 && i % 9 <= 8)
 						{
@@ -617,12 +631,12 @@ public class Lager {
 							continue;
 						}
 					}
-					if(inhalt.get(i) == name)
+					if(lagerinhalt.get(i) == name)
 					{
 						ohneAbfrage = i;
 						checkliste[i] = 2;
 					}
-					else if(inhalt.get(i) != null)
+					else if(lagerinhalt.get(i) != null)
 					{
 						if(i % 9 >= 6 && i % 9 <= 8)
 						{
@@ -651,7 +665,7 @@ public class Lager {
 					{
 						for(int i = 0; i < 3; i++)
 						{
-							if(inhalt.get(i+k) != null || inhalt.get(i+k+3) != null || inhalt.get(i+k+6) != null)
+							if(lagerinhalt.get(i+k) != null || lagerinhalt.get(i+k+3) != null || lagerinhalt.get(i+k+6) != null)
 							{
 								checkliste[i+k] = 0;
 								checkliste[i+k+3] = 0;
@@ -683,12 +697,12 @@ public class Lager {
 								continue;
 							}
 						}
-						if(inhalt.get(i) == name)
+						if(lagerinhalt.get(i) == name)
 						{
 							ohneAbfrage = i;
 							checkliste[i] = 2;
 						}
-						else if(inhalt.get(i) != null)
+						else if(lagerinhalt.get(i) != null)
 						{
 							if(i % 9 >= 6 && i % 9 <= 8)
 							{
@@ -719,7 +733,7 @@ public class Lager {
 	
 	public int[] getArrayVonFreienPlaetzen(int lagerquelle)
 	{
-		Produkt name = inhalt.get(lagerquelle);
+		Produkt name = lagerinhalt.get(lagerquelle);
 		return getArrayVonFreienPlaetzen(name);
 	}
 	
@@ -756,12 +770,12 @@ public class Lager {
 							continue;
 						}
 					}
-					if(inhalt.get(i) == name)
+					if(lagerinhalt.get(i) == name)
 					{
 						ohneAbfrage = i;
 						checkliste[i] = 2;
 					}
-					else if(inhalt.get(i) != null)
+					else if(lagerinhalt.get(i) != null)
 					{
 						if(i % 9 >= 6 && i % 9 <= 8)
 						{
@@ -804,12 +818,12 @@ public class Lager {
 							continue;
 						}
 					}
-					if(inhalt.get(i) == name)
+					if(lagerinhalt.get(i) == name)
 					{
 						ohneAbfrage = i;
 						checkliste[i] = 2;
 					}
-					else if(inhalt.get(i) != null)
+					else if(lagerinhalt.get(i) != null)
 					{
 						if(i % 9 >= 6 && i % 9 <= 8)
 						{
@@ -838,7 +852,7 @@ public class Lager {
 					{
 						for(int i = 0; i < 3; i++)
 						{
-							if(inhalt.get(i+k) != null || inhalt.get(i+k+3) != null || inhalt.get(i+k+6) != null)
+							if(lagerinhalt.get(i+k) != null || lagerinhalt.get(i+k+3) != null || lagerinhalt.get(i+k+6) != null)
 							{
 								checkliste[i+k] = 0;
 								checkliste[i+k+3] = 0;
@@ -870,12 +884,12 @@ public class Lager {
 								continue;
 							}
 						}
-						if(inhalt.get(i) == name)
+						if(lagerinhalt.get(i) == name)
 						{
 							ohneAbfrage = i;
 							checkliste[i] = 2;
 						}
-						else if(inhalt.get(i) != null)
+						else if(lagerinhalt.get(i) != null)
 						{
 							if(i % 9 >= 6 && i % 9 <= 8)
 							{
@@ -913,7 +927,7 @@ public class Lager {
 		return 0;
 	}
 	
-	public void zeigeAlleFreiePlaetze(Produkt name)
+	public void getAlleFreiePlaetze(Produkt name)
 	{
 		// 0 = belegt, 1 = frei, 2 = ausgew�hlter gegenstand
 		int checkliste[] = new int[27];
@@ -932,7 +946,7 @@ public class Lager {
 					{
 						continue;
 					}
-					if(inhalt.get(i) != null)
+					if(lagerinhalt.get(i) != null)
 					{
 						if(i % 9 >= 6 && i % 9 <= 8)
 						{
@@ -961,7 +975,7 @@ public class Lager {
 					{
 						continue;
 					}
-					if(inhalt.get(i) != null)
+					if(lagerinhalt.get(i) != null)
 					{
 						if(i % 9 >= 6 && i % 9 <= 8)
 						{
@@ -988,7 +1002,7 @@ public class Lager {
 				{
 					for(int i = 0; i < 3; i++)
 					{
-						if(inhalt.get(i+k) != null || inhalt.get(i+k+3) != null || inhalt.get(i+k+6) != null)
+						if(lagerinhalt.get(i+k) != null || lagerinhalt.get(i+k+3) != null || lagerinhalt.get(i+k+6) != null)
 						{
 							checkliste[i+k] = 0;
 							checkliste[i+k+3] = 0;
@@ -1024,16 +1038,16 @@ public class Lager {
 		}
 	}
 
-	public void zeigeAlleFreiePlaetze(int lagerplatz) {
+	public void getAlleFreiePlaetze(int lagerplatz) {
 		// 0 = belegt, 1 = frei, 2 = ausgew�hlter gegenstand
 		int checkliste[] = new int[27];
 		for(int i = 0; i < checkliste.length; i++)
 		{
 			checkliste[i] = 1;
 		}
-		if(inhalt.get(lagerplatz) != null)
+		if(lagerinhalt.get(lagerplatz) != null)
 		{
-			if(inhalt.get(lagerplatz) instanceof Papier)
+			if(lagerinhalt.get(lagerplatz) instanceof Papier)
 			{
 				// Gucken, welche Pl�tze �berhaupt frei sind!
 				for(int i = 26; i > 0; i--)
@@ -1047,7 +1061,7 @@ public class Lager {
 						checkliste[i] = 2;
 						continue;
 					}
-					if(inhalt.get(i) != null)
+					if(lagerinhalt.get(i) != null)
 					{
 						if(i % 9 >= 6 && i % 9 <= 8)
 						{
@@ -1068,7 +1082,7 @@ public class Lager {
 				}
 				// Ausgeben
 			}
-			if(inhalt.get(lagerplatz) instanceof Stein)
+			if(lagerinhalt.get(lagerplatz) instanceof Stein)
 			{
 				for(int i = 26; i > 0; i--)
 				{
@@ -1081,7 +1095,7 @@ public class Lager {
 						checkliste[i] = 2;
 						continue;
 					}
-					if(inhalt.get(i) != null)
+					if(lagerinhalt.get(i) != null)
 					{
 						if(i % 9 >= 6 && i % 9 <= 8)
 						{
@@ -1101,14 +1115,14 @@ public class Lager {
 					}
 				}
 			}
-			if(inhalt.get(lagerplatz) instanceof Holz)
+			if(lagerinhalt.get(lagerplatz) instanceof Holz)
 			{
 				int k = 0;
 				for(int j = 0; j < 3; j++)
 				{
 					for(int i = 0; i < 3; i++)
 					{
-						if(inhalt.get(i+k) != null || inhalt.get(i+k+3) != null || inhalt.get(i+k+6) != null)
+						if(lagerinhalt.get(i+k) != null || lagerinhalt.get(i+k+3) != null || lagerinhalt.get(i+k+6) != null)
 						{
 							checkliste[i+k] = 0;
 							checkliste[i+k+3] = 0;
@@ -1134,7 +1148,7 @@ public class Lager {
 				}
 				else if(checkliste[i] == 2)
 				{
-					System.out.print(" " + inhalt.get(lagerplatz).toShortString() + " ");
+					System.out.print(" " + lagerinhalt.get(lagerplatz).toShortString() + " ");
 				}
 				else
 				{
@@ -1149,7 +1163,7 @@ public class Lager {
 		}
 	}
 
-	public void zeigePlaetzeWoProduktGelagert(Produkt name) {
+	public void consolePrintPlaetzeWoProduktGelagert(Produkt name) {
 		for(int i = 0; i < 27; i++)
 		{
 			if(i % 9 == 0) 
@@ -1162,11 +1176,11 @@ public class Lager {
 			}
 			if(name instanceof Papier)
 			{
-				if(inhalt.get(i) instanceof Papier)
+				if(lagerinhalt.get(i) instanceof Papier)
 				{
-					if(((Papier) inhalt.get(i)).getFarbe().equals(((Papier) name).getFarbe()))
+					if(((Papier) lagerinhalt.get(i)).getFarbe().equals(((Papier) name).getFarbe()))
 					{
-						if(((Papier) inhalt.get(i)).getGroesse().equals(((Papier) name).getGroesse()))
+						if(((Papier) lagerinhalt.get(i)).getGroesse().equals(((Papier) name).getGroesse()))
 						{
 							System.out.print(" P ");
 						}
@@ -1182,23 +1196,23 @@ public class Lager {
 				}
 				else
 				{
-					if(inhalt.get(i) == null)
+					if(lagerinhalt.get(i) == null)
 					{
 						System.out.print(" _ ");
 					}
 					else
 					{
-						System.out.print(" " + inhalt.get(i).toShortStringSmall() + " ");	
+						System.out.print(" " + lagerinhalt.get(i).toShortStringSmall() + " ");	
 					}
 				}
 			}
 			if(name instanceof Holz)
 			{
-				if(inhalt.get(i) instanceof Holz)
+				if(lagerinhalt.get(i) instanceof Holz)
 				{
-					if(((Holz) inhalt.get(i)).getArt().equals(((Holz) name).getArt()))
+					if(((Holz) lagerinhalt.get(i)).getArt().equals(((Holz) name).getArt()))
 					{
-						if(((Holz) inhalt.get(i)).getForm().equals(((Holz) name).getForm()))
+						if(((Holz) lagerinhalt.get(i)).getForm().equals(((Holz) name).getForm()))
 						{
 							System.out.print(" H ");
 						}
@@ -1214,23 +1228,23 @@ public class Lager {
 				}
 				else
 				{
-					if(inhalt.get(i) == null)
+					if(lagerinhalt.get(i) == null)
 					{
 						System.out.print(" _ ");
 					}
 					else
 					{
-						System.out.print(" " + inhalt.get(i).toShortStringSmall() + " ");	
+						System.out.print(" " + lagerinhalt.get(i).toShortStringSmall() + " ");	
 					}
 				}
 			}
 			if(name instanceof Stein)
 			{
-				if(inhalt.get(i) instanceof Stein)
+				if(lagerinhalt.get(i) instanceof Stein)
 				{
-					if(((Stein) inhalt.get(i)).getArt().equals(((Stein) name).getArt()))
+					if(((Stein) lagerinhalt.get(i)).getArt().equals(((Stein) name).getArt()))
 					{
-						if(((Stein) inhalt.get(i)).getGewicht().equals(((Stein) name).getGewicht()))
+						if(((Stein) lagerinhalt.get(i)).getGewicht().equals(((Stein) name).getGewicht()))
 						{
 							System.out.print(" S ");
 						}
@@ -1246,27 +1260,27 @@ public class Lager {
 				}
 				else
 				{
-					if(inhalt.get(i) == null)
+					if(lagerinhalt.get(i) == null)
 					{
 						System.out.print(" _ ");
 					}
 					else
 					{
-						System.out.print(" " + inhalt.get(i).toShortStringSmall() + " ");	
+						System.out.print(" " + lagerinhalt.get(i).toShortStringSmall() + " ");	
 					}
 				}
 			}
 		}
 	}
 	
-	public boolean pruefeObProduktDortGelagert(int i, Produkt name) {
+	public boolean checkObProduktDortGelagert(int i, Produkt name) {
 		if(name instanceof Papier)
 		{
-			if(inhalt.get(i) instanceof Papier)
+			if(lagerinhalt.get(i) instanceof Papier)
 			{
-				if(((Papier) inhalt.get(i)).getFarbe().equals(((Papier) name).getFarbe()))
+				if(((Papier) lagerinhalt.get(i)).getFarbe().equals(((Papier) name).getFarbe()))
 				{
-					if(((Papier) inhalt.get(i)).getGroesse().equals(((Papier) name).getGroesse()))
+					if(((Papier) lagerinhalt.get(i)).getGroesse().equals(((Papier) name).getGroesse()))
 					{
 						System.out.print(" P ");
 						return true;
@@ -1285,25 +1299,25 @@ public class Lager {
 			}
 			else
 			{
-				if(inhalt.get(i) == null)
+				if(lagerinhalt.get(i) == null)
 				{
 					System.out.print(" _ ");
 					return false;
 				}
 				else
 				{
-					System.out.print(" " + inhalt.get(i).toShortStringSmall() + " ");	
+					System.out.print(" " + lagerinhalt.get(i).toShortStringSmall() + " ");	
 					return false;
 				}
 			}
 		}
 		if(name instanceof Holz)
 		{
-			if(inhalt.get(i) instanceof Holz)
+			if(lagerinhalt.get(i) instanceof Holz)
 			{
-				if(((Holz) inhalt.get(i)).getArt().equals(((Holz) name).getArt()))
+				if(((Holz) lagerinhalt.get(i)).getArt().equals(((Holz) name).getArt()))
 				{
-					if(((Holz) inhalt.get(i)).getForm().equals(((Holz) name).getForm()))
+					if(((Holz) lagerinhalt.get(i)).getForm().equals(((Holz) name).getForm()))
 					{
 						System.out.print(" H ");
 						return true;
@@ -1322,25 +1336,25 @@ public class Lager {
 			}
 			else
 			{
-				if(inhalt.get(i) == null)
+				if(lagerinhalt.get(i) == null)
 				{
 					System.out.print(" _ ");
 					return false;
 				}
 				else
 				{
-					System.out.print(" " + inhalt.get(i).toShortStringSmall() + " ");	
+					System.out.print(" " + lagerinhalt.get(i).toShortStringSmall() + " ");	
 					return false;
 				}
 			}
 		}
 		if(name instanceof Stein)
 		{
-			if(inhalt.get(i) instanceof Stein)
+			if(lagerinhalt.get(i) instanceof Stein)
 			{
-				if(((Stein) inhalt.get(i)).getArt().equals(((Stein) name).getArt()))
+				if(((Stein) lagerinhalt.get(i)).getArt().equals(((Stein) name).getArt()))
 				{
-					if(((Stein) inhalt.get(i)).getGewicht().equals(((Stein) name).getGewicht()))
+					if(((Stein) lagerinhalt.get(i)).getGewicht().equals(((Stein) name).getGewicht()))
 					{
 						System.out.print(" S ");
 						return true;
@@ -1359,14 +1373,14 @@ public class Lager {
 			}
 			else
 			{
-				if(inhalt.get(i) == null)
+				if(lagerinhalt.get(i) == null)
 				{
 					System.out.print(" _ ");
 					return false;
 				}
 				else
 				{
-					System.out.print(" " + inhalt.get(i).toShortStringSmall() + " ");
+					System.out.print(" " + lagerinhalt.get(i).toShortStringSmall() + " ");
 					return false;
 				}
 			}
@@ -1382,7 +1396,7 @@ public class Lager {
 		}
 		for(int i = 0; i < 27; i++)
 		{
-			if(pruefeObProduktNichtBlockiert(i) == false)
+			if(checkObProduktNichtBlockiert(i) == false)
 			{
 				checkliste[i] = 0;
 			}
@@ -1394,12 +1408,12 @@ public class Lager {
 		return checkliste;
 	}
 	
-	public boolean pruefeObProduktNichtBlockiert(int i) {
-		if(inhalt.get(i) instanceof Papier || inhalt.get(i) instanceof Stein)
+	public boolean checkObProduktNichtBlockiert(int i) {
+		if(lagerinhalt.get(i) instanceof Papier || lagerinhalt.get(i) instanceof Stein)
 		{
 			if(i % 9 >= 0 && i % 9 <= 2)
 			{
-				if(inhalt.get(i+1*3) == null && inhalt.get(i+2*3) == null)
+				if(lagerinhalt.get(i+1*3) == null && lagerinhalt.get(i+2*3) == null)
 				{
 					return true;
 				}
@@ -1410,7 +1424,7 @@ public class Lager {
 			}
 			if(i % 9 >= 3 && i % 9 <= 5)
 			{
-				if(inhalt.get(i+1*3) == null)
+				if(lagerinhalt.get(i+1*3) == null)
 				{
 					return true;
 				}
@@ -1424,9 +1438,9 @@ public class Lager {
 				return true;
 			}
 		}
-		if(inhalt.get(i) instanceof Holz)
+		if(lagerinhalt.get(i) instanceof Holz)
 		{
-			if(((Holz) inhalt.get(i)).getForm().equals("Balken"))
+			if(((Holz) lagerinhalt.get(i)).getForm().equals("Balken"))
 			{
 				return true;
 			}
@@ -1434,7 +1448,7 @@ public class Lager {
 			{
 				if(i % 9 >= 0 && i % 9 <= 2)
 				{
-					if(inhalt.get(i+1*3) == null && inhalt.get(i+2*3) == null)
+					if(lagerinhalt.get(i+1*3) == null && lagerinhalt.get(i+2*3) == null)
 					{
 						return true;
 					}
@@ -1445,7 +1459,7 @@ public class Lager {
 				}
 				if(i % 9 >= 3 && i % 9 <= 5)
 				{
-					if(inhalt.get(i+1*3) == null)
+					if(lagerinhalt.get(i+1*3) == null)
 					{
 						return true;
 					}
@@ -1463,14 +1477,14 @@ public class Lager {
 		return false;
 	}
 	
-	public boolean pruefeObProduktDortGelagertUndVerfuegbar(int i, Produkt name) {
+	public boolean checkObProduktDortGelagertUndVerfuegbar(int i, Produkt name) {
 		if(name instanceof Papier)
 		{
-			if(inhalt.get(i) instanceof Papier)
+			if(lagerinhalt.get(i) instanceof Papier)
 			{
-				if(((Papier) inhalt.get(i)).getFarbe().equals(((Papier) name).getFarbe()))
+				if(((Papier) lagerinhalt.get(i)).getFarbe().equals(((Papier) name).getFarbe()))
 				{
-					if(((Papier) inhalt.get(i)).getGroesse().equals(((Papier) name).getGroesse()))
+					if(((Papier) lagerinhalt.get(i)).getGroesse().equals(((Papier) name).getGroesse()))
 					{
 						// Abfrage, ob das Produkt von Dingen davor blockiert wird.
 						System.out.print(" P ");
@@ -1490,25 +1504,25 @@ public class Lager {
 			}
 			else
 			{
-				if(inhalt.get(i) == null)
+				if(lagerinhalt.get(i) == null)
 				{
 					System.out.print(" _ ");
 					return false;
 				}
 				else
 				{
-					System.out.print(" " + inhalt.get(i).toShortStringSmall() + " ");	
+					System.out.print(" " + lagerinhalt.get(i).toShortStringSmall() + " ");	
 					return false;
 				}
 			}
 		}
 		if(name instanceof Holz)
 		{
-			if(inhalt.get(i) instanceof Holz)
+			if(lagerinhalt.get(i) instanceof Holz)
 			{
-				if(((Holz) inhalt.get(i)).getArt().equals(((Holz) name).getArt()))
+				if(((Holz) lagerinhalt.get(i)).getArt().equals(((Holz) name).getArt()))
 				{
-					if(((Holz) inhalt.get(i)).getForm().equals(((Holz) name).getForm()))
+					if(((Holz) lagerinhalt.get(i)).getForm().equals(((Holz) name).getForm()))
 					{
 						System.out.print(" H ");
 						return true;
@@ -1527,25 +1541,25 @@ public class Lager {
 			}
 			else
 			{
-				if(inhalt.get(i) == null)
+				if(lagerinhalt.get(i) == null)
 				{
 					System.out.print(" _ ");
 					return false;
 				}
 				else
 				{
-					System.out.print(" " + inhalt.get(i).toShortStringSmall() + " ");	
+					System.out.print(" " + lagerinhalt.get(i).toShortStringSmall() + " ");	
 					return false;
 				}
 			}
 		}
 		if(name instanceof Stein)
 		{
-			if(inhalt.get(i) instanceof Stein)
+			if(lagerinhalt.get(i) instanceof Stein)
 			{
-				if(((Stein) inhalt.get(i)).getArt().equals(((Stein) name).getArt()))
+				if(((Stein) lagerinhalt.get(i)).getArt().equals(((Stein) name).getArt()))
 				{
-					if(((Stein) inhalt.get(i)).getGewicht().equals(((Stein) name).getGewicht()))
+					if(((Stein) lagerinhalt.get(i)).getGewicht().equals(((Stein) name).getGewicht()))
 					{
 						System.out.print(" S ");
 						return true;
@@ -1564,14 +1578,14 @@ public class Lager {
 			}
 			else
 			{
-				if(inhalt.get(i) == null)
+				if(lagerinhalt.get(i) == null)
 				{
 					System.out.print(" _ ");
 					return false;
 				}
 				else
 				{
-					System.out.print(" " + inhalt.get(i).toShortStringSmall() + " ");
+					System.out.print(" " + lagerinhalt.get(i).toShortStringSmall() + " ");
 					return false;
 				}
 			}
@@ -1580,45 +1594,45 @@ public class Lager {
 	}
 
 	public boolean Umlagern(int lagerquelle, int lagerziel) {
-		if(inhalt.get(lagerquelle) == null)
+		if(lagerinhalt.get(lagerquelle) == null)
 		{
 			System.out.println("Der Lagerplatz ist leer");
 			return false;
 		}
-		if(inhalt.get(lagerquelle) instanceof Papier)
+		if(lagerinhalt.get(lagerquelle) instanceof Papier)
 		{
-			if(inhalt.get(lagerziel) != null)
+			if(lagerinhalt.get(lagerziel) != null)
 			{
-				getLagerinhalt();
-				System.out.println(inhalt.get(lagerziel));
+				consolePrintGesamtesLager();
+				System.out.println(lagerinhalt.get(lagerziel));
 				System.out.println("Das Lagerziel ist bereits besetzt");
 				return false;
 			}
 			else
 			{
-				inhalt.set(lagerziel, inhalt.get(lagerquelle));
-				inhalt.set(lagerquelle, null);
-				Start.bilanz.removeGesamtkonto(100, inhalt.get(lagerziel), "Umlagern");
+				lagerinhalt.set(lagerziel, lagerinhalt.get(lagerquelle));
+				lagerinhalt.set(lagerquelle, null);
+				Start.bilanz.removeGesamtkonto(100, lagerinhalt.get(lagerziel), "Umlagern");
 				System.out.println("Das Lagerziel wurde erfolgreich zur Lagerquelle umgelagert.");
 				return true;
 			}
 		}
-		if(inhalt.get(lagerquelle) instanceof Holz)
+		if(lagerinhalt.get(lagerquelle) instanceof Holz)
 		{
-			if(((Holz) inhalt.get(lagerquelle)).getForm().equals("Balken"))
+			if(((Holz) lagerinhalt.get(lagerquelle)).getForm().equals("Balken"))
 			{
 				int holz_lagerziel = HolzLagerstelleAbfragen(lagerziel);
 				int holz_lagerquelle = HolzLagerstelleAbfragen(lagerquelle);
-				if(inhalt.get(holz_lagerziel) == null && inhalt.get(holz_lagerziel-3) == null && inhalt.get(holz_lagerziel-6) == null)
+				if(lagerinhalt.get(holz_lagerziel) == null && lagerinhalt.get(holz_lagerziel-3) == null && lagerinhalt.get(holz_lagerziel-6) == null)
 				{
-					inhalt.set(holz_lagerziel, inhalt.get(lagerquelle));
-					inhalt.set(holz_lagerziel-3, inhalt.get(lagerquelle));
-					inhalt.set(holz_lagerziel-6, inhalt.get(lagerquelle));
-					inhalt.set(holz_lagerquelle, null);
-					inhalt.set(holz_lagerquelle-3, null);
-					inhalt.set(holz_lagerquelle-6, null);
+					lagerinhalt.set(holz_lagerziel, lagerinhalt.get(lagerquelle));
+					lagerinhalt.set(holz_lagerziel-3, lagerinhalt.get(lagerquelle));
+					lagerinhalt.set(holz_lagerziel-6, lagerinhalt.get(lagerquelle));
+					lagerinhalt.set(holz_lagerquelle, null);
+					lagerinhalt.set(holz_lagerquelle-3, null);
+					lagerinhalt.set(holz_lagerquelle-6, null);
 					
-					Start.bilanz.removeGesamtkonto(100, inhalt.get(holz_lagerziel), "Umlagern");
+					Start.bilanz.removeGesamtkonto(100, lagerinhalt.get(holz_lagerziel), "Umlagern");
 					System.out.println("Das Lagerziel wurde erfolgreich zur Lagerquelle umgelagert.");
 					return true;
 				}
@@ -1629,31 +1643,31 @@ public class Lager {
 			}
 			else
 			{
-				if(inhalt.get(lagerziel) != null)
+				if(lagerinhalt.get(lagerziel) != null)
 				{
 					System.out.println("Das Lagerziel ist bereits besetzt");
 					return false;
 				}
 				else
 				{
-					inhalt.set(lagerziel, inhalt.get(lagerquelle));
-					inhalt.set(lagerquelle, null);
-					Start.bilanz.removeGesamtkonto(100, inhalt.get(lagerziel), "Umlagern");
+					lagerinhalt.set(lagerziel, lagerinhalt.get(lagerquelle));
+					lagerinhalt.set(lagerquelle, null);
+					Start.bilanz.removeGesamtkonto(100, lagerinhalt.get(lagerziel), "Umlagern");
 					System.out.println("Das Lagerziel wurde erfolgreich zur Lagerquelle umgelagert.");
 					return true;
 				}
 			}
 		}
-		if(inhalt.get(lagerquelle) instanceof Stein)
+		if(lagerinhalt.get(lagerquelle) instanceof Stein)
 		{
-			if(inhalt.get(lagerziel) != null)
+			if(lagerinhalt.get(lagerziel) != null)
 			{
 				System.out.println("Das Lagerziel ist bereits besetzt");
 				return false;
 			}
 			else
 			{
-				if(((Stein) inhalt.get(lagerquelle)).getGewicht().equals("Schwer"))
+				if(((Stein) lagerinhalt.get(lagerquelle)).getGewicht().equals("Schwer"))
 				{
 					if(lagerziel > 8)
 					{
@@ -1661,18 +1675,18 @@ public class Lager {
 					}
 					else
 					{
-						inhalt.set(lagerziel, inhalt.get(lagerquelle));
-						inhalt.set(lagerquelle, null);
-						Start.bilanz.removeGesamtkonto(100, inhalt.get(lagerziel), "Umlagern");
+						lagerinhalt.set(lagerziel, lagerinhalt.get(lagerquelle));
+						lagerinhalt.set(lagerquelle, null);
+						Start.bilanz.removeGesamtkonto(100, lagerinhalt.get(lagerziel), "Umlagern");
 						System.out.println("Das Lagerziel wurde erfolgreich zur Lagerquelle umgelagert.");
 						return true;	
 					}
 				}
 				else
 				{
-					inhalt.set(lagerziel, inhalt.get(lagerquelle));
-					inhalt.set(lagerquelle, null);
-					Start.bilanz.removeGesamtkonto(100, inhalt.get(lagerziel), "Umlagern");
+					lagerinhalt.set(lagerziel, lagerinhalt.get(lagerquelle));
+					lagerinhalt.set(lagerquelle, null);
+					Start.bilanz.removeGesamtkonto(100, lagerinhalt.get(lagerziel), "Umlagern");
 					System.out.println("Das Lagerziel wurde erfolgreich zur Lagerquelle umgelagert.");
 					return true;
 				}
@@ -1685,7 +1699,7 @@ public class Lager {
 	public boolean isLagerEmpty() {
 		for(int i = 0; i < 27; i++)
 		{
-			if(inhalt.get(i) == null)
+			if(lagerinhalt.get(i) == null)
 			{
 				
 			}
@@ -1698,7 +1712,7 @@ public class Lager {
 	}
 	
 	public String getLagerplatzInhalt(int lagerplatz) {
-		if(inhalt.get(lagerplatz) == null)
+		if(lagerinhalt.get(lagerplatz) == null)
 		{
 			//System.out.println("Lagerplatz ist leer");
 			return null;
@@ -1706,7 +1720,7 @@ public class Lager {
 		else
 		{
 			//System.out.println(inhalt.get(lagerplatz).getInhalt());
-			return inhalt.get(lagerplatz).getInhalt();
+			return lagerinhalt.get(lagerplatz).getInhalt();
 		}
 	}
 	

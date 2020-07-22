@@ -8,10 +8,11 @@ import java.util.LinkedList;
 import java.util.Queue; 
 
 public class CSV {
-	public File file;
-	public String name;
-	public BufferedReader in = null;
-	public Queue<Produkt> schlangecsv;
+	private File file;
+	private String name;
+	private BufferedReader in = null;
+	private Queue<Produkt> schlangecsv;
+	private int zaehler = 0;
 	public CSV(String name) {
 		file = new File(name);
         schlangecsv = new LinkedList<Produkt>();
@@ -43,7 +44,7 @@ public class CSV {
     	    	    	switch(auswahl)
     	    	    	{
     	    	    	case 0:
-    	    	    		Start.zaehler++;
+    	    	    		zaehler++;
     	    	    		break;
     	    	    	case 1:
     	    	    		Auftragsart = text;
