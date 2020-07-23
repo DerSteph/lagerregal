@@ -20,6 +20,7 @@ public class Bilanz {
 	public int getGesamtminus() {
 		return gesamtminus;
 	}
+	// Für Standart Einlagerung und Auslagerung
 	public void addGesamtkonto(int geld, Produkt name) {
 		this.gesamtkonto = this.gesamtkonto + geld;
 		this.gesamtplus = this.gesamtplus + geld;
@@ -30,15 +31,17 @@ public class Bilanz {
 		this.gesamtminus = this.gesamtminus - geld;
 		geldverlauf.add(new Bilanzobjekt(name));
 	}
+	// Für Verschrottung, Umlagerung, ...
 	public void removeGesamtkonto(int geld, Produkt name, String grund) {
 		this.gesamtkonto = this.gesamtkonto - geld;
 		this.gesamtminus = this.gesamtminus - geld;
 		geldverlauf.add(new Bilanzobjekt(name, grund));
 	}
+	// Jedes Ereignis wird an eine verkettete Liste drangehängt.
 	public LinkedList<Bilanzobjekt> getGeldverlauf() {
 		return geldverlauf;
 	}
-	public void getGesamtverlauf()
+	public void printConsoleGesamtverlauf()
 	{
 		for(Bilanzobjekt e: geldverlauf)
 		{
@@ -46,11 +49,4 @@ public class Bilanz {
 			System.out.println(dtf.format(e.getZeit()) + ": " + e.getGrund() + " " + e.getKosten() + " " + e.getProdukt().getClass().getSimpleName());
 		}
 	}
-	/*
-	 * TODO: Anzeige von Umsätzen, und Eintrag der Ereignisse in eine Liste
-	 * 
-	 * 
-	 * 
-	 * 
-	 */
 }

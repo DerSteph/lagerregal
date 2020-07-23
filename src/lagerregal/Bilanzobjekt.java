@@ -2,6 +2,7 @@ package lagerregal;
 
 import java.time.LocalDateTime;
 
+// Jedes Objekt in der Bilanz ist als Bilanzobjekt gespeichert, dieses beinhaltet Produkt, Grund, Kosten und die Zeit
 public class Bilanzobjekt {
 	private Produkt Produkt;
 	private String Grund;
@@ -19,6 +20,7 @@ public class Bilanzobjekt {
 		this.Produkt = produkt;
 		this.Grund = grund;
 		setZeit(LocalDateTime.now());
+		// Die jeweiligen Gründe haben ja nen festen Preis bei Ausführung, daher muss der Preis nochmal geändert werden
 		if(grund == "Verschrottung")
 		{
 			this.Kosten = -500;

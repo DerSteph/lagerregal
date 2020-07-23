@@ -6,7 +6,7 @@ import java.util.*;
 public class Lager {
 	private ArrayList<Produkt> lagerinhalt;
 	private ArrayList<Produkt> auftragsliste;
-	private ArrayList<Aufgabe> aufgabeninhalt;
+	//private ArrayList<Aufgabe> aufgabeninhalt;
 	private int listlaenge = 0;
 	private CSV datei;
 	public Lager() {
@@ -14,26 +14,26 @@ public class Lager {
 		for(int i = 0; i < 27; i++) {
 			lagerinhalt.add(i, null);
 		}
-		// Jo, also zweidimensionales und als Stack
 		this.auftragsliste = new ArrayList<Produkt>();
 		for(int i = 0; i < 3; i++)
 		{
 			auftragsliste.add(i, null);
 		}
-		this.aufgabeninhalt = new ArrayList<Aufgabe>();
+		/*this.aufgabeninhalt = new ArrayList<Aufgabe>();
 		for(int i = 0; i < 27; i++)
 		{
 			aufgabeninhalt.add(i, null);
-		}
+		}*/
 		try
 		{
 			URL name = Start.class.getResource("auftrag.csv");
-			datei = new CSV(name.toString().substring(5));
+			datei = new CSV(name.toString().substring(5)); // laesst das "file://" am Anfang weg
 		}
 		catch(Exception e) {
 			System.out.println("Datei kann nicht geladen werden.");
 		}
 	}
+	// Fuegt Auftrag der Auftragsliste hinzu
 	public boolean auftragHinzufuegen() {
 		if(listlaenge == 3)
 		{
@@ -61,8 +61,8 @@ public class Lager {
 			return true;
 		}
 	}
+	// Stellt Auftrag wieder hinten an die Schlange an
 	public boolean auftragZurueckstellen(int nummer) {
-		// Hier muss der Auftrag dann hinten rangestellt werden!!
 		if(listlaenge == 0) {
 			return false;
 		}
@@ -74,7 +74,7 @@ public class Lager {
 			return true;
 		}
 	}
-	// Lï¿½scht den Auftrag vollstï¿½ndig!
+	// Loescht den Auftrag vollstaendig!
 	public boolean auftragAblehnen(int nummer) {
 		if(listlaenge == 0) {
 			return false;
@@ -87,7 +87,7 @@ public class Lager {
 			return true;
 		}
 	}
-	// Löscht den Auftrag für das Abschliessen
+	// Löscht den Auftrag für das Abschliessen eines Auftrags
 	private boolean auftragLoeschen(int nummer) {
 		if(listlaenge == 0) {
 			return false;
@@ -100,10 +100,12 @@ public class Lager {
 		}
 	}
 
+	// Rufe Produkt ab in der Auftragsliste
 	public Produkt getAuftrag(int nummer) {
 		return auftragsliste.get(nummer);
 	}
 	
+	// Rufe Produkt ab im Lager
 	public Produkt getInhalt(int nummer) {
 		return lagerinhalt.get(nummer);
 	}
@@ -164,6 +166,7 @@ public class Lager {
 			return false;
 		}
 	}
+	// Abarbeiten des Auftrags für Einlagerung und Auslagerung
 	public boolean auftragAbarbeiten(int auswahl, int lagerplatz) {
 		if(auswahl > 3 || auswahl < 0)
 		{
@@ -210,6 +213,7 @@ public class Lager {
 			}
 			else if(auftrag instanceof Holz)
 			{
+				// Extra Abfrage für Balken
 				if(((Holz) auftrag).getForm().equals("Balken"))
 				{
 					int k = HolzLagerstelleAbfragen(lagerplatz);
@@ -262,6 +266,7 @@ public class Lager {
 				}
 			}
 			else if(auftrag instanceof Stein) {
+				// Extra Abfrage für schwere Steine
 				if(((Stein) auftrag).getGewicht().equals("Schwer"))
 				{
 					if(lagerplatz < 9) {
@@ -336,7 +341,6 @@ public class Lager {
 				System.out.println("Entspricht keiner Lagersache.");
 				return false;
 			}
-			// Zeige alle freien Plï¿½tzen
 		}
 		else if(((Produkt) auftrag).getLagerungsart().equals("Auslagerung"))
 		{
@@ -477,7 +481,8 @@ public class Lager {
 		System.out.println("Irgendwas ist kaputt.");
 		return false;
 	}
-
+	
+	// Lagerplatzinhalt wird an der Stelle verschrottet
 	public boolean Verschrotten(int lagerplatz) {
 		if(lagerinhalt.get(lagerplatz) != null) {
 			Produkt verschrottung = lagerinhalt.get(lagerplatz);
@@ -486,52 +491,7 @@ public class Lager {
 			}
 			if(lagerinhalt.get(lagerplatz) instanceof Holz)
 			{
-				int k = 0;
-				if(lagerplatz < 9)
-				{
-					if(lagerplatz % 3 == 0)
-					{
-						k = 6;
-					}
-					if(lagerplatz % 3 == 1)
-					{
-						k = 7;
-					}
-					if(lagerplatz % 3 == 2)
-					{
-						k = 8;
-					}
-				}
-				else if(lagerplatz < 18)
-				{
-					if(lagerplatz % 3 == 0)
-					{
-						k = 15;
-					}
-					if(lagerplatz % 3 == 1)
-					{
-						k = 16;
-					}
-					if(lagerplatz % 3 == 2)
-					{
-						k = 17;
-					}
-				}
-				else
-				{
-					if(lagerplatz % 3 == 0)
-					{
-						k = 24;
-					}
-					if(lagerplatz % 3 == 1)
-					{
-						k = 25;
-					}
-					if(lagerplatz % 3 == 2)
-					{
-						k = 26;
-					}
-				}
+				int k = HolzLagerstelleAbfragen(lagerplatz);
 				lagerinhalt.set(k, null);
 				lagerinhalt.set(k-3, null);
 				lagerinhalt.set(k-6, null);
@@ -544,9 +504,10 @@ public class Lager {
 		return false;
 	}
 	
+	// Prüfe, wo man das eingegeben Produkt im Lager setzen kann
 	public int[] getArrayVonFreienPlaetzen(Produkt name)
 	{
-		// 0 = belegt, 1 = frei, 2 = ausgewï¿½hlter gegenstand
+		// 0 = belegt, 1 = frei, 2 = ausgewaehlter Gegenstand
 		int checkliste[] = new int[27];
 		int ohneAbfrage = -1;
 		for(int i = 0; i < checkliste.length; i++)
@@ -557,7 +518,7 @@ public class Lager {
 		{
 			if(name instanceof Papier)
 			{
-				// Gucken, welche Plï¿½tze ï¿½berhaupt frei sind!
+				// Gucken, welche Plaetze ueberhaupt frei sind!
 				for(int i = 26; i > 0; i--)
 				{
 					if(checkliste[i] == 0)
@@ -578,11 +539,13 @@ public class Lager {
 							continue;
 						}
 					}
+					// Wenn Lagerplatz der abgefragte Gegenstand ist -> bei nächsten Schritt die hinteren Plätze blockieren
 					if(lagerinhalt.get(i) == name)
 					{
 						ohneAbfrage = i;
 						checkliste[i] = 2;
 					}
+					// Plätze dahinter blockieren, wenn Lagerplatz ein anderer Gegenstand ist
 					else if(lagerinhalt.get(i) != null)
 					{
 						if(i % 9 >= 6 && i % 9 <= 8)
@@ -602,12 +565,12 @@ public class Lager {
 						}
 					}
 				}
-				// Ausgeben
 			}
 			if(name instanceof Stein)
 			{
 				for(int i = 26; i > 0; i--)
 				{
+					// spezielle Abfrage, falls Stein schwer ist!
 					if(((Stein) name).getGewicht().equals("Schwer") && i > 8)
 					{
 						checkliste[i] = 0;
@@ -658,6 +621,7 @@ public class Lager {
 			}
 			if(name instanceof Holz)
 			{
+				// Abfrage für Balken
 				if(((Holz) name).getForm().equals("Balken"))
 				{
 					int k = 0;
@@ -677,6 +641,7 @@ public class Lager {
 				}
 				else
 				{
+					// Sonst auch ganz normal für andere
 					for(int i = 26; i >= 0; i--)
 					{
 						if(checkliste[i] == 0)
@@ -730,7 +695,7 @@ public class Lager {
 		}
 		return checkliste;	
 	}
-	
+	// Prüfe für das Produkt an Lagerstelle, wo freie Plätze für wären
 	public int[] getArrayVonFreienPlaetzen(int lagerquelle)
 	{
 		Produkt name = lagerinhalt.get(lagerquelle);
@@ -738,7 +703,8 @@ public class Lager {
 	}
 	
 	public int getAnzahlFreierVerfuegbarerPlaetze(Produkt name) {
-		// 0 = belegt, 1 = frei, 2 = ausgewï¿½hlter gegenstand
+		// 0 = belegt, 1 = frei, 2 = ausgewaehlter gegenstand
+		// Technik genau gleich wie bei getArrayVonFreienPlaetzen, hier werden die Plaetze aber gezaehlt
 		int checkliste[] = new int[27];
 		int ohneAbfrage = -1;
 		for(int i = 0; i < checkliste.length; i++)
@@ -749,7 +715,7 @@ public class Lager {
 		{
 			if(name instanceof Papier)
 			{
-				// Gucken, welche Plï¿½tze ï¿½berhaupt frei sind!
+				// Gucken, welche Plaetze ueberhaupt frei sind!
 				for(int i = 26; i > 0; i--)
 				{
 					if(checkliste[i] == 0)
@@ -927,9 +893,9 @@ public class Lager {
 		return 0;
 	}
 	
-	public void getAlleFreiePlaetze(Produkt name)
+	public void consolePrintAlleFreiePlaetze(Produkt name)
 	{
-		// 0 = belegt, 1 = frei, 2 = ausgewï¿½hlter gegenstand
+		// 0 = belegt, 1 = frei, 2 = ausgewaehlter gegenstand
 		int checkliste[] = new int[27];
 		for(int i = 0; i < checkliste.length; i++)
 		{
@@ -939,7 +905,7 @@ public class Lager {
 		{
 			if(name instanceof Papier)
 			{
-				// Gucken, welche Plï¿½tze ï¿½berhaupt frei sind!
+				// Gucken, welche Plaetze ueberhaupt frei sind!
 				for(int i = 26; i > 0; i--)
 				{
 					if(checkliste[i] == 0)
@@ -965,7 +931,6 @@ public class Lager {
 						}
 					}
 				}
-				// Ausgeben
 			}
 			if(name instanceof Stein)
 			{
@@ -1038,8 +1003,8 @@ public class Lager {
 		}
 	}
 
-	public void getAlleFreiePlaetze(int lagerplatz) {
-		// 0 = belegt, 1 = frei, 2 = ausgewï¿½hlter gegenstand
+	public void consolePrintAlleFreiePlaetze(int lagerplatz) {
+		// 0 = belegt, 1 = frei, 2 = ausgewaehlter gegenstand
 		int checkliste[] = new int[27];
 		for(int i = 0; i < checkliste.length; i++)
 		{
@@ -1049,7 +1014,7 @@ public class Lager {
 		{
 			if(lagerinhalt.get(lagerplatz) instanceof Papier)
 			{
-				// Gucken, welche Plï¿½tze ï¿½berhaupt frei sind!
+				// Gucken, welche Plaetze ueberhaupt frei sind!
 				for(int i = 26; i > 0; i--)
 				{
 					if(checkliste[i] == 0)
@@ -1159,7 +1124,7 @@ public class Lager {
 		}
 		else
 		{
-			System.out.println("Es wurde kein Lagerelement ausgewï¿½hlt");
+			System.out.println("Es wurde kein Lagerelement ausgewaehlt");
 		}
 	}
 
@@ -1273,6 +1238,7 @@ public class Lager {
 		}
 	}
 	
+	// Prüft für Auslagerung, ob das Produkt an der jeweiligen Stelle gelagert ist.
 	public boolean checkObProduktDortGelagert(int i, Produkt name) {
 		if(name instanceof Papier)
 		{
@@ -1388,6 +1354,7 @@ public class Lager {
 		return false;
 	}
 	
+	// Prüft, wo Plätze im Lager zum Umlagern verfügbar sind, gibt es als Array zurück
 	public int[] getPlaetzeZumUmlagern() {
 		int[] checkliste = new int[27];
 		for(int i = 0; i < 27; i++)
@@ -1408,6 +1375,7 @@ public class Lager {
 		return checkliste;
 	}
 	
+	// Prüft, ob ein Produkt von einem davorstehenden blockiert wird
 	public boolean checkObProduktNichtBlockiert(int i) {
 		if(lagerinhalt.get(i) instanceof Papier || lagerinhalt.get(i) instanceof Stein)
 		{
@@ -1476,124 +1444,10 @@ public class Lager {
 		}
 		return false;
 	}
-	
-	public boolean checkObProduktDortGelagertUndVerfuegbar(int i, Produkt name) {
-		if(name instanceof Papier)
-		{
-			if(lagerinhalt.get(i) instanceof Papier)
-			{
-				if(((Papier) lagerinhalt.get(i)).getFarbe().equals(((Papier) name).getFarbe()))
-				{
-					if(((Papier) lagerinhalt.get(i)).getGroesse().equals(((Papier) name).getGroesse()))
-					{
-						// Abfrage, ob das Produkt von Dingen davor blockiert wird.
-						System.out.print(" P ");
-						return true;
-					}
-					else
-					{
-						System.out.print(" p ");
-						return false;
-					}
-				}
-				else
-				{
-					System.out.print(" p ");
-					return false;
-				}
-			}
-			else
-			{
-				if(lagerinhalt.get(i) == null)
-				{
-					System.out.print(" _ ");
-					return false;
-				}
-				else
-				{
-					System.out.print(" " + lagerinhalt.get(i).toShortStringSmall() + " ");	
-					return false;
-				}
-			}
-		}
-		if(name instanceof Holz)
-		{
-			if(lagerinhalt.get(i) instanceof Holz)
-			{
-				if(((Holz) lagerinhalt.get(i)).getArt().equals(((Holz) name).getArt()))
-				{
-					if(((Holz) lagerinhalt.get(i)).getForm().equals(((Holz) name).getForm()))
-					{
-						System.out.print(" H ");
-						return true;
-					}
-					else
-					{
-						System.out.print(" h ");
-						return false;
-					}
-				}
-				else
-				{
-					System.out.print(" h ");
-					return false;
-				}
-			}
-			else
-			{
-				if(lagerinhalt.get(i) == null)
-				{
-					System.out.print(" _ ");
-					return false;
-				}
-				else
-				{
-					System.out.print(" " + lagerinhalt.get(i).toShortStringSmall() + " ");	
-					return false;
-				}
-			}
-		}
-		if(name instanceof Stein)
-		{
-			if(lagerinhalt.get(i) instanceof Stein)
-			{
-				if(((Stein) lagerinhalt.get(i)).getArt().equals(((Stein) name).getArt()))
-				{
-					if(((Stein) lagerinhalt.get(i)).getGewicht().equals(((Stein) name).getGewicht()))
-					{
-						System.out.print(" S ");
-						return true;
-					}
-					else
-					{
-						System.out.print(" s ");
-						return false;
-					}
-				}
-				else
-				{
-					System.out.print(" s ");
-					return false;
-				}
-			}
-			else
-			{
-				if(lagerinhalt.get(i) == null)
-				{
-					System.out.print(" _ ");
-					return false;
-				}
-				else
-				{
-					System.out.print(" " + lagerinhalt.get(i).toShortStringSmall() + " ");
-					return false;
-				}
-			}
-		}
-		return false;
-	}
 
+	// Funktion zum Umlagern von Lagerquelle zu Lagerziel
 	public boolean Umlagern(int lagerquelle, int lagerziel) {
+		// Prüft, ob Lagerquelle leer ist
 		if(lagerinhalt.get(lagerquelle) == null)
 		{
 			System.out.println("Der Lagerplatz ist leer");
@@ -1621,6 +1475,7 @@ public class Lager {
 		{
 			if(((Holz) lagerinhalt.get(lagerquelle)).getForm().equals("Balken"))
 			{
+				// Damit immer die vordeste Position ausgewählt wird
 				int holz_lagerziel = HolzLagerstelleAbfragen(lagerziel);
 				int holz_lagerquelle = HolzLagerstelleAbfragen(lagerquelle);
 				if(lagerinhalt.get(holz_lagerziel) == null && lagerinhalt.get(holz_lagerziel-3) == null && lagerinhalt.get(holz_lagerziel-6) == null)
@@ -1714,16 +1569,17 @@ public class Lager {
 	public String getLagerplatzInhalt(int lagerplatz) {
 		if(lagerinhalt.get(lagerplatz) == null)
 		{
-			//System.out.println("Lagerplatz ist leer");
+			System.out.println("Lagerplatz ist leer");
 			return null;
 		}
 		else
 		{
-			//System.out.println(inhalt.get(lagerplatz).getInhalt());
+			System.out.println(lagerinhalt.get(lagerplatz).getInhalt());
 			return lagerinhalt.get(lagerplatz).getInhalt();
 		}
 	}
 	
+	// Bei Holz soll immer die vorderste Position ausgewählt werden, zum Ein und Auslagern, daher die Funktion
 	public int HolzLagerstelleAbfragen(int lagerziel) {
 		int k = 0;
 		if(lagerziel < 9)

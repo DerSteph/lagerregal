@@ -200,57 +200,7 @@ public class MainWindowLayered extends JFrame {
 		gbl_panel_3.rowWeights = new double[]{};
 		panel_3.setLayout(gbl_panel_3);
 		panel_3.setBackground(Color.white);
-		
-		/*for(int i = 0; i < 3; i++)
-		{
-			final int temp = i;
-			auftrag_art[i] = new JLabel();
-			auftrag_produkt[i] = new JLabel();
-			auftrag_kosten[i] = new JLabel();
-			auftrag_annehmen[i] = new JButton("\u2714");
-			auftrag_annehmen[i].addActionListener(new java.awt.event.ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					if(e.getSource() instanceof JButton)
-					{
-						String text = ((JButton) e.getSource()).getText();
-						if(!text.equals(""))
-						{
-							if(Start.lager.getAuftrag(temp).getLagerungsart().equals("Einlagerung"))
-							{
-								new AddStuffToLagerWindow(temp);
-							}
-							else
-							{
-								new RemoveStuffFromLagerWindow(temp);
-							}
-						}
-					}
-				}
-			});
-			auftrag_zurueckstellen[i] = new JButton("\u274C");
-			auftrag_zurueckstellen[i].addActionListener(new java.awt.event.ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					Start.lager.auftragZurueckstellen(temp);
-					UpdateAuftragListe();
-				}
-			});
-			auftrag_ablehnen[i] = new JButton("\uD83D\uDDD1\uFE0F");
-			auftrag_ablehnen[i].setFont(new Font(kontostand.getFont().getName(), Font.PLAIN, 30));
-			auftrag_ablehnen[i].addActionListener(new java.awt.event.ActionListener() {
 
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					Start.lager.auftragAblehnen(temp);
-					UpdateAuftragListe();
-				}
-				
-			});
-			auftrag_ablehnen[i].setVisible(false);
-			auftrag_annehmen[i].setVisible(false);
-			auftrag_zurueckstellen[i].setVisible(false);
-		}*/
 		header_auftrag = new JLabel("Einlagern / Auslagern");
 		header_auftrag.setFont(new Font("Tahoma", Font.BOLD, 11));
 		GridBagConstraints gbc_header_auftrag = new GridBagConstraints();
@@ -302,10 +252,6 @@ public class MainWindowLayered extends JFrame {
 		gbc_header_ablehnen.gridx = 5;
 		gbc_header_ablehnen.gridy = 0;
 		panel_3.add(header_ablehnen, gbc_header_ablehnen);
-		
-		
-		
-		
 		
 		auftrag_art[0] = new JLabel("Att1");
 		GridBagConstraints gbc_lblNewLabel_5 = new GridBagConstraints();
@@ -504,7 +450,6 @@ public class MainWindowLayered extends JFrame {
 					{
 						if(Start.lager.getAuftrag(2).getLagerungsart().equals("Einlagerung"))
 						{
-							//new AddStuffToLagerWindow(2);
 							new AddStuffToLagerWindowNew(2);
 						}
 						else
@@ -574,139 +519,7 @@ public class MainWindowLayered extends JFrame {
 			auftrag_zurueckstellen[i].setEnabled(false);
 			auftrag_ablehnen[i].setEnabled(false);
 		}
-		/*JLabel lblNewLabel_5 = new JLabel("Att1");
-		GridBagConstraints gbc_lblNewLabel_5 = new GridBagConstraints();
-		gbc_lblNewLabel_5.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_5.gridx = 0;
-		gbc_lblNewLabel_5.gridy = 0;
-		panel_3.add(lblNewLabel_5, gbc_lblNewLabel_5);
-		
-		JLabel lblNewLabel_6 = new JLabel("Att2");
-		GridBagConstraints gbc_lblNewLabel_6 = new GridBagConstraints();
-		gbc_lblNewLabel_6.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_6.gridx = 1;
-		gbc_lblNewLabel_6.gridy = 0;
-		panel_3.add(lblNewLabel_6, gbc_lblNewLabel_6);
-		
-		JLabel lblNewLabel_7 = new JLabel("Att3");
-		GridBagConstraints gbc_lblNewLabel_7 = new GridBagConstraints();
-		gbc_lblNewLabel_7.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_7.gridx = 2;
-		gbc_lblNewLabel_7.gridy = 0;
-		panel_3.add(lblNewLabel_7, gbc_lblNewLabel_7);
-		
-		JButton btnNewButton_4 = new JButton("\u2714");
-		GridBagConstraints gbc_btnNewButton_4 = new GridBagConstraints();
-		gbc_btnNewButton_4.anchor = GridBagConstraints.EAST;
-		gbc_btnNewButton_4.insets = new Insets(0, 0, 5, 5);
-		gbc_btnNewButton_4.gridx = 3;
-		gbc_btnNewButton_4.gridy = 0;
-		panel_3.add(btnNewButton_4, gbc_btnNewButton_4);
-		
-		JButton btnNewButton_9 = new JButton("\u274C");
-		GridBagConstraints gbc_btnNewButton_9 = new GridBagConstraints();
-		gbc_btnNewButton_9.anchor = GridBagConstraints.EAST;
-		gbc_btnNewButton_9.insets = new Insets(0, 0, 5, 5);
-		gbc_btnNewButton_9.gridx = 4;
-		gbc_btnNewButton_9.gridy = 0;
-		panel_3.add(btnNewButton_9, gbc_btnNewButton_9);
-		
-		JButton btnNewButton_12 = new JButton("\uD83D\uDDD1\uFE0F");
-		GridBagConstraints gbc_btnNewButton_12 = new GridBagConstraints();
-		gbc_btnNewButton_12.anchor = GridBagConstraints.EAST;
-		gbc_btnNewButton_12.insets = new Insets(0, 0, 5, 0);
-		gbc_btnNewButton_12.gridx = 5;
-		gbc_btnNewButton_12.gridy = 0;
-		panel_3.add(btnNewButton_12, gbc_btnNewButton_12);
-		
-		JLabel lblNewLabel_8 = new JLabel("Att1_2");
-		GridBagConstraints gbc_lblNewLabel_8 = new GridBagConstraints();
-		gbc_lblNewLabel_8.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_8.gridx = 0;
-		gbc_lblNewLabel_8.gridy = 1;
-		panel_3.add(lblNewLabel_8, gbc_lblNewLabel_8);
-		
-		JLabel lblNewLabel_9 = new JLabel("Att2_2");
-		GridBagConstraints gbc_lblNewLabel_9 = new GridBagConstraints();
-		gbc_lblNewLabel_9.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_9.gridx = 1;
-		gbc_lblNewLabel_9.gridy = 1;
-		panel_3.add(lblNewLabel_9, gbc_lblNewLabel_9);
-		
-		JLabel lblNewLabel_10 = new JLabel("Att2_3");
-		GridBagConstraints gbc_lblNewLabel_10 = new GridBagConstraints();
-		gbc_lblNewLabel_10.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_10.gridx = 2;
-		gbc_lblNewLabel_10.gridy = 1;
-		panel_3.add(lblNewLabel_10, gbc_lblNewLabel_10);
-		
-		JButton btnNewButton_5 = new JButton("\u2714");
-		GridBagConstraints gbc_btnNewButton_5 = new GridBagConstraints();
-		gbc_btnNewButton_5.anchor = GridBagConstraints.EAST;
-		gbc_btnNewButton_5.insets = new Insets(0, 0, 5, 5);
-		gbc_btnNewButton_5.gridx = 3;
-		gbc_btnNewButton_5.gridy = 1;
-		panel_3.add(btnNewButton_5, gbc_btnNewButton_5);
-		
-		JButton btnNewButton_10 = new JButton("\u274C");
-		GridBagConstraints gbc_btnNewButton_10 = new GridBagConstraints();
-		gbc_btnNewButton_10.anchor = GridBagConstraints.EAST;
-		gbc_btnNewButton_10.insets = new Insets(0, 0, 5, 5);
-		gbc_btnNewButton_10.gridx = 4;
-		gbc_btnNewButton_10.gridy = 1;
-		panel_3.add(btnNewButton_10, gbc_btnNewButton_10);
-		
-		JButton btnNewButton_7 = new JButton("\uD83D\uDDD1\uFE0F");
-		GridBagConstraints gbc_btnNewButton_7 = new GridBagConstraints();
-		gbc_btnNewButton_7.anchor = GridBagConstraints.EAST;
-		gbc_btnNewButton_7.insets = new Insets(0, 0, 5, 0);
-		gbc_btnNewButton_7.gridx = 5;
-		gbc_btnNewButton_7.gridy = 1;
-		panel_3.add(btnNewButton_7, gbc_btnNewButton_7);
-		
-		JLabel lblNewLabel_11 = new JLabel("Att1_3");
-		GridBagConstraints gbc_lblNewLabel_11 = new GridBagConstraints();
-		gbc_lblNewLabel_11.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_11.gridx = 0;
-		gbc_lblNewLabel_11.gridy = 2;
-		panel_3.add(lblNewLabel_11, gbc_lblNewLabel_11);
-		
-		JLabel lblNewLabel_12 = new JLabel("Att2_3");
-		GridBagConstraints gbc_lblNewLabel_12 = new GridBagConstraints();
-		gbc_lblNewLabel_12.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_12.gridx = 1;
-		gbc_lblNewLabel_12.gridy = 2;
-		panel_3.add(lblNewLabel_12, gbc_lblNewLabel_12);
-		
-		JLabel lblNewLabel_13 = new JLabel("Att3_3");
-		GridBagConstraints gbc_lblNewLabel_13 = new GridBagConstraints();
-		gbc_lblNewLabel_13.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_13.gridx = 2;
-		gbc_lblNewLabel_13.gridy = 2;
-		panel_3.add(lblNewLabel_13, gbc_lblNewLabel_13);
-		
-		JButton btnNewButton_6 = new JButton("\u2714");
-		GridBagConstraints gbc_btnNewButton_6 = new GridBagConstraints();
-		gbc_btnNewButton_6.insets = new Insets(0, 0, 5, 5);
-		gbc_btnNewButton_6.gridx = 3;
-		gbc_btnNewButton_6.gridy = 2;
-		panel_3.add(btnNewButton_6, gbc_btnNewButton_6);
-		
-		JButton btnNewButton_11 = new JButton("\u274C");
-		GridBagConstraints gbc_btnNewButton_11 = new GridBagConstraints();
-		gbc_btnNewButton_11.anchor = GridBagConstraints.EAST;
-		gbc_btnNewButton_11.insets = new Insets(0, 0, 5, 5);
-		gbc_btnNewButton_11.gridx = 4;
-		gbc_btnNewButton_11.gridy = 2;
-		panel_3.add(btnNewButton_11, gbc_btnNewButton_11);
-		
-		JButton btnNewButton_8 = new JButton("\uD83D\uDDD1\uFE0F");
-		GridBagConstraints gbc_btnNewButton_8 = new GridBagConstraints();
-		gbc_btnNewButton_8.anchor = GridBagConstraints.EAST;
-		gbc_btnNewButton_8.insets = new Insets(0, 0, 5, 0);
-		gbc_btnNewButton_8.gridx = 5;
-		gbc_btnNewButton_8.gridy = 2;
-		panel_3.add(btnNewButton_8, gbc_btnNewButton_8);*/
+
 		panel_2.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		kontostand = new JLabel("Dein Kontostand: 0\u20AC");
@@ -755,25 +568,7 @@ public class MainWindowLayered extends JFrame {
 			}
 		});
 		panel_1.add(btnNewButton_3);
-		
-		/*JLabel grafik_lagerraum0 = new JLabel("New label");
-		
-		JLabel grafik_lagerraum1 = new JLabel("New label");
-		
-		JLabel grafik_lagerraum2 = new JLabel("New label");
-		
-		JLabel grafik_lagerraum3 = new JLabel("New label");
-		
-		JLabel grafik_lagerraum4 = new JLabel("New label");
-		
-		JLabel grafik_lagerraum5 = new JLabel("New label");
-		
-		JLabel grafik_lagerraum6 = new JLabel("New label");
-		
-		JLabel grafik_lagerraum7 = new JLabel("New label");
-		
-		JLabel grafik_lagerraum8 = new JLabel("New label");*/
-		
+	
 		for(int i = 0; i < 27; i++)
 		{
 			lagerraum_feld[i] = new JLabel();
@@ -790,29 +585,22 @@ public class MainWindowLayered extends JFrame {
 		panel_4.add(ueberpanel[1]);
 		panel_5.add(ueberpanel[2]);
 		
-		
-		/*JLabel[] test = new JLabel[27];
-		for(int i = 0; i < 27; i++)
-		{
-			test[i] = new JLabel();
-			test[i].setText("Huren" + i);
-		}*/
 			for(int i = 0; i < 9; i++)
 			{
 				if(i < 3)
 				{
 					lagerraum_feld[i].setBounds(140*(i)+10, 10, 138, 64);
-					ueberpanel[0].add(lagerraum_feld[i], 1);
+					ueberpanel[0].add(lagerraum_feld[i], Integer.valueOf(1));
 				}
 				else if(i < 6)
 				{
 					lagerraum_feld[i].setBounds(140*(i-3)+10, 40, 138, 64);
-					ueberpanel[0].add(lagerraum_feld[i], 2);
+					ueberpanel[0].add(lagerraum_feld[i], Integer.valueOf(2));
 				}
 				else
 				{
 					lagerraum_feld[i].setBounds(140*(i-6)+10, 70, 138, 64);
-					ueberpanel[0].add(lagerraum_feld[i], 3);
+					ueberpanel[0].add(lagerraum_feld[i], Integer.valueOf(3));
 				}
 			}
 			for(int i = 9; i < 18; i++)
@@ -820,17 +608,17 @@ public class MainWindowLayered extends JFrame {
 				if(i < 12)
 				{
 					lagerraum_feld[i].setBounds(140*(i-9)+10, 10, 138, 64);
-					ueberpanel[1].add(lagerraum_feld[i], 1);
+					ueberpanel[1].add(lagerraum_feld[i], Integer.valueOf(1));
 				}
 				else if(i < 15)
 				{
 					lagerraum_feld[i].setBounds(140*(i-12)+10, 40, 138, 64);
-					ueberpanel[1].add(lagerraum_feld[i], 2);
+					ueberpanel[1].add(lagerraum_feld[i], Integer.valueOf(2));
 				}
 				else
 				{
 					lagerraum_feld[i].setBounds(140*(i-15)+10, 70, 138, 64);
-					ueberpanel[1].add(lagerraum_feld[i], 3);
+					ueberpanel[1].add(lagerraum_feld[i], Integer.valueOf(3));
 				}
 			}
 			for(int i = 18; i < 27; i++)
@@ -838,17 +626,17 @@ public class MainWindowLayered extends JFrame {
 				if(i < 21)
 				{
 					lagerraum_feld[i].setBounds(140*(i-18)+10, 10, 138, 64);
-					ueberpanel[2].add(lagerraum_feld[i], 1);
+					ueberpanel[2].add(lagerraum_feld[i], Integer.valueOf(1));
 				}
 				else if(i < 24)
 				{
 					lagerraum_feld[i].setBounds(140*(i-21)+10, 40, 138, 64);
-					ueberpanel[2].add(lagerraum_feld[i], 2);
+					ueberpanel[2].add(lagerraum_feld[i], Integer.valueOf(2));
 				}
 				else
 				{
 					lagerraum_feld[i].setBounds(140*(i-24)+10, 70, 138, 64);
-					ueberpanel[2].add(lagerraum_feld[i], 3);
+					ueberpanel[2].add(lagerraum_feld[i], Integer.valueOf(3));
 				}
 			}
 		

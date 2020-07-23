@@ -13,6 +13,7 @@ public class CSV {
 	private BufferedReader in = null;
 	private Queue<Produkt> schlangecsv;
 	private int zaehler = 0;
+	// Liest Datei ein und erstellt eine Schlange für die Liste
 	public CSV(String name) {
 		file = new File(name);
         schlangecsv = new LinkedList<Produkt>();
@@ -28,6 +29,7 @@ public class CSV {
             in = new BufferedReader(new FileReader(name));
             in.readLine(); // um die erste Zeile nicht zu lesen
             String zeile = null;
+            // Lese jede Zeile ein
             while((zeile = in.readLine()) != null)
             {
     	    	String text = new String();
@@ -83,19 +85,16 @@ public class CSV {
     	    	{
     	    		Papier papier = new Papier(Auftragsart, Attribut1, Attribut2, Integer.parseInt(Belohnung));
     	    		addSchlange(papier);
-    	    		//System.out.println("Erfolgreich Papier der Schlange hinzugefügt.");
     	    	}
     	    	if(Produkt.equals("Holz"))
     	    	{
     	    		Holz holz = new Holz(Auftragsart, Attribut1, Attribut2, Integer.parseInt(Belohnung));
     	    		addSchlange(holz);
-    	    		//System.out.println("Erfolgreich Holz der Schlange hinzugefügt.");
     	    	}
     	    	if(Produkt.equals("Stein"))
     	    	{
     	    		Stein stein = new Stein(Auftragsart, Attribut1, Attribut2, Integer.parseInt(Belohnung));
     	    		addSchlange(stein);
-    	    		//System.out.println("Erfolgreich Stein der Schlange hinzugefügt.");
     	    	}
     	    	System.out.println(zeile);
             }
@@ -112,6 +111,7 @@ public class CSV {
 	}
 	public void removeSchlange() {
 		schlangecsv.poll();
+		// Wenn Schlange wieder leer, soll er die Datei erneut einlesen
 		if(schlangecsv.isEmpty())
 		{
 			readFile(this.name);
