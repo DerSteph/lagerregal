@@ -1,38 +1,27 @@
 package lagerregal;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
 import java.util.Queue; 
 
 public class CSV {
-	private File file;
 	private String name;
 	private BufferedReader in = null;
 	private Queue<Produkt> schlangecsv;
 	private int zaehler = 0;
 	// Liest Datei ein und erstellt eine Schlange für die Liste
 	public CSV(String name) {
-		file = new File(name);
         schlangecsv = new LinkedList<Produkt>();
         this.name = name;
         readFile(name);
 	}
 	public void readFile(String name) {
-		// prüft, ob die Datei existiert
-		if (!file.canRead() || !file.isFile())
-        {
-        	System.out.println("Datei kann nicht gelesen werden");
-        }
-		else
-		{
 			// öffnen der Datei
 	        try {
-	            in = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream(name)));
+	            in = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream(name), StandardCharsets.UTF_8));
 	            in.readLine(); // um die erste Zeile nicht zu lesen
 	            String zeile = null;
 	            // Lese jede Zeile ein
@@ -108,7 +97,6 @@ public class CSV {
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }	
-		}
 	}
 	public void addSchlange(Produkt e) {
 		schlangecsv.offer(e);
