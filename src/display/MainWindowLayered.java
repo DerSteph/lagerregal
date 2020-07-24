@@ -214,6 +214,8 @@ public class MainWindowLayered extends JFrame {
 		
 		JLabel header_produkt = new JLabel("Produkt");
 		header_produkt.setFont(new Font("Tahoma", Font.BOLD, 11));
+		header_produkt.setPreferredSize(new Dimension(64, 20));
+		header_produkt.setHorizontalAlignment(JLabel.CENTER);
 		GridBagConstraints gbc_header_produkt = new GridBagConstraints();
 		gbc_header_produkt.insets = new Insets(0, 0, 5, 5);
 		gbc_header_produkt.gridx = 1;

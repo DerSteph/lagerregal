@@ -124,18 +124,27 @@ public class RemoveStuffFromLagerWindowNew extends JFrame {
 			label[i].addActionListener(new java.awt.event.ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					String text = Start.lager.getLagerplatzInhalt(Start.window.getLagerplatzZuGrafiklagerplatz(temp));
-					if(Start.lager.auftragAbarbeiten(num, Start.window.getLagerplatzZuGrafiklagerplatz(temp)))
+					// Abfrage, ob der Auftrag im Mainfenster noch vorhanden
+					if(Start.lager.getAuftrag(num) == null)
 					{
-						Start.window.UpdateMainLagerraum();
-						Start.window.UpdateAuftragListe();
-						Start.window.kontostand.setText("Dein Kontostand: " + Start.bilanz.getGesamtkonto() + "€");
-						Start.window.letzteAktion.setText("Letzte Aktion: Auslagern von " + text + " in Lager " + Start.window.getLagerplatzFromInhalt(temp));
 						dispose();
 					}
 					else
 					{
-						JOptionPane.showMessageDialog(null, "<html><body><center>Der Lagerplatz ist bereits durch andere Produkte davor blockiert!<br> Versuche mit der Funktion <font color='red'>Umlagern</font> die davorstehenden Produkte umzulagern<br>oder mit der Funktion <font color='red'>Verschrotten</font> die davorstehenden Produkte zu verschrotten.</center></body></html>");
+						// Führe Auftrag aus
+						String text = Start.lager.getLagerplatzInhalt(Start.window.getLagerplatzZuGrafiklagerplatz(temp));
+						if(Start.lager.auftragAbarbeiten(num, Start.window.getLagerplatzZuGrafiklagerplatz(temp)))
+						{
+							Start.window.UpdateMainLagerraum();
+							Start.window.UpdateAuftragListe();
+							Start.window.kontostand.setText("Dein Kontostand: " + Start.bilanz.getGesamtkonto() + "€");
+							Start.window.letzteAktion.setText("Letzte Aktion: Auslagern von " + text + " in Lager " + Start.window.getLagerplatzFromInhalt(temp));
+							dispose();
+						}
+						else
+						{
+							JOptionPane.showMessageDialog(null, "<html><body><center>Der Lagerplatz ist bereits durch andere Produkte davor blockiert!<br> Versuche mit der Funktion <font color='red'>Umlagern</font> die davorstehenden Produkte umzulagern<br>oder mit der Funktion <font color='red'>Verschrotten</font> die davorstehenden Produkte zu verschrotten.</center></body></html>");
+						}	
 					}
 				}
 			});

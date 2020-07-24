@@ -484,10 +484,18 @@ public class Lager {
 			}
 			if(lagerinhalt.get(lagerplatz) instanceof Holz)
 			{
-				int k = HolzLagerstelleAbfragen(lagerplatz);
-				lagerinhalt.set(k, null);
-				lagerinhalt.set(k-3, null);
-				lagerinhalt.set(k-6, null);
+				// Spezielle Bedingung für Balken, weil 3 Lang
+				if(((Holz) lagerinhalt.get(lagerplatz)).getForm().equals("Balken"))
+				{
+					int k = HolzLagerstelleAbfragen(lagerplatz);
+					lagerinhalt.set(k, null);
+					lagerinhalt.set(k-3, null);
+					lagerinhalt.set(k-6, null);	
+				}
+				else
+				{
+					lagerinhalt.set(lagerplatz, null);
+				}
 			}
 			Start.bilanz.removeGesamtkonto(500, verschrottung, "Verschrottung");
 			System.out.println("Erfolgreich verschrottet");

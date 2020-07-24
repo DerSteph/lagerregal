@@ -122,30 +122,40 @@ public class AddStuffToLagerWindowNew extends JFrame {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					int i = temp;
-					if(Start.lager.auftragAbarbeiten(num, Start.window.getLagerplatzZuGrafiklagerplatz(i)))
+					// Abfrage, ob der Auftrag im Mainfenster noch vorhanden
+					if(Start.lager.getAuftrag(num) == null)
 					{
-						Start.window.UpdateMainLagerraum();
-						Start.window.UpdateAuftragListe();
-						if(Start.lager.getInhalt(Start.window.getLagerplatzZuGrafiklagerplatz(i)) instanceof Holz)
-						{
-							if(((Holz) Start.lager.getInhalt(Start.window.getLagerplatzZuGrafiklagerplatz(i))).getForm() == "Balken")
-							{
-								Start.window.letzteAktion.setText("Letzte Aktion: Einlagerung von " + Start.lager.getLagerplatzInhalt(Start.window.getLagerplatzZuGrafiklagerplatz(i)));								
-							}
-						}
-						else
-						{
-							Start.window.letzteAktion.setText("Letzte Aktion: Einlagerung von " + Start.lager.getLagerplatzInhalt(Start.window.getLagerplatzZuGrafiklagerplatz(i)) + " in Lager " + Start.window.getLagerplatzFromInhalt(Start.window.getRightLagerplatz(i)));
-						}
-						Start.window.kontostand.setText("Dein Kontostand: " + Start.bilanz.getGesamtkonto() + "€");
-						Start.window.button_umlagern.setEnabled(true);
-						Start.window.button_verschrotten.setEnabled(true);
 						dispose();
 					}
 					else
 					{
-						JOptionPane.showMessageDialog(null,
-								"Der Lagerplatz ist bereits durch andere Dinge davor blockiert.");
+						// Probiere, ob man Auftrag abarbeiten kann
+						if(Start.lager.auftragAbarbeiten(num, Start.window.getLagerplatzZuGrafiklagerplatz(i)))
+						{
+							Start.window.UpdateMainLagerraum();
+							Start.window.UpdateAuftragListe();
+							if(Start.lager.getInhalt(Start.window.getLagerplatzZuGrafiklagerplatz(i)) instanceof Holz)
+							{
+								if(((Holz) Start.lager.getInhalt(Start.window.getLagerplatzZuGrafiklagerplatz(i))).getForm() == "Balken")
+								{
+									Start.window.letzteAktion.setText("Letzte Aktion: Einlagerung von " + Start.lager.getLagerplatzInhalt(Start.window.getLagerplatzZuGrafiklagerplatz(i)));								
+								}
+							}
+							else
+							{
+								Start.window.letzteAktion.setText("Letzte Aktion: Einlagerung von " + Start.lager.getLagerplatzInhalt(Start.window.getLagerplatzZuGrafiklagerplatz(i)) + " in Lager " + Start.window.getLagerplatzFromInhalt(Start.window.getRightLagerplatz(i)));
+							}
+							Start.window.kontostand.setText("Dein Kontostand: " + Start.bilanz.getGesamtkonto() + "€");
+							Start.window.button_umlagern.setEnabled(true);
+							Start.window.button_verschrotten.setEnabled(true);
+							dispose();
+						}
+						// Für alle Fälle
+						else
+						{
+							JOptionPane.showMessageDialog(null,
+									"Der Lagerplatz ist bereits durch andere Dinge davor blockiert.", "Fehler", JOptionPane.WARNING_MESSAGE);
+						}	
 					}
 				}
 			});
