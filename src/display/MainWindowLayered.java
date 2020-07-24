@@ -27,6 +27,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.SystemColor;
 import javax.swing.border.LineBorder;
 
@@ -275,6 +276,8 @@ public class MainWindowLayered extends JFrame {
 		panel_3.add(auftrag_kosten[0], gbc_lblNewLabel_7);
 		
 		auftrag_annehmen[0] = new JButton("\u2714");
+		auftrag_annehmen[0].setFont(new Font(auftrag_annehmen[0].getFont().getName(), Font.BOLD, 20));
+		auftrag_annehmen[0].setPreferredSize(new Dimension(80, 50));
 		GridBagConstraints gbc_btnNewButton_4 = new GridBagConstraints();
 		gbc_btnNewButton_4.insets = new Insets(0, 0, 5, 5);
 		gbc_btnNewButton_4.gridx = 3;
@@ -289,7 +292,6 @@ public class MainWindowLayered extends JFrame {
 					{
 						if(Start.lager.getAuftrag(0).getLagerungsart().equals("Einlagerung"))
 						{
-							//new AddStuffToLagerWindow(0);
 							new AddStuffToLagerWindowNew(0);
 						}
 						else
@@ -303,6 +305,8 @@ public class MainWindowLayered extends JFrame {
 		panel_3.add(auftrag_annehmen[0], gbc_btnNewButton_4);
 		
 		auftrag_zurueckstellen[0] = new JButton("\u274C");
+		auftrag_zurueckstellen[0].setFont(new Font(auftrag_zurueckstellen[0].getFont().getName(), Font.BOLD, 20));
+		auftrag_zurueckstellen[0].setPreferredSize(new Dimension(55, 50));
 		GridBagConstraints gbc_btnNewButton_9 = new GridBagConstraints();
 		gbc_btnNewButton_9.insets = new Insets(0, 0, 5, 5);
 		gbc_btnNewButton_9.gridx = 4;
@@ -312,11 +316,14 @@ public class MainWindowLayered extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				Start.lager.auftragZurueckstellen(0);
 				UpdateAuftragListe();
+				letzteAktion.setText("Letzte Aktion: Zurueckstellen von Auftrag 0");
 			}
 		});
 		panel_3.add(auftrag_zurueckstellen[0], gbc_btnNewButton_9);
 		
 		auftrag_ablehnen[0] = new JButton("\uD83D\uDDD1\uFE0F");
+		auftrag_ablehnen[0].setFont(new Font(auftrag_ablehnen[0].getFont().getName(), Font.BOLD, 20));
+		auftrag_ablehnen[0].setPreferredSize(new Dimension(55, 50));
 		GridBagConstraints gbc_btnNewButton_12 = new GridBagConstraints();
 		gbc_btnNewButton_12.insets = new Insets(0, 0, 5, 0);
 		gbc_btnNewButton_12.gridx = 5;
@@ -328,6 +335,7 @@ public class MainWindowLayered extends JFrame {
 				Start.lager.auftragAblehnen(0);
 				Start.window.kontostand.setText("Dein Kontostand: " + Start.bilanz.getGesamtkonto() + "€");
 				UpdateAuftragListe();
+				letzteAktion.setText("Letzte Aktion: Ablehnen von Auftrag 0");
 			}
 			
 		});
@@ -356,6 +364,8 @@ public class MainWindowLayered extends JFrame {
 		panel_3.add(auftrag_kosten[1], gbc_lblNewLabel_10);
 		
 		auftrag_annehmen[1] = new JButton("\u2714");
+		auftrag_annehmen[1].setFont(new Font(auftrag_annehmen[1].getFont().getName(), Font.BOLD, 20));
+		auftrag_annehmen[1].setPreferredSize(new Dimension(80, 50));
 		GridBagConstraints gbc_btnNewButton_5 = new GridBagConstraints();
 		gbc_btnNewButton_5.insets = new Insets(0, 0, 5, 5);
 		gbc_btnNewButton_5.gridx = 3;
@@ -370,7 +380,6 @@ public class MainWindowLayered extends JFrame {
 					{
 						if(Start.lager.getAuftrag(1).getLagerungsart().equals("Einlagerung"))
 						{
-							//new AddStuffToLagerWindow(1);
 							new AddStuffToLagerWindowNew(1);
 						}
 						else
@@ -384,6 +393,8 @@ public class MainWindowLayered extends JFrame {
 		panel_3.add(auftrag_annehmen[1], gbc_btnNewButton_5);
 		
 		auftrag_zurueckstellen[1] = new JButton("\u274C");
+		auftrag_zurueckstellen[1].setFont(new Font(auftrag_zurueckstellen[1].getFont().getName(), Font.BOLD, 20));
+		auftrag_zurueckstellen[1].setPreferredSize(new Dimension(55, 50));
 		GridBagConstraints gbc_btnNewButton_10 = new GridBagConstraints();
 		gbc_btnNewButton_10.insets = new Insets(0, 0, 5, 5);
 		gbc_btnNewButton_10.gridx = 4;
@@ -393,11 +404,14 @@ public class MainWindowLayered extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				Start.lager.auftragZurueckstellen(1);
 				UpdateAuftragListe();
+				letzteAktion.setText("Letzte Aktion: Zurueckstellen von Auftrag 1");
 			}
 		});
 		panel_3.add(auftrag_zurueckstellen[1], gbc_btnNewButton_10);
 		
 		auftrag_ablehnen[1] = new JButton("\uD83D\uDDD1\uFE0F");
+		auftrag_ablehnen[1].setFont(new Font(auftrag_ablehnen[1].getFont().getName(), Font.BOLD, 20));
+		auftrag_ablehnen[1].setPreferredSize(new Dimension(55, 50));
 		GridBagConstraints gbc_btnNewButton_7 = new GridBagConstraints();
 		gbc_btnNewButton_7.insets = new Insets(0, 0, 5, 0);
 		gbc_btnNewButton_7.gridx = 5;
@@ -409,6 +423,7 @@ public class MainWindowLayered extends JFrame {
 				Start.lager.auftragAblehnen(1);
 				Start.window.kontostand.setText("Dein Kontostand: " + Start.bilanz.getGesamtkonto() + "€");
 				UpdateAuftragListe();
+				letzteAktion.setText("Letzte Aktion: Ablehnen von Auftrag 2");
 			}
 			
 		});
@@ -436,6 +451,8 @@ public class MainWindowLayered extends JFrame {
 		panel_3.add(auftrag_kosten[2], gbc_lblNewLabel_13);
 		
 		auftrag_annehmen[2] = new JButton("\u2714");
+		auftrag_annehmen[2].setFont(new Font(auftrag_annehmen[2].getFont().getName(), Font.BOLD, 20));
+		auftrag_annehmen[2].setPreferredSize(new Dimension(80, 50));
 		GridBagConstraints gbc_btnNewButton_6 = new GridBagConstraints();
 		gbc_btnNewButton_6.insets = new Insets(0, 0, 5, 5);
 		gbc_btnNewButton_6.gridx = 3;
@@ -463,6 +480,8 @@ public class MainWindowLayered extends JFrame {
 		panel_3.add(auftrag_annehmen[2], gbc_btnNewButton_6);
 		
 		auftrag_zurueckstellen[2] = new JButton("\u274C");
+		auftrag_zurueckstellen[2].setFont(new Font(auftrag_zurueckstellen[2].getFont().getName(), Font.BOLD, 20));
+		auftrag_zurueckstellen[2].setPreferredSize(new Dimension(55, 50));
 		GridBagConstraints gbc_btnNewButton_11 = new GridBagConstraints();
 		gbc_btnNewButton_11.insets = new Insets(0, 0, 5, 5);
 		gbc_btnNewButton_11.gridx = 4;
@@ -472,11 +491,14 @@ public class MainWindowLayered extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				Start.lager.auftragZurueckstellen(2);
 				UpdateAuftragListe();
+				letzteAktion.setText("Letzte Aktion: Zurueckstellen von Auftrag 2");
 			}
 		});
 		panel_3.add(auftrag_zurueckstellen[2], gbc_btnNewButton_11);
 		
 		auftrag_ablehnen[2] = new JButton("\uD83D\uDDD1\uFE0F");
+		auftrag_ablehnen[2].setFont(new Font(auftrag_ablehnen[2].getFont().getName(), Font.BOLD, 20));
+		auftrag_ablehnen[2].setPreferredSize(new Dimension(55, 50));
 		GridBagConstraints gbc_btnNewButton_8 = new GridBagConstraints();
 		gbc_btnNewButton_8.insets = new Insets(0, 0, 5, 0);
 		gbc_btnNewButton_8.gridx = 5;
@@ -488,27 +510,13 @@ public class MainWindowLayered extends JFrame {
 				Start.lager.auftragAblehnen(2);
 				UpdateAuftragListe();
 				Start.window.kontostand.setText("Dein Kontostand: " + Start.bilanz.getGesamtkonto() + "€");
+				letzteAktion.setText("Letzte Aktion: Ablehnen von Auftrag 2");
 			}
 			
 		});
 		panel_3.add(auftrag_ablehnen[2], gbc_btnNewButton_8);
 		for(int i = 0; i< 3; i++)
 		{
-			if(i == 1)
-			{
-				auftrag_art[i].setBackground(Color.white);
-				auftrag_art[i].setOpaque(true);
-				auftrag_produkt[i].setBackground(Color.white);
-				auftrag_produkt[i].setOpaque(true);
-				auftrag_kosten[i].setBackground(Color.white);
-				auftrag_kosten[i].setOpaque(true);
-				auftrag_annehmen[i].setBackground(Color.white);
-				auftrag_annehmen[i].setOpaque(true);
-				auftrag_zurueckstellen[i].setBackground(Color.white);
-				auftrag_zurueckstellen[i].setOpaque(true);
-				auftrag_ablehnen[i].setBackground(Color.white);
-				auftrag_ablehnen[i].setOpaque(true);
-			}
 			auftrag_art[i].setText("-");
 			auftrag_produkt[i].setText("-");
 			auftrag_kosten[i].setText("-");
@@ -527,7 +535,8 @@ public class MainWindowLayered extends JFrame {
 		panel_2.add(kontostand);
 		
 		button_neuerauftrag = new JButton("Neuer Auftrag");
-		button_neuerauftrag.setBackground(new Color(144, 238, 144));
+		button_neuerauftrag.setPreferredSize(new Dimension(120, 40));
+		button_neuerauftrag.setBackground(Color.GREEN);
 		button_neuerauftrag.setFont(new Font("Tahoma", Font.BOLD, 11));
 		button_neuerauftrag.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -540,6 +549,7 @@ public class MainWindowLayered extends JFrame {
 		panel_1.add(button_neuerauftrag);
 		
 		button_umlagern = new JButton("Umlagern");
+		button_umlagern.setPreferredSize(new Dimension(110, 40));
 		button_umlagern.setBackground(new Color(0, 139, 139));
 		button_umlagern.setFont(new Font("Tahoma", Font.BOLD, 11));
 		button_umlagern.addActionListener(new ActionListener() {
@@ -550,6 +560,7 @@ public class MainWindowLayered extends JFrame {
 		panel_1.add(button_umlagern);
 		
 		button_verschrotten = new JButton("Verschrotten");
+		button_verschrotten.setPreferredSize(new Dimension(110, 40));
 		button_verschrotten.setBackground(new Color(0, 139, 139));
 		button_verschrotten.setFont(new Font("Tahoma", Font.BOLD, 11));
 		button_verschrotten.addActionListener(new ActionListener() {
@@ -560,6 +571,7 @@ public class MainWindowLayered extends JFrame {
 		panel_1.add(button_verschrotten);
 		
 		JButton btnNewButton_3 = new JButton("Bilanz");
+		btnNewButton_3.setPreferredSize(new Dimension(70, 40));
 		btnNewButton_3.setBackground(new Color(100, 149, 237));
 		btnNewButton_3.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnNewButton_3.addActionListener(new ActionListener() {
@@ -585,90 +597,81 @@ public class MainWindowLayered extends JFrame {
 		panel_4.add(ueberpanel[1]);
 		panel_5.add(ueberpanel[2]);
 		
-			for(int i = 0; i < 9; i++)
+		
+		// Code um die Labels auf der Lagerregal grafik anzuzeigen, damit sie auch überlappen
+		int k = 0;
+		for(int i = 0; i < 3; i++)
+		{
+			for(int j = 0; j < 9; j++)
 			{
-				if(i < 3)
+				if(j < 3)
 				{
-					lagerraum_feld[i].setBounds(140*(i)+10, 10, 138, 64);
-					ueberpanel[0].add(lagerraum_feld[i], Integer.valueOf(1));
+					lagerraum_feld[(i*9)+j].setBounds(140*((i*9)+j-k*3)+10, 10, 138, 64);
+					ueberpanel[i].add(lagerraum_feld[(i*9)+j], Integer.valueOf(1));
+					if(j == 2)
+					{
+						k++;
+					}
 				}
-				else if(i < 6)
+				else if(j < 6)
 				{
-					lagerraum_feld[i].setBounds(140*(i-3)+10, 40, 138, 64);
-					ueberpanel[0].add(lagerraum_feld[i], Integer.valueOf(2));
+					lagerraum_feld[(i*9)+j].setBounds(140*((i*9)+j-k*3)+10, 40, 138, 64);
+					ueberpanel[i].add(lagerraum_feld[(i*9)+j], Integer.valueOf(2));
+					if(j == 5)
+					{
+						k++;
+					}
 				}
 				else
 				{
-					lagerraum_feld[i].setBounds(140*(i-6)+10, 70, 138, 64);
-					ueberpanel[0].add(lagerraum_feld[i], Integer.valueOf(3));
+					lagerraum_feld[(i*9)+j].setBounds(140*((i*9)+j-k*3)+10, 70, 138, 64);
+					ueberpanel[i].add(lagerraum_feld[(i*9)+j], Integer.valueOf(3));
+					if(j == 8)
+					{
+						k++;
+					}
 				}
 			}
-			for(int i = 9; i < 18; i++)
-			{
-				if(i < 12)
-				{
-					lagerraum_feld[i].setBounds(140*(i-9)+10, 10, 138, 64);
-					ueberpanel[1].add(lagerraum_feld[i], Integer.valueOf(1));
-				}
-				else if(i < 15)
-				{
-					lagerraum_feld[i].setBounds(140*(i-12)+10, 40, 138, 64);
-					ueberpanel[1].add(lagerraum_feld[i], Integer.valueOf(2));
-				}
-				else
-				{
-					lagerraum_feld[i].setBounds(140*(i-15)+10, 70, 138, 64);
-					ueberpanel[1].add(lagerraum_feld[i], Integer.valueOf(3));
-				}
-			}
-			for(int i = 18; i < 27; i++)
-			{
-				if(i < 21)
-				{
-					lagerraum_feld[i].setBounds(140*(i-18)+10, 10, 138, 64);
-					ueberpanel[2].add(lagerraum_feld[i], Integer.valueOf(1));
-				}
-				else if(i < 24)
-				{
-					lagerraum_feld[i].setBounds(140*(i-21)+10, 40, 138, 64);
-					ueberpanel[2].add(lagerraum_feld[i], Integer.valueOf(2));
-				}
-				else
-				{
-					lagerraum_feld[i].setBounds(140*(i-24)+10, 70, 138, 64);
-					ueberpanel[2].add(lagerraum_feld[i], Integer.valueOf(3));
-				}
-			}
+		}
 		
 		button_umlagern.setEnabled(false);
 		button_verschrotten.setEnabled(false);
 		
 		contentPane.setLayout(gl_contentPane);
 		setVisible(true);
-		
 	}
+	
+	/*
+	 * Die folgenden 3 Funktionen sind dafür zuständig, um den richtigen Platz auszuwählen, da die Lagerordnung im Lager eine andere ist
+	 * als wie sie in der Grafik dargestellt wird. 
+	 * 
+	 */
+	// Bekomme Lagerplatznummer für Lagerregale, die hintereinenader stehen
 	public int getRightLagerplatz(int number) {
 		int rightNumber[] = new int[]{24,25,26,15,16,17,6,7,8,21,22,23,12,13,14,3,4,5,18,19,20,9,10,11,0,1,2};
 		return rightNumber[number];
 	}
 	
-	public int getRightLagerplatzMain(int number) {
+	// Bekomme Lagerplatznummer für Produkte, die in der Grafik dargestellt sind
+	public int getLagerplatzZuGrafiklagerplatz(int number) {
 		int rightNumber[] = new int[]{18,19,20,21,22,23,24,25,26,9,10,11,12,13,14,15,16,17,0,1,2,3,4,5,6,7,8};
 		return rightNumber[number];
 	}
 	
-	public int getGrafikLagerplatz(int number) {
+	// Speziell für Umlagern
+	public int getGrafikLagerplatzZuLagerplatz(int number) {
 		int rightNumber[] = new int[]{0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26};
 		return rightNumber[number];
 	}
 	
+	// Updatet die Anzeige der Auftragsliste
 	public void UpdateAuftragListe() {
 		for(int i = 0; i < 3; i++)
 		{
 			if(Start.lager.getAuftrag(i) != null)
 			{
 				auftrag_art[i].setText(Start.lager.getAuftrag(i).getLagerungsart());
-				auftrag_produkt[i].setText("<html><center>" + Start.lager.getAuftrag(i).getInhaltFormatted() + "</center></html>");
+				auftrag_produkt[i].setText("");
 				auftrag_kosten[i].setText(Integer.toString(Start.lager.getAuftrag(i).getKosten()) + "€");
 				auftrag_art[i].setEnabled(true);
 				auftrag_produkt[i].setEnabled(true);
@@ -676,6 +679,10 @@ public class MainWindowLayered extends JFrame {
 				auftrag_annehmen[i].setEnabled(true);
 				auftrag_zurueckstellen[i].setEnabled(true);
 				auftrag_ablehnen[i].setEnabled(true);
+				ImageIcon icon = bekommeBild(Start.lager.getAuftrag(i));
+				Image test = getSkaliertesBild(icon.getImage(), 64, 64);
+				auftrag_produkt[i].setIcon(new ImageIcon(test));
+				auftrag_produkt[i].setToolTipText(Start.lager.getAuftrag(i).getInhalt());
 			}
 			else
 			{
@@ -688,6 +695,8 @@ public class MainWindowLayered extends JFrame {
 				auftrag_annehmen[i].setEnabled(false);
 				auftrag_zurueckstellen[i].setEnabled(false);
 				auftrag_ablehnen[i].setEnabled(false);
+				auftrag_produkt[i].setIcon(null);
+				auftrag_produkt[i].setToolTipText(null);
 			}
 		}
 		if(Start.lager.isAuftragListeVoll())
@@ -700,6 +709,7 @@ public class MainWindowLayered extends JFrame {
 		}
 	}
 	
+	// Funktion um die Bilder für die Produkte zuzuordnen
 	public ImageIcon bekommeBild(Produkt name) {
 		if(name instanceof Papier)
 		{
@@ -821,36 +831,12 @@ public class MainWindowLayered extends JFrame {
 		return new ImageIcon(MainWindowLayered.class.getResource("/bilder/leer.png"));
 	}
 	
-	public void GotoLager(int lagerplatz) {
-		if(lagerplatz < 9)
-		{
-			lagerauswahl_main.setText("Lager 1");
-		}
-		else if(lagerplatz < 18)
-		{
-			lagerauswahl_main.setText("Lager 2");
-		}
-		else
-		{
-			lagerauswahl_main.setText("Lager 3");
-		}
-		UpdateMainLagerraum();
-	}
-	
+	// Updaten des Lagers im Fenster
 	public void UpdateMainLagerraum () {
-		int adder = 0;
-		/*if(lagerauswahl_main.getText().equals("Lager 2"))
-		{
-			adder = 9;
-		}
-		if(lagerauswahl_main.getText().equals("Lager 3"))
-		{
-			adder = 18;
-		}*/
 		int j = 0;
 		for(int i = 0; i < 27; i++)
 		{
-			String text = Start.lager.getLagerplatzInhalt(getRightLagerplatzMain(i + adder));
+			String text = Start.lager.getLagerplatzInhalt(getLagerplatzZuGrafiklagerplatz(i));
 			if(text == null)
 			{
 				text = "leer";
@@ -874,21 +860,23 @@ public class MainWindowLayered extends JFrame {
 			{
 				j = 0;
 			}
-			ImageIcon icon2 = bekommeBild(Start.lager.getInhalt(getRightLagerplatzMain(i)));
-			Image test = getScaledImage(icon2.getImage(), 64, 64);
+			ImageIcon icon2 = bekommeBild(Start.lager.getInhalt(getLagerplatzZuGrafiklagerplatz(i)));
+			Image test = getSkaliertesBild(icon2.getImage(), 64, 64);
 			lagerraum_feld[i].setIcon(new ImageIcon(test));
 			lagerraum_feld[i].setToolTipText(text);
 		}
 	}
-	public Image getScaledImage(Image srcImg, int w, int h){
-	    BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-	    Graphics2D g2 = resizedImg.createGraphics();
+	
+	// Funktion um die Größe der Bilder zu verändern
+	public Image getSkaliertesBild(Image quelle, int w, int h){
+	    BufferedImage ziel = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+	    Graphics2D g2 = ziel.createGraphics();
 
 	    g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-	    g2.drawImage(srcImg, 0, 0, w, h, null);
+	    g2.drawImage(quelle, 0, 0, w, h, null);
 	    g2.dispose();
 
-	    return resizedImg;
+	    return ziel;
 	}
 	public int getLagerplatzFromInhalt(int i) {
 		if(i < 9)

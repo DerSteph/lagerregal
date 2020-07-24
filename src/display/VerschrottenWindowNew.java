@@ -93,12 +93,12 @@ public class VerschrottenWindowNew extends JFrame {
 		for (int i = 0; i < 27; i++) {
 			final int temp = i;
 			label[i] = new JButton();
-			String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatzMain(i));
+			String text = Start.lager.getLagerplatzInhalt(Start.window.getLagerplatzZuGrafiklagerplatz(i));
 			if(text == null) {
 				text = "leer";
 				label[i].setEnabled(false);
 			}
-			else if(checkliste[Start.window.getRightLagerplatzMain(i)] == 0)
+			else if(checkliste[Start.window.getLagerplatzZuGrafiklagerplatz(i)] == 0)
 			{
 				label[i].setEnabled(false);
 			}
@@ -109,8 +109,8 @@ public class VerschrottenWindowNew extends JFrame {
 			label[i].addActionListener(new java.awt.event.ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatzMain(temp));
-					if(Start.lager.Verschrotten(Start.window.getRightLagerplatzMain(temp)))
+					String text = Start.lager.getLagerplatzInhalt(Start.window.getLagerplatzZuGrafiklagerplatz(temp));
+					if(Start.lager.Verschrotten(Start.window.getLagerplatzZuGrafiklagerplatz(temp)))
 					{
 						Start.window.UpdateMainLagerraum();
 						Start.window.letzteAktion.setText("Letzte Aktion: Verschrotten von " + text + " in Lager " + Start.window.getLagerplatzFromInhalt(temp));
@@ -154,8 +154,8 @@ public class VerschrottenWindowNew extends JFrame {
 			{
 				j = 0;
 			}
-			ImageIcon icon2 = Start.window.bekommeBild(Start.lager.getInhalt(Start.window.getRightLagerplatzMain(i)));
-			Image test = Start.window.getScaledImage(icon2.getImage(), 64, 64);
+			ImageIcon icon2 = Start.window.bekommeBild(Start.lager.getInhalt(Start.window.getLagerplatzZuGrafiklagerplatz(i)));
+			Image test = Start.window.getSkaliertesBild(icon2.getImage(), 64, 64);
 			label[i].setIcon(new ImageIcon(test));
 		}
 		lagertext = new JLabel();

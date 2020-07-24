@@ -18,6 +18,7 @@ import javax.swing.border.LineBorder;
 
 import lagerregal.Holz;
 import lagerregal.Start;
+import lagerregal.Stein;
 
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -106,9 +107,9 @@ public class AddStuffToLagerWindowNew extends JFrame {
 		for (int i = 0; i < 27; i++) {
 			final int temp = i;
 			label[i] = new JButton();
-			String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatzMain(i));
+			String text = Start.lager.getLagerplatzInhalt(Start.window.getLagerplatzZuGrafiklagerplatz(i));
 			if (text == null) {
-				if (checkliste[Start.window.getRightLagerplatzMain(i)] == 0) {
+				if (checkliste[Start.window.getLagerplatzZuGrafiklagerplatz(i)] == 0) {
 					label[i].setEnabled(false);
 				} else {
 					label[i].setEnabled(true);
@@ -123,31 +124,21 @@ public class AddStuffToLagerWindowNew extends JFrame {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					int i = temp;
-					/*if(lagerauswahl.getText().equals("Lager 2"))
-					{
-						i = temp + 9;
-					}
-					if(lagerauswahl.getText().equals("Lager 3"))
-					{
-						i = temp + 18;
-					}*/
-					if(Start.lager.auftragAbarbeiten(num, Start.window.getRightLagerplatzMain(i)))
+					if(Start.lager.auftragAbarbeiten(num, Start.window.getLagerplatzZuGrafiklagerplatz(i)))
 					{
 						Start.window.UpdateMainLagerraum();
-						//Start.window.GotoLager(i);
 						Start.window.UpdateAuftragListe();
-						if(Start.lager.getInhalt(Start.window.getRightLagerplatzMain(i)) instanceof Holz)
+						if(Start.lager.getInhalt(Start.window.getLagerplatzZuGrafiklagerplatz(i)) instanceof Holz)
 						{
-							if(((Holz) Start.lager.getInhalt(Start.window.getRightLagerplatzMain(i))).getForm() == "Balken")
+							if(((Holz) Start.lager.getInhalt(Start.window.getLagerplatzZuGrafiklagerplatz(i))).getForm() == "Balken")
 							{
-								Start.window.letzteAktion.setText("Letzte Aktion: Einlagerung von " + Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatzMain(i)));								
+								Start.window.letzteAktion.setText("Letzte Aktion: Einlagerung von " + Start.lager.getLagerplatzInhalt(Start.window.getLagerplatzZuGrafiklagerplatz(i)));								
 							}
 						}
 						else
 						{
-							Start.window.letzteAktion.setText("Letzte Aktion: Einlagerung von " + Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatzMain(i)) + " in Lager " + Start.window.getLagerplatzFromInhalt(Start.window.getRightLagerplatz(i)));
+							Start.window.letzteAktion.setText("Letzte Aktion: Einlagerung von " + Start.lager.getLagerplatzInhalt(Start.window.getLagerplatzZuGrafiklagerplatz(i)) + " in Lager " + Start.window.getLagerplatzFromInhalt(Start.window.getRightLagerplatz(i)));
 						}
-						//dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 						Start.window.kontostand.setText("Dein Kontostand: " + Start.bilanz.getGesamtkonto() + "€");
 						Start.window.button_umlagern.setEnabled(true);
 						Start.window.button_verschrotten.setEnabled(true);
@@ -191,16 +182,31 @@ public class AddStuffToLagerWindowNew extends JFrame {
 			{
 				j = 0;
 			}
-			ImageIcon icon2 = Start.window.bekommeBild(Start.lager.getInhalt(Start.window.getRightLagerplatzMain(i)));
-			Image test = Start.window.getScaledImage(icon2.getImage(), 64, 64);
+			ImageIcon icon2 = Start.window.bekommeBild(Start.lager.getInhalt(Start.window.getLagerplatzZuGrafiklagerplatz(i)));
+			Image test = Start.window.getSkaliertesBild(icon2.getImage(), 64, 64);
 			label[i].setIcon(new ImageIcon(test));
 		}
 		lagertext = new JLabel();
 		if (check != 0) {
-			lagertext.setText("<html><body><center>" + Start.lager.getAuftrag(num).getInhalt() + "<br>Es sind noch " + check
-					+ " Plaetze frei.</center></body></html>");
+			lagertext.setText("<html><center>" + Start.lager.getAuftrag(num).getInhalt() + "<br>Es sind noch " + check
+					+ " Plaetze frei.");
+			if(Start.lager.getAuftrag(num) instanceof Stein)
+			{
+				if(((Stein) Start.lager.getAuftrag(num)).getGewicht().equals("Schwer"))
+				{
+					lagertext.setText(lagertext.getText() + "<br><font color='#00BFFF'>Schwere Steine können nur<br> unten gelagert werden!</font>");
+				}
+			}
+			if(Start.lager.getAuftrag(num) instanceof Holz)
+			{
+				if(((Holz) Start.lager.getAuftrag(num)).getForm().equals("Balken"))
+				{
+					lagertext.setText(lagertext.getText() + "<br><font color='#00BFFF'>Balken benoetigen 3 Lagerplaetze<br> nach hinten!</font>");
+				}
+			}
+			lagertext.setText(lagertext.getText() + "</center></html>");
 			ImageIcon icon2 = Start.window.bekommeBild(Start.lager.getAuftrag(num));
-			Image test = Start.window.getScaledImage(icon2.getImage(), 64, 64);
+			Image test = Start.window.getSkaliertesBild(icon2.getImage(), 64, 64);
 			lagertext.setIcon(new ImageIcon(test));
 		} else {
 			lagertext.setForeground(Color.RED);

@@ -38,6 +38,7 @@ public class UmlagernWindowNew extends JFrame {
 	 * Create the frame.
 	 */
 	public UmlagernWindowNew() {
+		setTitle("Umlagern");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 444, 802);
 		setLocationRelativeTo(null);
@@ -97,11 +98,11 @@ public class UmlagernWindowNew extends JFrame {
 		{
 			final int temp = i;
 			label[i] = new JButton();
-			String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatzMain(i));
+			String text = Start.lager.getLagerplatzInhalt(Start.window.getLagerplatzZuGrafiklagerplatz(i));
 			if(text == null) {
 				label[i].setEnabled(false);
 			}
-			else if(checkliste[Start.window.getRightLagerplatzMain(i)] == 0)
+			else if(checkliste[Start.window.getLagerplatzZuGrafiklagerplatz(i)] == 0)
 			{
 				label[i].setEnabled(false);
 			}
@@ -115,8 +116,8 @@ public class UmlagernWindowNew extends JFrame {
 					if(modus == "Lagerquelle")
 					{
 						modus = "Lagerziel";
-						lagerquelle = Start.window.getRightLagerplatzMain(temp);
-						checkliste = Start.lager.getArrayVonFreienPlaetzen(Start.window.getRightLagerplatzMain(temp));
+						lagerquelle = Start.window.getLagerplatzZuGrafiklagerplatz(temp);
+						checkliste = Start.lager.getArrayVonFreienPlaetzen(Start.window.getLagerplatzZuGrafiklagerplatz(temp));
 
 						JButton button = (JButton)e.getSource();
 						button.setEnabled(false);
@@ -127,12 +128,12 @@ public class UmlagernWindowNew extends JFrame {
 					else
 					{
 						int lagerziel = 0;
-						lagerziel = Start.window.getRightLagerplatzMain(temp);
+						lagerziel = Start.window.getLagerplatzZuGrafiklagerplatz(temp);
 						if(Start.lager.Umlagern(lagerquelle, lagerziel))
 						{
 							Start.window.UpdateMainLagerraum();
-							System.out.println(Start.window.getGrafikLagerplatz(lagerquelle) + ","+ Start.window.getGrafikLagerplatz(lagerziel));
-							Start.window.letzteAktion.setText("Letzte Aktion: Umlagerung von " + Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatzMain(temp)) + " von Lager " + Start.window.getLagerplatzFromInhalt(Start.window.getRightLagerplatz(lagerquelle)) + " zu Lager " + Start.window.getLagerplatzFromInhalt(Start.window.getRightLagerplatz(lagerziel)));
+							System.out.println(Start.window.getGrafikLagerplatzZuLagerplatz(lagerquelle) + ","+ Start.window.getGrafikLagerplatzZuLagerplatz(lagerziel));
+							Start.window.letzteAktion.setText("Letzte Aktion: Umlagerung von " + Start.lager.getLagerplatzInhalt(Start.window.getLagerplatzZuGrafiklagerplatz(temp)) + " von Lager " + Start.window.getLagerplatzFromInhalt(Start.window.getRightLagerplatz(lagerquelle)) + " zu Lager " + Start.window.getLagerplatzFromInhalt(Start.window.getRightLagerplatz(lagerziel)));
 							Start.window.kontostand.setText("Dein Kontostand: " + Start.bilanz.getGesamtkonto() + "€");
 							dispose();
 						}
@@ -174,8 +175,8 @@ public class UmlagernWindowNew extends JFrame {
 			{
 				j = 0;
 			}
-			ImageIcon icon2 = Start.window.bekommeBild(Start.lager.getInhalt(Start.window.getRightLagerplatzMain(i)));
-			Image test = Start.window.getScaledImage(icon2.getImage(), 64, 64);
+			ImageIcon icon2 = Start.window.bekommeBild(Start.lager.getInhalt(Start.window.getLagerplatzZuGrafiklagerplatz(i)));
+			Image test = Start.window.getSkaliertesBild(icon2.getImage(), 64, 64);
 			label[i].setIcon(new ImageIcon(test));
 		}
 		
@@ -189,9 +190,9 @@ public class UmlagernWindowNew extends JFrame {
 	public void UpdateLager() {
 			for(int i = 0; i < 27; i++)
 			{
-				String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatzMain(i));
+				String text = Start.lager.getLagerplatzInhalt(Start.window.getLagerplatzZuGrafiklagerplatz(i));
 				if(text == null) {
-					if (checkliste[Start.window.getRightLagerplatzMain(i)] == 0) {
+					if (checkliste[Start.window.getLagerplatzZuGrafiklagerplatz(i)] == 0) {
 						label[i].setEnabled(false);
 					} else {
 						label[i].setEnabled(true);

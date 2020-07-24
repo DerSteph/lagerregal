@@ -19,11 +19,6 @@ public class Lager {
 		{
 			auftragsliste.add(i, null);
 		}
-		/*this.aufgabeninhalt = new ArrayList<Aufgabe>();
-		for(int i = 0; i < 27; i++)
-		{
-			aufgabeninhalt.add(i, null);
-		}*/
 		try
 		{
 			URL name = Start.class.getResource("auftrag.csv");
@@ -1569,12 +1564,10 @@ public class Lager {
 	public String getLagerplatzInhalt(int lagerplatz) {
 		if(lagerinhalt.get(lagerplatz) == null)
 		{
-			System.out.println("Lagerplatz ist leer");
 			return null;
 		}
 		else
 		{
-			System.out.println(lagerinhalt.get(lagerplatz).getInhalt());
 			return lagerinhalt.get(lagerplatz).getInhalt();
 		}
 	}

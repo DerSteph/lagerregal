@@ -89,16 +89,18 @@ public class RemoveStuffFromLagerWindowNew extends JFrame {
 		label = new JButton[27];
 
 		int j = 0;
+		int verfuegbar = 0;
+		int blockiert = 0;
 		for (int i = 0; i < 27; i++) {
 			final int temp = i;
 			label[i] = new JButton();
-			String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatzMain(i));
-			Boolean check = Start.lager.checkObProduktDortGelagert(Start.window.getRightLagerplatzMain(i), Start.lager.getAuftrag(num));
+			String text = Start.lager.getLagerplatzInhalt(Start.window.getLagerplatzZuGrafiklagerplatz(i));
+			Boolean check = Start.lager.checkObProduktDortGelagert(Start.window.getLagerplatzZuGrafiklagerplatz(i), Start.lager.getAuftrag(num));
 			Boolean check2 = false;
 			label[i].setBackground(new JButton().getBackground());
 			if(check)
 			{
-				check2 = Start.lager.checkObProduktNichtBlockiert(Start.window.getRightLagerplatzMain(i));	
+				check2 = Start.lager.checkObProduktNichtBlockiert(Start.window.getLagerplatzZuGrafiklagerplatz(i));	
 			}
 			if(text == null) {
 				label[i].setEnabled(false);
@@ -107,11 +109,13 @@ public class RemoveStuffFromLagerWindowNew extends JFrame {
 			{
 				label[i].setBackground(Color.green);
 				label[i].setEnabled(true);
+				verfuegbar++;
 			}
 			else if(check && !check2)
 			{
 				label[i].setBackground(Color.yellow);
 				label[i].setEnabled(true);
+				blockiert++;
 			}
 			else
 			{
@@ -120,8 +124,8 @@ public class RemoveStuffFromLagerWindowNew extends JFrame {
 			label[i].addActionListener(new java.awt.event.ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					String text = Start.lager.getLagerplatzInhalt(Start.window.getRightLagerplatzMain(temp));
-					if(Start.lager.auftragAbarbeiten(num, Start.window.getRightLagerplatzMain(temp)))
+					String text = Start.lager.getLagerplatzInhalt(Start.window.getLagerplatzZuGrafiklagerplatz(temp));
+					if(Start.lager.auftragAbarbeiten(num, Start.window.getLagerplatzZuGrafiklagerplatz(temp)))
 					{
 						Start.window.UpdateMainLagerraum();
 						Start.window.UpdateAuftragListe();
@@ -166,14 +170,28 @@ public class RemoveStuffFromLagerWindowNew extends JFrame {
 			{
 				j = 0;
 			}
-			ImageIcon icon2 = Start.window.bekommeBild(Start.lager.getInhalt(Start.window.getRightLagerplatzMain(i)));
-			Image test = Start.window.getScaledImage(icon2.getImage(), 64, 64);
+			ImageIcon icon2 = Start.window.bekommeBild(Start.lager.getInhalt(Start.window.getLagerplatzZuGrafiklagerplatz(i)));
+			Image test = Start.window.getSkaliertesBild(icon2.getImage(), 64, 64);
 			label[i].setIcon(new ImageIcon(test));
 		}
 		
-		lagertext.setText(Start.lager.getAuftrag(num).getInhalt());
+		if(verfuegbar == 0 && blockiert == 0)
+		{
+			lagertext.setText("<html><center>" + Start.lager.getAuftrag(num).getInhalt() + "<br><font color='red'>Das Produkt ist nicht im Lager!<br>Notfalls kannst du den Auftrag<br>auch zurueckstellen oder ablehnen.</font></center></html>");	
+		}
+		else
+		{
+			if(verfuegbar != 0)
+			{
+				lagertext.setText("<html><center>" + Start.lager.getAuftrag(num).getInhalt() + "<br>Verfuegbar: " + verfuegbar + " mal<br>" + "Blockiert: " + blockiert + " mal</center></html>");	
+			}
+			else
+			{
+				lagertext.setText("<html><center>" + Start.lager.getAuftrag(num).getInhalt() + "<br><font color='red'>Alle " + blockiert + " Produkte werden blockiert. <br>Durch Umlagern anderer Produkte<br>kannst du sie freischaufeln.</font></center></html>");
+			}	
+		}
 		ImageIcon icon2 = Start.window.bekommeBild(Start.lager.getAuftrag(num));
-		Image test = Start.window.getScaledImage(icon2.getImage(), 64, 64);
+		Image test = Start.window.getSkaliertesBild(icon2.getImage(), 64, 64);
 		lagertext.setIcon(new ImageIcon(test));
 		lagertext.setHorizontalAlignment(JLabel.CENTER);
 		
