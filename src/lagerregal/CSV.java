@@ -98,7 +98,7 @@ public class CSV {
     	    	}
     	    	System.out.println(zeile);
             }
-            System.out.println("Erfolgreich alle Zeilen eingelesen");
+            System.out.println("Erfolgreich alle Zeilen eingelesen (insgesamt " + zaehler + ")");
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,14 +1,10 @@
 package display;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.Insets;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
-import java.awt.event.WindowEvent;
 
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
@@ -26,15 +22,17 @@ import lagerregal.Start;
 
 public class VerschrottenWindowNew extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JLabel lagertext;
 	JButton[] label;
 	int checkliste[];
 
-	/**
-	 * Create the frame.
-	 */
 	public VerschrottenWindowNew() {
+		// Grafikelemente von WindowBuilder
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 444, 802);
 		setLocationRelativeTo(null);
@@ -87,7 +85,8 @@ public class VerschrottenWindowNew extends JFrame {
 		lagertext = new JLabel("New label");
 		
 		label = new JButton[27];
-		checkliste = Start.lager.getPlaetzeZumUmlagern();
+		// Prüfen nach Plätzen, die man Verschrotten kann
+		checkliste = Start.lager.getPlaetzeZumUmlagernOderVerschrotten();
 
 		int j = 0;
 		for (int i = 0; i < 27; i++) {
@@ -160,7 +159,7 @@ public class VerschrottenWindowNew extends JFrame {
 		}
 		lagertext = new JLabel();
 
-		lagertext.setText("<html><body><center>Wähle ein Produkt aus, was verschrottet werden soll.<br>Verschrotten kostet <b>500€</b></center></body></html>");
+		lagertext.setText("<html><center>W\u00E4hle ein Produkt aus, was verschrottet werden soll.<br><font color='red'>Verschrotten kostet <b>500\u20AC</b></font></center></html>");
 
 		lagertext.setHorizontalAlignment(JLabel.CENTER);
 		

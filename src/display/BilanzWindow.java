@@ -1,7 +1,6 @@
 package display;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import lagerregal.Bilanzobjekt;
@@ -12,12 +11,15 @@ import java.time.format.DateTimeFormatter;
 import java.util.Vector;
 
 public class BilanzWindow {
+	private JTable table;
+	private DefaultTableModel model;
 	public BilanzWindow() {
 		JFrame bilanzfenster = new JFrame();
 		bilanzfenster.setPreferredSize(new Dimension(500,300));
 		bilanzfenster.setLocationRelativeTo(null);
 		bilanzfenster.setTitle("Bilanz");
 		
+		// Oberer Bereich für die Anzeige der Gesamtzahlen
 		JPanel oben = new JPanel();
 		oben.setLayout(new GridLayout(1,3));
 		
@@ -37,21 +39,20 @@ public class BilanzWindow {
 		unten.setLayout(new GridLayout(1,1));
 		
 		// Die Column-Titles
-		String[] title = new String[]{
-				"Grund", "Produkt", "Kosten", "Datum"
-		};
-		
-		final DefaultTableModel model = new DefaultTableModel();
+
+		model = new DefaultTableModel();
 		model.addColumn("Grund");
 		model.addColumn("Produkt");
 		model.addColumn("Kosten");
 		model.addColumn("Datum");
 		
-		JTable table = new JTable(model);
+		// Die Bilanzobjekte werden in einer Tabelle dargestellt
+		table = new JTable(model);
 		table.setPreferredScrollableViewportSize(new Dimension(450,63));
         table.setFillsViewportHeight(true);
 		JPanel content = new JPanel();
 		
+		// Damit man bei vielen Einträgen scrollen kann
 		JScrollPane js = new JScrollPane(table);
 		js.setVisible(true);
 		content.setLayout(new BorderLayout());
@@ -60,6 +61,7 @@ public class BilanzWindow {
 		
 		if(Start.bilanz.getGeldverlauf().isEmpty())
 		{
+			// Wenn keine Einträge, soll ne leere Tabelle entstehen
 			for(int i = 0; i < 5; i++)
 			{
 				Vector<String> data = new Vector<String>(4);
@@ -73,9 +75,10 @@ public class BilanzWindow {
 		else
 		{
 			int count = 0;
+			// Duchgehen der Bilanzliste
 			for(Bilanzobjekt e: Start.bilanz.getGeldverlauf())
 			{
-				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
 
 				Vector<String> data = new Vector<String>(4);
 				data.add(e.getGrund());

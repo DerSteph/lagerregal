@@ -9,8 +9,8 @@ import javax.swing.table.TableCellRenderer;
 
 public class ColorTableCellRenderer implements TableCellRenderer{
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+		// Zum Einfärben der Zahlen
 		JLabel label = new JLabel((String)value);
-		//System.out.println("Row: " + row + ", Column: " + column);
 		if(column == 2 && value != "")
 		{
 				int Test = Integer.valueOf((String) value);

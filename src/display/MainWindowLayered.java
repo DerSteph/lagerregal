@@ -1,8 +1,5 @@
 package display;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -38,16 +35,19 @@ import lagerregal.Start;
 import lagerregal.Stein;
 
 import javax.swing.ImageIcon;
-import javax.swing.SwingConstants;
+import java.awt.Toolkit;
 
 public class MainWindowLayered extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public JPanel anzeige = new JPanel();
 	public JLabel[] lagerraum_feld = new JLabel[27];
 	
 	public JLabel auftrag_art[] = new JLabel[3];
 	public JButton auftrag_annehmen[] = new JButton[3];
 	public JButton auftrag_zurueckstellen[] = new JButton[3];
-	/*public JLabel auftrag_produkt[][] = new JLabel[3][3];*/
 	public JLabel auftrag_produkt[] = new JLabel[3];
 	public JLabel auftrag_kosten[] = new JLabel[3];
 	public JButton auftrag_ablehnen[] = new JButton[3];
@@ -57,7 +57,6 @@ public class MainWindowLayered extends JFrame {
 	
 	private JPanel contentPane;
 	private JLabel header_auftrag;
-	//public JLabel letzteAktion;
 	JButton button_neuerauftrag;
 	JButton button_umlagern;
 	JButton button_verschrotten;
@@ -67,6 +66,8 @@ public class MainWindowLayered extends JFrame {
 	 * Create the frame.
 	 */
 	public MainWindowLayered() {
+		// Grafikelemente durch WindowBuilder
+		setIconImage(Toolkit.getDefaultToolkit().getImage(MainWindowLayered.class.getResource("/bilder/Stein_marmor_leicht.png")));
 		setBackground(Color.WHITE);
 		setTitle("LagerRegal 2020");
 		setResizable(false);
@@ -201,7 +202,8 @@ public class MainWindowLayered extends JFrame {
 		gbl_panel_3.rowWeights = new double[]{};
 		panel_3.setLayout(gbl_panel_3);
 		panel_3.setBackground(Color.white);
-
+		
+		// Auftragsliste
 		header_auftrag = new JLabel("Einlagern / Auslagern");
 		header_auftrag.setFont(new Font("Tahoma", Font.BOLD, 11));
 		GridBagConstraints gbc_header_auftrag = new GridBagConstraints();
@@ -548,7 +550,9 @@ public class MainWindowLayered extends JFrame {
 		});
 		panel_1.add(button_neuerauftrag);
 		
+		// Erstellen der Buttons oben rechts
 		button_umlagern = new JButton("Umlagern");
+		button_umlagern.setForeground(Color.WHITE);
 		button_umlagern.setPreferredSize(new Dimension(110, 40));
 		button_umlagern.setBackground(new Color(0, 139, 139));
 		button_umlagern.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -560,6 +564,7 @@ public class MainWindowLayered extends JFrame {
 		panel_1.add(button_umlagern);
 		
 		button_verschrotten = new JButton("Verschrotten");
+		button_verschrotten.setForeground(Color.WHITE);
 		button_verschrotten.setPreferredSize(new Dimension(110, 40));
 		button_verschrotten.setBackground(new Color(0, 139, 139));
 		button_verschrotten.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -571,6 +576,7 @@ public class MainWindowLayered extends JFrame {
 		panel_1.add(button_verschrotten);
 		
 		JButton btnNewButton_3 = new JButton("Bilanz");
+		btnNewButton_3.setForeground(Color.WHITE);
 		btnNewButton_3.setPreferredSize(new Dimension(70, 40));
 		btnNewButton_3.setBackground(new Color(100, 149, 237));
 		btnNewButton_3.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -584,7 +590,6 @@ public class MainWindowLayered extends JFrame {
 		for(int i = 0; i < 27; i++)
 		{
 			lagerraum_feld[i] = new JLabel();
-			lagerraum_feld[i].setHorizontalAlignment(JLabel.CENTER);
 		}
 		UpdateMainLagerraum();
 
@@ -878,6 +883,7 @@ public class MainWindowLayered extends JFrame {
 
 	    return ziel;
 	}
+	// Um Zurückzugeben, welche Reihe der Inhalt ist
 	public int getLagerplatzFromInhalt(int i) {
 		if(i < 9)
 		{

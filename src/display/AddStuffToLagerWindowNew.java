@@ -1,8 +1,5 @@
 package display;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -12,7 +9,6 @@ import javax.swing.JButton;
 import javax.swing.GroupLayout.Alignment;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
-import java.awt.event.WindowEvent;
 
 import javax.swing.border.LineBorder;
 
@@ -26,24 +22,25 @@ import java.awt.Image;
 import java.awt.Insets;
 
 import javax.swing.LayoutStyle.ComponentPlacement;
-import java.awt.FlowLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import java.awt.GridBagLayout;
-
 public class AddStuffToLagerWindowNew extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JLabel lagertext;
 	JButton[] label;
 	int checkliste[];
-	private JLabel aufgabenbeschreibung;
 
 	/**
 	 * Create the frame.
 	 */
 	public AddStuffToLagerWindowNew(int num) {
+		// Grafikelemente durch WindowBuilder
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 444, 802);
 		setLocationRelativeTo(null);
@@ -93,9 +90,9 @@ public class AddStuffToLagerWindowNew extends JFrame {
 		
 		lagertext = new JLabel("New label");
 		
-		
 		label = new JButton[27];
-
+		
+		// Prüft, welche Plätze verfügbar sind
 		checkliste = Start.lager.getArrayVonFreienPlaetzen(Start.lager.getAuftrag(num));
 		int check = 0;
 		for (int i = 0; i < 27; i++) {
@@ -104,6 +101,7 @@ public class AddStuffToLagerWindowNew extends JFrame {
 			}
 		}
 		int j = 0;
+		// Erstellt für jedes Lager einen einzelnen Button
 		for (int i = 0; i < 27; i++) {
 			final int temp = i;
 			label[i] = new JButton();
@@ -118,7 +116,6 @@ public class AddStuffToLagerWindowNew extends JFrame {
 			} else {
 				label[i].setEnabled(false);
 			}
-			//label[i].setText(text);
 			label[i].setMargin(new Insets(0,0,0,0));
 			label[i].addActionListener(new java.awt.event.ActionListener() {
 				@Override
@@ -182,10 +179,11 @@ public class AddStuffToLagerWindowNew extends JFrame {
 			{
 				j = 0;
 			}
-			ImageIcon icon2 = Start.window.bekommeBild(Start.lager.getInhalt(Start.window.getLagerplatzZuGrafiklagerplatz(i)));
-			Image test = Start.window.getSkaliertesBild(icon2.getImage(), 64, 64);
-			label[i].setIcon(new ImageIcon(test));
+			ImageIcon icon = Start.window.bekommeBild(Start.lager.getInhalt(Start.window.getLagerplatzZuGrafiklagerplatz(i)));
+			Image image = Start.window.getSkaliertesBild(icon.getImage(), 64, 64);
+			label[i].setIcon(new ImageIcon(image));
 		}
+		// Text für Beschreibung des Produktes
 		lagertext = new JLabel();
 		if (check != 0) {
 			lagertext.setText("<html><center>" + Start.lager.getAuftrag(num).getInhalt() + "<br>Es sind noch " + check
@@ -218,8 +216,6 @@ public class AddStuffToLagerWindowNew extends JFrame {
 		
 		panel_3.add(lagertext);
 		
-		/*aufgabenbeschreibung = new JLabel("Aufgabenbeschreibung");
-		panel_3.add(aufgabenbeschreibung);*/
 		contentPane.setLayout(gl_contentPane);
 		setVisible(true);
 	}

@@ -1350,7 +1350,7 @@ public class Lager {
 	}
 	
 	// Prüft, wo Plätze im Lager zum Umlagern verfügbar sind, gibt es als Array zurück
-	public int[] getPlaetzeZumUmlagern() {
+	public int[] getPlaetzeZumUmlagernOderVerschrotten() {
 		int[] checkliste = new int[27];
 		for(int i = 0; i < 27; i++)
 		{

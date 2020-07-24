@@ -1,14 +1,10 @@
 package display;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.Insets;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
-import java.awt.event.WindowEvent;
 
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
@@ -26,15 +22,17 @@ import lagerregal.Start;
 
 public class RemoveStuffFromLagerWindowNew extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JLabel lagertext;
 	JButton[] label;
 	int checkliste[];
 
-	/**
-	 * Create the frame.
-	 */
 	public RemoveStuffFromLagerWindowNew(int num) {
+		// Grafikelemente von WindowBuilder
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 444, 802);
 		setLocationRelativeTo(null);
@@ -88,6 +86,7 @@ public class RemoveStuffFromLagerWindowNew extends JFrame {
 		
 		label = new JButton[27];
 
+		// Um Zählen wv Plätze verfügbar sind oder blockiert sind für das Produkt zum Rausholen
 		int j = 0;
 		int verfuegbar = 0;
 		int blockiert = 0;
@@ -174,7 +173,7 @@ public class RemoveStuffFromLagerWindowNew extends JFrame {
 			Image test = Start.window.getSkaliertesBild(icon2.getImage(), 64, 64);
 			label[i].setIcon(new ImageIcon(test));
 		}
-		
+		// Beschreibungstext bestimmen
 		if(verfuegbar == 0 && blockiert == 0)
 		{
 			lagertext.setText("<html><center>" + Start.lager.getAuftrag(num).getInhalt() + "<br><font color='red'>Das Produkt ist nicht im Lager!<br>Notfalls kannst du den Auftrag<br>auch zurueckstellen oder ablehnen.</font></center></html>");	

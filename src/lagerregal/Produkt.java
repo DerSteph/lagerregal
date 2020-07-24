@@ -4,6 +4,7 @@ public class Produkt {
 	private String Lagerungsart;
 	private int Kosten;
 	
+	// als Vorfunktion für die geerbten Klassen
 	public String getInhalt() {
 		return null;
 	}
@@ -27,6 +28,7 @@ public class Produkt {
 	public String toString() {
 		return this.getClass().getSimpleName();
 	}
+	// Für Konsolenausgabe
 	public String toShortString () {
 		switch(this.toString())
 		{

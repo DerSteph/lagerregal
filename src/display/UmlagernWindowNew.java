@@ -1,14 +1,10 @@
 package display;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.Insets;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
-import java.awt.event.WindowEvent;
 
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
@@ -26,18 +22,19 @@ import lagerregal.Start;
 
 public class UmlagernWindowNew extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private String modus = "Lagerquelle";
 	private int lagerquelle = 0;
 	private JLabel lagertext;
 	private int[] checkliste;
-	private JLabel lagerauswahl;
 	private JButton[] label;
 
-	/**
-	 * Create the frame.
-	 */
 	public UmlagernWindowNew() {
+		// Grafikelemente von WindowBuilder
 		setTitle("Umlagern");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 444, 802);
@@ -91,7 +88,8 @@ public class UmlagernWindowNew extends JFrame {
 		
 		
 		label = new JButton[27];
-		checkliste = Start.lager.getPlaetzeZumUmlagern();
+		// Suche nach freien Plätzen zum Umlagern
+		checkliste = Start.lager.getPlaetzeZumUmlagernOderVerschrotten();
 		
 		int j = 0;
 		for(int i = 0; i < 27; i++)
@@ -99,6 +97,7 @@ public class UmlagernWindowNew extends JFrame {
 			final int temp = i;
 			label[i] = new JButton();
 			String text = Start.lager.getLagerplatzInhalt(Start.window.getLagerplatzZuGrafiklagerplatz(i));
+			// Aktiviere / Deaktiviere Buttons je nach Zustand
 			if(text == null) {
 				label[i].setEnabled(false);
 			}
@@ -113,6 +112,7 @@ public class UmlagernWindowNew extends JFrame {
 			label[i].addActionListener(new java.awt.event.ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
+					// Unterschiedliche Zustände, je nach dem ob ein Objekt zum Auslagern ausgewählt wurde
 					if(modus == "Lagerquelle")
 					{
 						modus = "Lagerziel";
@@ -180,14 +180,16 @@ public class UmlagernWindowNew extends JFrame {
 			label[i].setIcon(new ImageIcon(test));
 		}
 		
-		lagertext.setText("<html><center>Wähle ein Produkt aus, was du umlagern möchtest.<br>Umlagern kostet 100€</center></html>");
+		lagertext.setText("<html><center>W\u00E4hle ein Produkt aus, was du umlagern m\u00F6chtest.<br><font color='red'>Umlagern kostet <b>100\u20AC</b></font></center></html>");
 		lagertext.setHorizontalAlignment(JLabel.CENTER);
 		
 		panel_3.add(lagertext);
 		contentPane.setLayout(gl_contentPane);
 		setVisible(true);
 	}
-	public void UpdateLager() {
+	
+	// Um das Lager zu Updaten im Fenster
+	private void UpdateLager() {
 			for(int i = 0; i < 27; i++)
 			{
 				String text = Start.lager.getLagerplatzInhalt(Start.window.getLagerplatzZuGrafiklagerplatz(i));
