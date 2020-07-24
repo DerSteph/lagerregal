@@ -32,6 +32,7 @@ public class VerschrottenWindowNew extends JFrame {
 	int checkliste[];
 
 	public VerschrottenWindowNew() {
+		setResizable(false);
 		// Grafikelemente von WindowBuilder
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 444, 802);

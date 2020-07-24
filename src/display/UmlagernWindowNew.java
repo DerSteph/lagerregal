@@ -34,6 +34,7 @@ public class UmlagernWindowNew extends JFrame {
 	private JButton[] label;
 
 	public UmlagernWindowNew() {
+		setResizable(false);
 		// Grafikelemente von WindowBuilder
 		setTitle("Umlagern");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

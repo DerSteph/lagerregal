@@ -40,6 +40,7 @@ public class AddStuffToLagerWindowNew extends JFrame {
 	 * Create the frame.
 	 */
 	public AddStuffToLagerWindowNew(int num) {
+		setResizable(false);
 		// Grafikelemente durch WindowBuilder
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 444, 802);

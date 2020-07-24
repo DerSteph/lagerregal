@@ -1,13 +1,10 @@
 package lagerregal;
 
-import java.io.File;
-import java.net.URL;
 import java.util.*;
 
 public class Lager {
 	private ArrayList<Produkt> lagerinhalt;
 	private ArrayList<Produkt> auftragsliste;
-	//private ArrayList<Aufgabe> aufgabeninhalt;
 	private int listlaenge = 0;
 	private CSV datei;
 	public Lager() {

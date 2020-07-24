@@ -1,0 +1,1 @@
+Ich habe die Datei auftrag.csv nur in UTF-8 kodiert, damit man sie auch auf GNU/Linux benutzen kann.

@@ -32,6 +32,7 @@ public class RemoveStuffFromLagerWindowNew extends JFrame {
 	int checkliste[];
 
 	public RemoveStuffFromLagerWindowNew(int num) {
+		setResizable(false);
 		// Grafikelemente von WindowBuilder
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 444, 802);
