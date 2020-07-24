@@ -48,51 +48,47 @@ public class AddStuffToLagerWindowNew extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		
+
 		JPanel lagerraum1 = new JPanel();
 		lagerraum1.setBorder(new LineBorder(new Color(0, 0, 0)));
 		lagerraum1.setBackground(SystemColor.inactiveCaptionBorder);
-		
+
 		JPanel lagerraum2 = new JPanel();
 		lagerraum2.setBorder(new LineBorder(new Color(0, 0, 0)));
 		lagerraum2.setBackground(SystemColor.inactiveCaptionBorder);
-		
+
 		JPanel lagerraum3 = new JPanel();
 		lagerraum3.setBorder(new LineBorder(new Color(0, 0, 0)));
 		lagerraum3.setBackground(SystemColor.inactiveCaptionBorder);
-		
+
 		JPanel panel_3 = new JPanel();
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
-						.addComponent(panel_3, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+		gl_contentPane.setHorizontalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addGroup(gl_contentPane
+				.createSequentialGroup()
+				.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
+						.addComponent(panel_3, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
+								Short.MAX_VALUE)
 						.addComponent(lagerraum1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE)
 						.addComponent(lagerraum2, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE)
 						.addComponent(lagerraum3, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-		);
-		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+		gl_contentPane.setVerticalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addComponent(lagerraum1, GroupLayout.PREFERRED_SIZE, 195, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(lagerraum2, GroupLayout.PREFERRED_SIZE, 195, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(lagerraum3, GroupLayout.PREFERRED_SIZE, 195, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(panel_3, GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
-					.addContainerGap())
-		);
-		lagerraum3.setLayout(new GridLayout(3,3));
-		lagerraum2.setLayout(new GridLayout(3,3));
-		lagerraum1.setLayout(new GridLayout(3,3));
-		
+						.addComponent(lagerraum1, GroupLayout.PREFERRED_SIZE, 195, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(lagerraum2, GroupLayout.PREFERRED_SIZE, 195, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(lagerraum3, GroupLayout.PREFERRED_SIZE, 195, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(panel_3, GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE).addContainerGap()));
+		lagerraum3.setLayout(new GridLayout(3, 3));
+		lagerraum2.setLayout(new GridLayout(3, 3));
+		lagerraum1.setLayout(new GridLayout(3, 3));
+
 		lagertext = new JLabel("New label");
-		
+
 		label = new JButton[27];
-		
+
 		// Prüft, welche Plätze verfügbar sind
 		checkliste = Start.lager.getArrayVonFreienPlaetzen(Start.lager.getAuftrag(num));
 		int check = 0;
@@ -117,33 +113,32 @@ public class AddStuffToLagerWindowNew extends JFrame {
 			} else {
 				label[i].setEnabled(false);
 			}
-			label[i].setMargin(new Insets(0,0,0,0));
+			label[i].setMargin(new Insets(0, 0, 0, 0));
 			label[i].addActionListener(new java.awt.event.ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					int i = temp;
 					// Abfrage, ob der Auftrag im Mainfenster noch vorhanden
-					if(Start.lager.getAuftrag(num) == null)
-					{
+					if (Start.lager.getAuftrag(num) == null) {
 						dispose();
-					}
-					else
-					{
+					} else {
 						// Probiere, ob man Auftrag abarbeiten kann
-						if(Start.lager.auftragAbarbeiten(num, Start.window.getLagerplatzZuGrafiklagerplatz(i)))
-						{
+						if (Start.lager.auftragAbarbeiten(num, Start.window.getLagerplatzZuGrafiklagerplatz(i))) {
 							Start.window.UpdateMainLagerraum();
 							Start.window.UpdateAuftragListe();
-							if(Start.lager.getInhalt(Start.window.getLagerplatzZuGrafiklagerplatz(i)) instanceof Holz)
-							{
-								if(((Holz) Start.lager.getInhalt(Start.window.getLagerplatzZuGrafiklagerplatz(i))).getForm() == "Balken")
-								{
-									Start.window.letzteAktion.setText("Letzte Aktion: Einlagerung von " + Start.lager.getLagerplatzInhalt(Start.window.getLagerplatzZuGrafiklagerplatz(i)));								
+							if (Start.lager
+									.getInhalt(Start.window.getLagerplatzZuGrafiklagerplatz(i)) instanceof Holz) {
+								if (((Holz) Start.lager.getInhalt(Start.window.getLagerplatzZuGrafiklagerplatz(i)))
+										.getForm() == "Balken") {
+									Start.window.letzteAktion.setText("Letzte Aktion: Einlagerung von " + Start.lager
+											.getLagerplatzInhalt(Start.window.getLagerplatzZuGrafiklagerplatz(i)));
 								}
-							}
-							else
-							{
-								Start.window.letzteAktion.setText("Letzte Aktion: Einlagerung von " + Start.lager.getLagerplatzInhalt(Start.window.getLagerplatzZuGrafiklagerplatz(i)) + " in Lager " + Start.window.getLagerplatzFromInhalt(Start.window.getRightLagerplatz(i)));
+							} else {
+								Start.window.letzteAktion.setText("Letzte Aktion: Einlagerung von "
+										+ Start.lager.getLagerplatzInhalt(
+												Start.window.getLagerplatzZuGrafiklagerplatz(i))
+										+ " in Lager "
+										+ Start.window.getLagerplatzFromInhalt(Start.window.getRightLagerplatz(i)));
 							}
 							Start.window.kontostand.setText("Dein Kontostand: " + Start.bilanz.getGesamtkonto() + "€");
 							Start.window.button_umlagern.setEnabled(true);
@@ -151,46 +146,36 @@ public class AddStuffToLagerWindowNew extends JFrame {
 							dispose();
 						}
 						// Für alle Fälle
-						else
-						{
+						else {
 							JOptionPane.showMessageDialog(null,
-									"Der Lagerplatz ist bereits durch andere Dinge davor blockiert.", "Fehler", JOptionPane.WARNING_MESSAGE);
-						}	
+									"Der Lagerplatz ist bereits durch andere Dinge davor blockiert.", "Fehler",
+									JOptionPane.WARNING_MESSAGE);
+						}
 					}
 				}
 			});
-			if(i < 9)
-			{
-				lagerraum1.add(label[i]);	
-			}
-			else if(i < 18)
-			{
+			if (i < 9) {
+				lagerraum1.add(label[i]);
+			} else if (i < 18) {
 				lagerraum2.add(label[i]);
-			}
-			else
-			{
+			} else {
 				lagerraum3.add(label[i]);
 			}
-			if(j < 3)
-			{
+			if (j < 3) {
 				label[i].setHorizontalAlignment(JLabel.RIGHT);
 				j++;
-			}
-			else if(j < 6)
-			{
+			} else if (j < 6) {
 				label[i].setHorizontalAlignment(JLabel.CENTER);
 				j++;
-			}
-			else
-			{
+			} else {
 				label[i].setHorizontalAlignment(JLabel.LEFT);
 				j++;
 			}
-			if(j == 9)
-			{
+			if (j == 9) {
 				j = 0;
 			}
-			ImageIcon icon = Start.window.bekommeBild(Start.lager.getInhalt(Start.window.getLagerplatzZuGrafiklagerplatz(i)));
+			ImageIcon icon = Start.window
+					.bekommeBild(Start.lager.getInhalt(Start.window.getLagerplatzZuGrafiklagerplatz(i)));
 			Image image = Start.window.getSkaliertesBild(icon.getImage(), 64, 64);
 			label[i].setIcon(new ImageIcon(image));
 		}
@@ -198,19 +183,17 @@ public class AddStuffToLagerWindowNew extends JFrame {
 		lagertext = new JLabel();
 		if (check != 0) {
 			lagertext.setText("<html><center>" + Start.lager.getAuftrag(num).getInhalt() + "<br>Es sind noch " + check
-					+ " Plaetze frei.");
-			if(Start.lager.getAuftrag(num) instanceof Stein)
-			{
-				if(((Stein) Start.lager.getAuftrag(num)).getGewicht().equals("Schwer"))
-				{
-					lagertext.setText(lagertext.getText() + "<br><font color='#00BFFF'>Schwere Steine können nur<br> unten gelagert werden!</font>");
+					+ " Plätze frei.");
+			if (Start.lager.getAuftrag(num) instanceof Stein) {
+				if (((Stein) Start.lager.getAuftrag(num)).getGewicht().equals("Schwer")) {
+					lagertext.setText(lagertext.getText()
+							+ "<br><font color='#00BFFF'>Schwere Steine können nur<br> unten gelagert werden!</font>");
 				}
 			}
-			if(Start.lager.getAuftrag(num) instanceof Holz)
-			{
-				if(((Holz) Start.lager.getAuftrag(num)).getForm().equals("Balken"))
-				{
-					lagertext.setText(lagertext.getText() + "<br><font color='#00BFFF'>Balken benoetigen 3 Lagerplaetze<br> nach hinten!</font>");
+			if (Start.lager.getAuftrag(num) instanceof Holz) {
+				if (((Holz) Start.lager.getAuftrag(num)).getForm().equals("Balken")) {
+					lagertext.setText(lagertext.getText()
+							+ "<br><font color='#00BFFF'>Balken benötigen 3 Lagerplaetze<br> nach hinten!</font>");
 				}
 			}
 			lagertext.setText(lagertext.getText() + "</center></html>");
@@ -220,13 +203,13 @@ public class AddStuffToLagerWindowNew extends JFrame {
 		} else {
 			lagertext.setForeground(Color.RED);
 			lagertext.setText(
-					"<html><body><center>Es sind keine Plaetze mehr frei! <br>Du musst einige Produkte umlagern oder loeschen!</center></body></html>");
+					"<html><body><center>Es sind keine Plaetze mehr frei! <br>Du musst einige Produkte umlagern oder löschen!</center></body></html>");
 		}
 		panel_3.setLayout(new GridLayout(1, 1));
 		lagertext.setHorizontalAlignment(JLabel.CENTER);
-		
+
 		panel_3.add(lagertext);
-		
+
 		contentPane.setLayout(gl_contentPane);
 		setVisible(true);
 	}

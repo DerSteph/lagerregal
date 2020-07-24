@@ -6,6 +6,7 @@ public class Start {
 	public static Lager lager;
 	public static Bilanz bilanz;
 	public static MainWindowLayered window;
+
 	public static void main(String[] args) {
 		// Erstelle Lager
 		lager = new Lager();
