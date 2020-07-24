@@ -685,8 +685,8 @@ public class MainWindowLayered extends JFrame {
 				auftrag_zurueckstellen[i].setEnabled(true);
 				auftrag_ablehnen[i].setEnabled(true);
 				ImageIcon icon = bekommeBild(Start.lager.getAuftrag(i));
-				Image test = getSkaliertesBild(icon.getImage(), 64, 64);
-				auftrag_produkt[i].setIcon(new ImageIcon(test));
+				Image image = getSkaliertesBild(icon.getImage(), 64, 64);
+				auftrag_produkt[i].setIcon(new ImageIcon(image));
 				auftrag_produkt[i].setToolTipText(Start.lager.getAuftrag(i).getInhalt());
 			}
 			else
