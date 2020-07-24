@@ -1,5 +1,6 @@
 package lagerregal;
 
+import java.io.File;
 import java.net.URL;
 import java.util.*;
 
@@ -21,8 +22,8 @@ public class Lager {
 		}
 		try
 		{
-			URL name = Start.class.getResource("auftrag.csv");
-			datei = new CSV(name.toString().substring(5)); // laesst das "file://" am Anfang weg
+			String file = "/auftrag.csv";
+			datei = new CSV(file); // laesst das "file://" am Anfang weg
 		}
 		catch(Exception e) {
 			System.out.println("Datei kann nicht geladen werden.");
